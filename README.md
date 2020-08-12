@@ -36,7 +36,9 @@ This library has the following peer dependencies:
   - [useFocusHierarchy()](#usefocushierarchy)
   - [useFocusStore()](#usefocusstore)
 - [**Interfaces**](#interfaces)
-
+  - [FocusNode](#focusnode)
+  - [LRUDEvent](#lrudevent)
+  - [FocusStore](#focusstore)
 - [**Prior Art**](#prior-art)
 - [**Limitations**](#limitations)
 
