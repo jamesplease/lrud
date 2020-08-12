@@ -1,0 +1,78 @@
+{
+  "name": "@please/lrud",
+  "version": "0.0.1",
+  "description": "A React library for managing focus in TV apps.",
+  "main": "es/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf ./dist ./es ./tmp ./lib",
+    "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean",
+    "prebuild": "npm run clean",
+    "prettier": "prettier --config ./.prettierrc --write **/*.{js,css}",
+    "build": "npm run build:types && npm run build:es",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --extensions '.ts,.tsx'"
+  },
+  "publishConfig": {
+    "registry": "https://artifacts.netflix.net/api/npm/npm-netflix"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "*.js",
+    "*.css",
+    "types"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesplease/lrud.git"
+  },
+  "keywords": [
+    "lrud",
+    "tv",
+    "react",
+    "component",
+    "navigation",
+    "focus",
+    "remote"
+  ],
+  "author": "James Please",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jamesplease/lrud/issues"
+  },
+  "homepage": "https://github.com/jamesplease/lrud#readme",
+  "dependencies": {
+    "@xdproto/focus": "^2.0.0-beta.12",
+    "classnames": "^2.2.6",
+    "core-hooks": "0.0.4",
+    "focus-visible": "^5.0.2",
+    "framer-motion": "^1.6.2",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "typescript": "3.9.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/plugin-external-helpers": "7.2.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "7.10.4",
+    "@babel/preset-env": "7.5.5",
+    "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.10.4",
+    "@types/jest": "26.0.9",
+    "@types/react": "16.9.46",
+    "babel-eslint": "10.0.2",
+    "babel-loader": "8.0.6",
+    "chalk": "2.4.2",
+    "clean-css": "4.2.1",
+    "cross-env": "5.2.0",
+    "eslint": "6.2.0",
+    "glob": "7.1.4",
+    "prettier": "1.18.2",
+    "rimraf": "3.0.0"
+  }
+}
