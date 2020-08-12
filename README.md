@@ -35,6 +35,8 @@ This library has the following peer dependencies:
   - [useNodeEvents()](#usenodeevents-focusid-events-)
   - [useFocusHierarchy()](#usefocushierarchy)
   - [useFocusStore()](#usefocusstore)
+- [**Interfaces**](#interfaces)
+
 - [**Prior Art**](#prior-art)
 - [**Limitations**](#limitations)
 
@@ -194,9 +196,9 @@ export default function MyComponent() {
 
 Each callback receives a single argument, the focus node.
 
-The available events are:
+The available event keys are:
 
-| Event name | Description Description                         |
+| Event key  | Description                                     |
 | ---------- | ----------------------------------------------- |
 | `focus`    | Called when the focus node receives focus.      |
 | `blur`     | Called when the focus node loses focus.         |
@@ -241,6 +243,32 @@ export default function MyComponent() {
   }, []);
 }
 ```
+
+## Interfaces
+
+These are the objects you will encounter when using this library.
+
+### `FocusNode`
+
+Coming soon.
+
+### `LRUDEvent`
+
+An object that is passed to you in the event callbacks of a `FocusNode`, such as `onFocus`.
+
+| Property          | Type      | Description                                                                                                  |
+| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------ |
+| `key`             | string    | A string representing the key that was pressed. One of `"left"`, `"right"`, `"up"`, `"down"`, or `"select"`. |
+| `isArrow`         | boolean   | Whether or not this key is an arrow.                                                                         |
+| `node`            | FocusNode | The `FocusNode` that received this event.                                                                    |
+| `preventDefault`  | function  | Call this to stop the default behavior of the event. Commonly used to override the navigation behavior       |
+| `stopPropagation` | function  | Call this to stop the propagation of the event.                                                              |
+
+### `FocusStore`
+
+An object that represents the store that contains all of the state related to what is in focus.
+Typically, you should not need to interact with this object directly, but it is made available to you
+for advanced use cases that you may have.
 
 ## Limitations
 
