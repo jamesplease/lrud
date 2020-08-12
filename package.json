@@ -15,9 +15,6 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --extensions '.ts,.tsx'"
   },
-  "publishConfig": {
-    "registry": "https://artifacts.netflix.net/api/npm/npm-netflix"
-  },
   "files": [
     "dist",
     "lib",
