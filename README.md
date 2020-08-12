@@ -171,7 +171,7 @@ export default function MyComponent() {
 }
 ```
 
-### `useNodeEvents( nodeId, events )`
+### `useNodeEvents( focusId, events )`
 
 A [Hook](https://reactjs.org/docs/hooks-intro.html) that allows you to tap into a focus nodes' focus lifecycle events. Use this hook when
 you need to respond to the focus lifecycle for a node that is not in your current component.
