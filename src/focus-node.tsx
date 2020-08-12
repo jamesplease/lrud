@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useRef,
   useMemo,
+  forwardRef,
 } from 'react';
 import FocusContext from './focus-context';
 import nodeFromDefinition from './utils/node-from-definition';
@@ -20,6 +21,11 @@ import {
 } from './types';
 
 let uniqueId = 0;
+
+type Ref =
+  | React.MutableRefObject<HTMLElement | null>
+  | ((instance: HTMLElement | null) => void)
+  | null;
 
 function checkForUpdate({
   focusStore,
@@ -40,49 +46,52 @@ function checkForUpdate({
   }
 }
 
-export default function FocusNode({
-  elementType = 'div',
+export function FocusNode(
+  {
+    elementType = 'div',
 
-  focusId,
-  className = '',
-  children,
-  wrapping = false,
-  orientation,
-  isGrid = false,
-  isTrap = false,
-  canReceiveFocusFromArrows = true,
-  restoreTrapFocusHierarchy,
+    focusId,
+    className = '',
+    children,
+    wrapping = false,
+    orientation,
+    isGrid = false,
+    isTrap = false,
+    canReceiveFocusFromArrows = true,
+    restoreTrapFocusHierarchy,
 
-  disabled,
+    disabled,
 
-  onMountAssignFocusTo,
+    onMountAssignFocusTo,
 
-  isExiting = false,
+    isExiting = false,
 
-  propsFromNode,
+    propsFromNode,
 
-  focusedClass = 'isFocused',
-  focusedLeafClass = 'isFocusedLeaf',
-  disabledClass = 'focusDisabled',
-  activeClass = 'isActive',
+    focusedClass = 'isFocused',
+    focusedLeafClass = 'isFocusedLeaf',
+    disabledClass = 'focusDisabled',
+    activeClass = 'isActive',
 
-  onKey,
-  onArrow,
-  onLeft,
-  onRight,
-  onUp,
-  onDown,
-  onSelect,
-  onBack,
+    onKey,
+    onArrow,
+    onLeft,
+    onRight,
+    onUp,
+    onDown,
+    onSelect,
+    onBack,
 
-  onMove,
-  onGridMove,
+    onMove,
+    onGridMove,
 
-  onFocus,
-  onBlur,
+    onFocus,
+    onBlur,
 
-  ...otherProps
-}: FocusNodeProps) {
+    ...otherProps
+  }: FocusNodeProps,
+  ref: Ref
+) {
   const [nodeId] = useState(() => {
     const isInvalidId = focusId === 'root';
 
@@ -288,9 +297,13 @@ export default function FocusNode({
       {createElement(elementType, {
         ...otherProps,
         ...computedProps,
+        ref,
         className: classNameString,
         children,
       })}
     </FocusContext.Context.Provider>
   );
 }
+
+const ForwardedFocusNode = forwardRef(FocusNode);
+export default ForwardedFocusNode;
