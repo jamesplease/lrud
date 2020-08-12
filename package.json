@@ -46,9 +46,6 @@
     "url": "https://github.com/jamesplease/lrud/issues"
   },
   "homepage": "https://github.com/jamesplease/lrud#readme",
-  "dependencies": {
-    "prop-types": "^15.7.2"
-  },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0"
   },
