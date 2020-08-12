@@ -72,6 +72,17 @@ LRUD commands on their keyboard or remote control.
 This behavior can be configured through the props of the FocusNode component. To
 learn more about those props, refer to the API documentation below.
 
+### FAQ
+
+#### What is LRUD?
+
+LRUD is an acronym that stands for left-right-up-down, and it refers to the directional buttons typically found on remotes. In LRUD systems,
+input devices usually also have some kind of "submit" button, and, less commonly, a back button.
+
+#### Is this library right for me?
+
+The [limitations](#limitations) described below may help you to determine that.
+
 ## API Reference
 
 This section of the documentation describes the library's named exports.
@@ -230,17 +241,6 @@ export default function MyComponent() {
   }, []);
 }
 ```
-
-### FAQ
-
-#### What is LRUD?
-
-LRUD is an acronym that stands for left-right-up-down, and it refers to the directional buttons typically found on remotes. In LRUD systems,
-input devices usually also have some kind of "submit" button, and, less commonly, a back button.
-
-#### Is this library right for me?
-
-The [limitations](#limitations) described below may help you to determine that.
 
 ## Limitations
 
