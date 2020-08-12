@@ -16,7 +16,7 @@ interface Events {
   enabled?: EventCallback;
 }
 
-export default function useNodeEvents(nodeId: Id, events: Events = {}): void {
+export default function useFocusEvents(nodeId: Id, events: Events = {}): void {
   const node = useFocusNode(nodeId);
   const nodeRef = useRef(node);
   nodeRef.current = node;
@@ -28,7 +28,7 @@ export default function useNodeEvents(nodeId: Id, events: Events = {}): void {
   const isDisabled = Boolean(node && node.disabled);
   const isActive = Boolean(node && node.active);
 
-  useOnChange(isFocused, (currentIsFocused) => {
+  useOnChange(isFocused, currentIsFocused => {
     if (nodeRef.current) {
       if (currentIsFocused && typeof eventsRef.current.focus === 'function') {
         eventsRef.current.focus(nodeRef.current);
@@ -41,7 +41,7 @@ export default function useNodeEvents(nodeId: Id, events: Events = {}): void {
     }
   });
 
-  useOnChange(isDisabled, (currentIsDisabled) => {
+  useOnChange(isDisabled, currentIsDisabled => {
     if (nodeRef.current) {
       if (
         currentIsDisabled &&
@@ -57,7 +57,7 @@ export default function useNodeEvents(nodeId: Id, events: Events = {}): void {
     }
   });
 
-  useOnChange(isActive, (currentIsActive) => {
+  useOnChange(isActive, currentIsActive => {
     if (nodeRef.current) {
       if (currentIsActive && typeof eventsRef.current.active === 'function') {
         eventsRef.current.active(nodeRef.current);
