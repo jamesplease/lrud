@@ -11,7 +11,7 @@ function FocusProviderWrapper({
   wrapping,
   children,
 }: {
-  children?: React.ReactChild;
+  children?: React.ReactNode;
   orientation?: Orientation;
   wrapping?: boolean;
 }) {

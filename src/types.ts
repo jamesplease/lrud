@@ -177,7 +177,7 @@ export interface FocusNodeProps extends FocusNodeEvents {
   elementType?: React.ElementType;
   focusId?: Id;
   className?: string;
-  children?: React.ReactChild;
+  children?: React.ReactNode;
   wrapping?: boolean;
   orientation?: Orientation;
   isGrid?: boolean;
