@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.0.3 (2020/8/12)
+
+- Fixes types
+
 ### v0.0.2 (2020/8/12)
 
 - Fixes dependencies
