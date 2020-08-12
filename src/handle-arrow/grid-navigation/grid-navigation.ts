@@ -15,7 +15,6 @@ interface GridNavigationOptions {
 export default function gridNavigation({
   focusState,
   orientation,
-  focusedNode,
   gridNode,
   rowNode,
   direction,

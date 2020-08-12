@@ -4,6 +4,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,
     "noImplicitReturns": false,
+    "lib": ["dom", "es6", "dom.iterable", "scripthost", "es2019"],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "noUnusedLocals": true,

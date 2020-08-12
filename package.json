@@ -46,6 +46,7 @@
   },
   "homepage": "https://github.com/jamesplease/lrud#readme",
   "dependencies": {
+    "@types/node": "14.0.27",
     "@xdproto/focus": "^2.0.0-beta.12",
     "classnames": "^2.2.6",
     "core-hooks": "0.0.4",
