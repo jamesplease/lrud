@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.0.5 (2020/8/12)
+
+- You can now pass in a `ref` to `FocusNode`
+
 ### v0.0.4 (2020/8/12)
 
 - More types fixes
