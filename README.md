@@ -39,6 +39,7 @@ This library has the following peer dependencies:
   - [FocusNode](#focusnode)
   - [LRUDEvent](#lrudevent)
   - [FocusStore](#focusstore)
+  - [FocusState](#focusstate)
 - [**Prior Art**](#prior-art)
 - [**Limitations**](#limitations)
 
@@ -258,19 +259,46 @@ Coming soon.
 
 An object that is passed to you in the event callbacks of a `FocusNode`, such as `onFocus`.
 
-| Property          | Type      | Description                                                                                                  |
-| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------ |
-| `key`             | string    | A string representing the key that was pressed. One of `"left"`, `"right"`, `"up"`, `"down"`, or `"select"`. |
-| `isArrow`         | boolean   | Whether or not this key is an arrow.                                                                         |
-| `node`            | FocusNode | The `FocusNode` that received this event.                                                                    |
-| `preventDefault`  | function  | Call this to stop the default behavior of the event. Commonly used to override the navigation behavior       |
-| `stopPropagation` | function  | Call this to stop the propagation of the event.                                                              |
+| Property          | Type                    | Description                                                                                                            |
+| ----------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `key`             | string                  | A string representing the key that was pressed. One of `"left"`, `"right"`, `"up"`, `"down"`, `"select"`, or `"back"`. |
+| `isArrow`         | boolean                 | Whether or not this key is an arrow.                                                                                   |
+| `node`            | [FocusNode](#focusnode) | The [`FocusNode`](#focusnode) that received this event.                                                                |
+| `preventDefault`  | function                | Call this to stop the default behavior of the event. Commonly used to override the navigation behavior                 |
+| `stopPropagation` | function                | Call this to stop the propagation of the event.                                                                        |
 
 ### `FocusStore`
+
+> Heads up: the API of the FocusStore is considered to be internal. We strongly discourage you from calling
+> methods on the FocusStore directly!
 
 An object that represents the store that contains all of the state related to what is in focus.
 Typically, you should not need to interact with this object directly, but it is made available to you
 for advanced use cases that you may have.
+
+| Property       | Type     | Description                                                            |
+| -------------- | -------- | ---------------------------------------------------------------------- |
+| `getState`     | function | Returns the current [FocusState](#focusstate)                          |
+| `createNodes`  | function | Creates one or more focus nodes in the tree.                           |
+| `deleteNode`   | function | Deletes a focus node from the tree.                                    |
+| `setFocus`     | function | Imperatively assign focus to a particular focus node.                  |
+| `updateNode`   | function | Update an existing node. Used to, for example, set a node as disabled. |
+| `handleArrow`  | function | Call this to navigate based on an arrow key press.                     |
+| `handleSelect` | function | Call this to cause the focus tree to respond to a "select" key press.  |
+
+### `FocusState`
+
+> Heads up! The `FocusState` API is considered to be internal. We strongly discourage you from accessing this object directly in your application.
+
+An object representing the state of the focus in the app.
+
+| Property                 | Type             | Description                                                          |
+| ------------------------ | ---------------- | -------------------------------------------------------------------- |
+| `focusedNodeId`          | string           | The ID of the leaf node in the focus hierarchy.                      |
+| `focusHierarchy`         | Array            | An array of node IDs representing the focus hierarchy.               |
+| `activeNodeId`           | string \| `null` | The ID of the active node, if there is one.                          |
+| `nodes`                  | Object           | A mapping of all of the focus nodes that exist.                      |
+| `_updatingFocusIsLocked` | boolean          | A boolean used internally for managing the creation of nested nodes. |
 
 ## Limitations
 
