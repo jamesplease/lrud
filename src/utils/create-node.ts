@@ -19,6 +19,7 @@ export default function createNodeDefinitionHierarchy({
   nodeDefinitionHierarchy,
   nodeHierarchy,
 }: createNodeDefinitionHierarchyState): createNodeDefinitionHierarchyReturn {
+  console.log('creating with', nodeDefinitionHierarchy);
   const nodeUpdates: NodeMap = {};
 
   let onMountAssignFocusToReturn: Id | null = null;
@@ -55,34 +56,36 @@ export default function createNodeDefinitionHierarchy({
       }
     }
 
-    if (nodeDefinition.defaultFocusColumn || nodeDefinition.defaultFocusRow) {
+    if (nodeDefinition.navigationStyle === 'grid' && (nodeDefinition.defaultFocusColumn || nodeDefinition.defaultFocusRow)) {
       if (isLastNode) {
         shouldLockFocus = false;
-        const gridNode = node;
+        const gridNode = focusState.nodes[node.focusId];
 
-        const rowIndex = getIndex(
-          gridNode.children.length,
-          nodeDefinition.defaultFocusRow ?? 0, 
-          gridNode.wrapGridRows
-        );
+        if (gridNode) {
+          const rowIndex = getIndex(
+            gridNode.children.length,
+            nodeDefinition.defaultFocusRow ?? 0, 
+            gridNode.wrapGridRows
+          );
+          
+          const newRowNodeId = gridNode.children[rowIndex];
+          const rowNode = focusState.nodes[newRowNodeId];
+  
+            // TODO: fix this
+          const rowNodeChildrenLength = rowNode?.children?.length ?? 0;
+  
+          const columnIndex = getIndex(
+            rowNodeChildrenLength,
+            nodeDefinition.defaultFocusColumn ?? 0,
+            gridNode.wrapGridColumns
+          )
         
-        const newRowNodeId = gridNode.children[rowIndex];
-        const rowNode = focusState.nodes[newRowNodeId];
-
-          // TODO: fix this
-        const rowNodeChildrenLength = rowNode?.children?.length ?? 0;
-
-        const columnIndex = getIndex(
-          rowNodeChildrenLength,
-          nodeDefinition.defaultFocusColumn ?? 0,
-          gridNode.wrapGridColumns
-        )
-      
-        const itemIndex = Math.min(columnIndex, Math.max(rowNodeChildrenLength - 1, 0));
-        const focusedItemId = rowNode?.children[itemIndex];
-        
-        if (focusedItemId) {
-          onMountAssignFocusToReturn = focusedItemId;
+          const itemIndex = Math.min(columnIndex, Math.max(rowNodeChildrenLength - 1, 0));
+          const focusedItemId = rowNode?.children[itemIndex];
+          
+          if (focusedItemId) {
+            onMountAssignFocusToReturn = focusedItemId;
+          }
         }
       } else {
         shouldLockFocus = true;

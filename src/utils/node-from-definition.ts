@@ -43,6 +43,9 @@ export default function nodeFromDefinition({
   const navigationStyle = nodeDefinition.navigationStyle ?? 'first-child';
   const isGridContainer = navigationStyle === 'grid';
 
+  const defaultFocusColumnValue = defaultFocusColumn ?? 0;
+  const defaultFocusRowValue = defaultFocusRow ?? 0;
+
   const node: FocusNode = {
     focusId: nodeDefinition.focusId,
     isRoot: false,
@@ -65,8 +68,8 @@ export default function nodeFromDefinition({
     navigationStyle,
     nodeNavigationItem,
 
-    defaultFocusColumn: defaultFocusColumn ?? 0,
-    defaultFocusRow: defaultFocusRow ?? 0,
+    defaultFocusColumn: defaultFocusColumnValue,
+    defaultFocusRow: defaultFocusRowValue,
 
     restoreTrapFocusHierarchy: Boolean(
       nodeDefinition.restoreTrapFocusHierarchy ?? true
@@ -74,8 +77,8 @@ export default function nodeFromDefinition({
     children: [],
     focusedChildIndex: null,
     prevFocusedChildIndex: null,
-    _gridColumnIndex: isGridContainer ? 0 : null,
-    _gridRowIndex: isGridContainer ? 0 : null,
+    _gridColumnIndex: isGridContainer ? defaultFocusColumnValue : null,
+    _gridRowIndex: isGridContainer ? defaultFocusRowValue : null,
     wrapGridColumns: Boolean(nodeDefinition.wrapGridColumns),
     wrapGridRows: Boolean(nodeDefinition.wrapGridRows),
     _focusTrapPreviousHierarchy: [],
