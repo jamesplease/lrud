@@ -311,7 +311,3 @@ An object representing the state of the focus in the app.
 - [bbc/lrud](https://github.com/bbc/lrud)
 - [react-tv](https://github.com/raphamorim/react-tv)
 - [@xdproto/focus](https://github.com/jamesplease/focus) _(the predecessor of this library)_
-
-```
-
-```
