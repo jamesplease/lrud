@@ -3,7 +3,7 @@ import FocusContext from '../focus-context';
 import warning from '../utils/warning';
 import { FocusStore } from '../types';
 
-export default function useFocusStore(): FocusStore {
+export default function useFocusStoreDangerously(): FocusStore {
   const contextValue = useContext(FocusContext.Context);
 
   if (!contextValue) {

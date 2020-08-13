@@ -42,7 +42,7 @@ This library has the following peer dependencies:
   - [useSetFocus()](#usesetfocus)
   - [useNodeEvents()](#usenodeevents-focusid-events-)
   - [useFocusHierarchy()](#usefocushierarchy)
-  - [useFocusStore()](#usefocusstore)
+  - [useFocusStoreDangerously()](#usefocusstoredangerously)
 - [**Interfaces**](#interfaces)
   - [FocusNode](#focusnode)
   - [LRUDEvent](#lrudevent)
@@ -272,7 +272,7 @@ export default function MyComponent() {
 }
 ```
 
-### `useFocusStore()`
+### `useFocusStoreDangerously()`
 
 > ⚠️ Heads up! The FocusStore is an internal API. We strongly discourage you from accessing properties or calling
 > methods on the FocusStore directly!
@@ -281,10 +281,10 @@ A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the
 [FocusStore](#focusstore). Typically, you should not need to use this hook.
 
 ```js
-import { useFocusStore } from '@please/lrud';
+import { useFocusStoreDangerously } from '@please/lrud';
 
 export default function MyComponent() {
-  const focusStore = useFocusStore();
+  const focusStore = useFocusStoreDangerously();
 
   useEffect(() => {
     console.log('the current focus state:', focusStore.getState());
