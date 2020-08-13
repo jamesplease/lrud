@@ -1,5 +1,6 @@
 # lrud
 
+[![Travis build status](http://img.shields.io/travis/jamesplease/lrud.svg?style=flat)](https://travis-ci.com/github/jamesplease/lrud)
 [![npm version](https://img.shields.io/npm/v/@please/lrud.svg)](https://www.npmjs.com/package/@please/lrud)
 
 A React library for managing focus in LRUD applications.
