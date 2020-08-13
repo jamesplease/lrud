@@ -127,7 +127,41 @@ export default function App() {
 
 A [Component](https://reactjs.org/docs/react-component.html) that represents a focusable node in your application.
 
-All props are optional.
+All props are optional. Example usage appears beneath the props table.
+
+| Prop                        | Type                | Default value    | Description                                                                                                                                       |
+| --------------------------- | ------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `propsFromNode`             | function            |                  | A function you can supply to compute additional props to apply to the element. The function is passed one argument, the [focus node](#focusnode). |
+| `className`                 | string              |                  | A class name to apply to this element.                                                                                                            |
+| `focusedClass`              | string              | "isFocused"      | A class name that is applied when this element is focused.                                                                                        |
+| `focusedLeafClass`          | string              | "isFocusedExact" | A class name that is applied this element is exactly focused.                                                                                     |
+| `activeClass`               | string              | "isActive"       | A class name that is applied this element is active.                                                                                              |
+| `disabledClass`             | string              | "focusDisabled"  | A class name that is applied this element is disabled.                                                                                            |
+| `elementType`               | string\|elementType | 'div'            | The React element type to render. For instance, `"img"` or [`motion.div`](https://www.framer.com/api/motion/component/).                          |
+| `focusId`                   | string              | `{unique_id}`    | A unique identifier for this node. Specify this yourself for debugging purposes, or when you will need to manually set focus to the node.         |
+| `orientation`               | string              | 'horizontal'     | Whether the children of this node are arranged horizontally or vertically. Pass `"vertical"` for vertical lists.                                  |
+| `wrapping`                  | boolean             | 'false'          | Set to `true` for the navigation to wrap when the user reaches the start or end of the children list.                                             |
+| `disabled`                  | boolean             | 'false'          | This node will not receive focus when `true`.                                                                                                     |
+| `isGrid`                    | boolean             | 'false'          | Pass `true` to make this a grid.                                                                                                                  |
+| `isTrap`                    | boolean             | 'false'          | Pass `true` to make this a focus trap.                                                                                                            |
+| `canReceiveFocusFromArrows` | boolean             | 'true'           | Pass `false` and this node will not receive focus from arrows. Commonly paired with `isTrap`.                                                     |
+| `restoreTrapFocusHierarchy` | boolean             | 'true'           | Pass `false` and, if this node is a trap, it will not restore their previous focus hierarchy when becoming focused again.                         |
+| `onMountAssignFocusTo`      | string              |                  | A focus ID of a nested child to default focus to when this node mounts.                                                                           |
+| `isExiting`                 | boolean             |                  | Pass `true` to signal that this node is animating out. Useful for certain kinds of exit transitions.                                              |
+| `onFocus`                   | function            |                  | A function that is called when the node receives focus.                                                                                           |
+| `onBlur`                    | function            |                  | A function that is called when the node loses focus.                                                                                              |
+| `onKey`                     | function            |                  | A function that is called when the user presses any TV remote key while this element has focus.                                                   |
+| `onArrow`                   | function            |                  | A function that is called when the user presses a directional button.                                                                             |
+| `onLeft`                    | function            |                  | A function that is called when the user presses the left button.                                                                                  |
+| `onUp`                      | function            |                  | A function that is called when the user presses the up button.                                                                                    |
+| `onDown`                    | function            |                  | A function that is called when the user presses the down button.                                                                                  |
+| `onRight`                   | function            |                  | A function that is called when the user presses the right button.                                                                                 |
+| `onSelect`                  | function            |                  | A function that is called when the user pressed the select button.                                                                                |
+| `onBack`                    | function            |                  | A function that is called when the user presses the back button.                                                                                  |
+| `onMove`                    | function            |                  | A function that is called when the focused child index of this node changes. Only called for nodes with children that are _not_ grids.            |
+| `onGridMove`                | function            |                  | A function that is called when the focused child index of this node changes. Only called for grids.                                               |
+| `children`                  | React Node(s)       |                  | Children of the Focus Node.                                                                                                                       |
+| `...rest`                   | any                 |                  | All other props are applied to the underlying DOM node.                                                                                           |
 
 ```jsx
 import { FocusNode } from '@please/lrud';
