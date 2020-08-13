@@ -150,6 +150,8 @@ All props are optional. Example usage appears beneath the props table.
 | `canReceiveFocusFromArrows` | boolean             | 'true'           | Pass `false` and this node will not receive focus from arrows. Commonly paired with `isTrap`.                                                          |
 | `restoreTrapFocusHierarchy` | boolean             | 'true'           | Pass `false` and, if this node is a trap, it will not restore their previous focus hierarchy when becoming focused again.                              |
 | `onMountAssignFocusTo`      | string              |                  | A focus ID of a nested child to default focus to when this node mounts.                                                                                |
+| `defaultFocusColumn`        | number              | `0`              | The column index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                           |
+| `defaultFocusRow`           | number              | `0`              | The row index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                              |
 | `isExiting`                 | boolean             |                  | Pass `true` to signal that this node is animating out. Useful for certain kinds of exit transitions.                                                   |
 | `onFocused`                 | function            |                  | A function that is called when the node receives focus. Passed one argument, an [LRUDEvent](#lrudevent).                                               |
 | `onBlurred`                 | function            |                  | A function that is called when the node loses focus. Passed one argument, an [LRUDEvent](#lrudevent).                                                  |
@@ -325,6 +327,8 @@ A focus node. Each `<FocusNode/>` React component creates one of these.
 | `navigationStyle`             | string           | One of `'first-child'` or `'grid'`                                                                                                |
 | `nodeNavigationItem`          | string           | How this node is used in the navigation algorithm. Possible values are 'default'`, 'grid-container'`, `'grid-row'`, `'grid-item'` |
 | `canReceiveFocusFromArrows`   | boolean          | Set to `false` and this node will not receive focus due to arrow navigation.                                                      |
+| `defaultFocusColumn`          | number           | The column index that should receive focus when focus is assigned to this focus node. Applies to grids only.                      |
+| `defaultFocusRow`             | number           | The row index that should receive focus when focus is assigned to this focus node. Applies to grids only.                         |
 | `_gridColumnIndex`            | number \| `null` | The focused column index of a grid.                                                                                               |
 | `_gridRowIndex`               | number \| `null` | The focused row index of a grid.                                                                                                  |
 | `_focusTrapPreviousHierarchy` | Array\<string\>  | The previous focus hierarchy of a trap.                                                                                           |
