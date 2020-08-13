@@ -54,6 +54,8 @@ export function FocusNode(
     className = '',
     children,
     wrapping = false,
+    wrapGridColumns,
+    wrapGridRows,
     orientation,
     isGrid = false,
     isTrap = false,
@@ -118,11 +120,18 @@ export function FocusNode(
 
   const contextValue = useContext(FocusContext.Context);
   const [staticDefinitions] = useState(() => {
+    const wrapGridRowsValue =
+      typeof wrapGridRows === 'boolean' ? wrapGridRows : wrapping;
+    const wrapGridColumnsValue =
+      typeof wrapGridColumns === 'boolean' ? wrapGridColumns : wrapping;
+
     const nodeDefinition: NodeDefinition = {
       focusId: nodeId,
       orientation: orientation || defaultOrientation,
       wrapping: Boolean(wrapping),
       trap: Boolean(isTrap),
+      wrapGridColumns: wrapGridColumnsValue,
+      wrapGridRows: wrapGridRowsValue,
       canReceiveFocusFromArrows,
       restoreTrapFocusHierarchy:
         restoreTrapFocusHierarchy !== undefined

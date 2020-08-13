@@ -179,6 +179,8 @@ export interface FocusNodeProps extends FocusNodeEvents {
   className?: string;
   children?: React.ReactNode;
   wrapping?: boolean;
+  wrapGridRows?: boolean;
+  wrapGridColumns?: boolean;
   orientation?: Orientation;
   isGrid?: boolean;
   isTrap?: boolean;
