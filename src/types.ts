@@ -35,14 +35,14 @@ export interface FocusNodeEvents {
   onRight?: (e: LRUDEvent) => void;
   onUp?: (e: LRUDEvent) => void;
   onDown?: (e: LRUDEvent) => void;
-  onSelect?: (e: LRUDEvent) => void;
+  onSelected?: (e: LRUDEvent) => void;
   onBack?: (e: LRUDEvent) => void;
 
   onMove?: (e: any) => void;
   onGridMove?: (e: any) => void;
 
-  onFocus?: (e: any) => void;
-  onBlur?: (e: any) => void;
+  onFocused?: (e: any) => void;
+  onBlurred?: (e: any) => void;
 }
 
 export interface BaseNode extends FocusNodeEvents {

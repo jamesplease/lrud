@@ -1,6 +1,6 @@
 import { Id, NodeMap } from '../types';
 
-type CallbackName = 'onBlur' | 'onFocus';
+type CallbackName = 'onBlurred' | 'onFocused';
 
 export default function bubbleEvent({
   nodeIds,
@@ -13,7 +13,7 @@ export default function bubbleEvent({
   callbackName: CallbackName;
   arg: any;
 }) {
-  [...nodeIds].reverse().forEach((targetNodeId) => {
+  [...nodeIds].reverse().forEach(targetNodeId => {
     const node = nodes[targetNodeId];
 
     if (!node) {

@@ -25,7 +25,7 @@ export default function emitFocusStateEvents({
   bubbleEvent({
     nodeIds: blur,
     nodes: focusState.nodes,
-    callbackName: 'onBlur',
+    callbackName: 'onBlurred',
     arg: {
       blurNode,
       focusNode,
@@ -35,7 +35,7 @@ export default function emitFocusStateEvents({
   bubbleEvent({
     nodeIds: focus,
     nodes: focusState.nodes,
-    callbackName: 'onFocus',
+    callbackName: 'onFocused',
     arg: {
       blurNode,
       focusNode,

@@ -14,11 +14,11 @@ export default function nodeFromDefinition({
     onRight,
     onUp,
     onDown,
-    onSelect,
+    onSelected,
     onBack,
 
-    onFocus,
-    onBlur,
+    onFocused,
+    onBlurred,
 
     isExiting = false,
 
@@ -80,11 +80,11 @@ export default function nodeFromDefinition({
     onRight,
     onUp,
     onDown,
-    onSelect,
+    onSelected,
     onBack,
 
-    onFocus,
-    onBlur,
+    onFocused,
+    onBlurred,
 
     onMove,
     onGridMove,

@@ -79,14 +79,14 @@ export function FocusNode(
     onRight,
     onUp,
     onDown,
-    onSelect,
+    onSelected,
     onBack,
 
     onMove,
     onGridMove,
 
-    onFocus,
-    onBlur,
+    onFocused,
+    onBlurred,
 
     ...otherProps
   }: FocusNodeProps,
@@ -136,7 +136,7 @@ export function FocusNode(
       onRight,
       onUp,
       onDown,
-      onSelect,
+      onSelected,
       onBack,
 
       onMove,
@@ -147,8 +147,8 @@ export function FocusNode(
 
       isExiting,
 
-      onFocus,
-      onBlur,
+      onFocused,
+      onBlurred,
     };
 
     if (process.env.NODE_ENV !== 'production') {
