@@ -27,7 +27,7 @@ export default function getDefaultNavTarget(
       const unfilteredChildren = parentNode.children || [];
 
       // We only consider children nodes that are enabled
-      const parentsChildren = unfilteredChildren.filter((nodeId) => {
+      const parentsChildren = unfilteredChildren.filter(nodeId => {
         const node = focusState.nodes[nodeId];
 
         if (node && (node.disabled || node.isExiting)) {
@@ -37,7 +37,7 @@ export default function getDefaultNavTarget(
         return true;
       });
 
-      const index = parentsChildren.indexOf(node.id);
+      const index = parentsChildren.indexOf(node.focusId);
 
       // This is true when pressing the "forward" key (right or down) and focus is
       // on the *last* item in the list of children. For example:

@@ -46,7 +46,7 @@ export interface FocusNodeEvents {
 }
 
 export interface BaseNode extends FocusNodeEvents {
-  id: Id;
+  focusId: Id;
 
   children: Id[];
   focusedChildIndex: null | number;
@@ -125,7 +125,7 @@ export interface FocusState {
 }
 
 export interface NodeDefinition extends FocusNodeEvents {
-  id: Id;
+  focusId: Id;
   wrapping?: boolean;
   orientation?: Orientation;
   trap?: boolean;

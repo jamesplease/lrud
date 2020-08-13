@@ -28,7 +28,7 @@ export default function createNodeDefinitionHierarchy({
     const node = nodeHierarchy[i];
 
     const nodeDefinition = nodeDefinitionHierarchy[i];
-    const currentNode = focusState.nodes[nodeDefinition.id];
+    const currentNode = focusState.nodes[nodeDefinition.focusId];
     const isCreatingNewNode = !currentNode;
 
     if (nodeDefinition.onMountAssignFocusTo !== undefined) {
@@ -74,7 +74,7 @@ export default function createNodeDefinitionHierarchy({
 
     const parentLoopIndex = i - 1;
     const parentDefinition = nodeDefinitionHierarchy[parentLoopIndex];
-    const parentId = parentDefinition.id;
+    const parentId = parentDefinition.focusId;
 
     const parentNode = ((focusState.nodes[parentId] ||
       nodeUpdates[parentId]) as unknown) as Node;
@@ -82,15 +82,15 @@ export default function createNodeDefinitionHierarchy({
     const parentChildren = parentNode.children;
 
     const newParentChildren = Array.isArray(parentChildren)
-      ? parentChildren.concat(nodeDefinition.id)
-      : [nodeDefinition.id];
+      ? parentChildren.concat(nodeDefinition.focusId)
+      : [nodeDefinition.focusId];
 
     nodeUpdates[parentId] = {
       ...parentNode,
       children: newParentChildren,
     };
 
-    nodeUpdates[nodeDefinition.id] = node;
+    nodeUpdates[nodeDefinition.focusId] = node;
   }
 
   return {

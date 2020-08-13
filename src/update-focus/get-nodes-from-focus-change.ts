@@ -18,22 +18,22 @@ function getParentGrid(nodes: NodeMap, node: Node): FocusNode {
   const parentId = node.parentId as Id;
   const rowNode = nodes[parentId] as FocusNode;
 
-  const rowChildren = rowNode.children.filter((nodeId) => {
+  const rowChildren = rowNode.children.filter(nodeId => {
     const node = nodes[nodeId];
     return node && !node.disabled && !node.isExiting;
   });
 
-  const columnIndex = rowChildren.indexOf(node.id);
+  const columnIndex = rowChildren.indexOf(node.focusId);
 
   const gridNodeId = rowNode.parentId as Id;
   const gridNode = nodes[gridNodeId] as FocusNode;
 
-  const gridChildren = gridNode.children.filter((nodeId) => {
+  const gridChildren = gridNode.children.filter(nodeId => {
     const node = nodes[nodeId];
     return node && !node.disabled && !node.isExiting;
   });
 
-  const rowIndex = gridChildren.indexOf(rowNode.id);
+  const rowIndex = gridChildren.indexOf(rowNode.focusId);
 
   return {
     ...gridNode,
@@ -148,7 +148,7 @@ export default function getNodesFromFocusChange({
         result[nodeId] as Node
       );
 
-      result[updatedGridNode.id] = updatedGridNode;
+      result[updatedGridNode.focusId] = updatedGridNode;
     }
   }
 

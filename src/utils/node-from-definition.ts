@@ -26,7 +26,7 @@ export default function nodeFromDefinition({
     onGridMove,
   } = nodeDefinition;
 
-  const parentId = parentNode.id;
+  const parentId = parentNode.focusId;
   let nodeNavigationItem: NodeNavigationItem = 'default';
 
   if (nodeDefinition.navigationStyle === 'grid') {
@@ -41,7 +41,7 @@ export default function nodeFromDefinition({
   const isGridContainer = navigationStyle === 'grid';
 
   const node: FocusNode = {
-    id: nodeDefinition.id,
+    focusId: nodeDefinition.focusId,
     isRoot: false,
     parentId,
 

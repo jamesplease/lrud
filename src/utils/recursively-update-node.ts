@@ -7,7 +7,7 @@ export default function recursivelyUpdateChildren(
 ): NodeMap {
   let newNodes: NodeMap = {};
 
-  children.forEach((childId) => {
+  children.forEach(childId => {
     const childNode = nodes[childId];
 
     if (!childNode) {
@@ -16,7 +16,7 @@ export default function recursivelyUpdateChildren(
 
     const childChildren = childNode ? childNode.children : null;
 
-    newNodes[childNode.id] = {
+    newNodes[childNode.focusId] = {
       ...childNode,
       ...update,
     };

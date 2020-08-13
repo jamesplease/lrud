@@ -38,7 +38,7 @@ function FocusProviderWrapper({
       store,
       focusDefinitionHierarchy: [
         {
-          id: 'root',
+          focusId: 'root',
         },
       ],
       focusNodesHierarchy: [store.getState().nodes.root as RootFocusNode],

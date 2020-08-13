@@ -265,9 +265,9 @@ export default function MyComponent() {
 
   console.log(focusHierarchy);
   // => [
-  //   { id: 'root', ... },
-  //   { id: 'homePage', ... },
-  //   { id: 'mainNav', ... },
+  //   { focusId: 'root', ... },
+  //   { focusId: 'homePage', ... },
+  //   { focusId: 'mainNav', ... },
   // ]
 }
 ```
@@ -302,7 +302,7 @@ A focus node. Each `<FocusNode/>` React component creates one of these.
 
 | Property                      | Type             | Description                                                                                                                       |
 | ----------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                          | string           | A unique identifier for this node.                                                                                                |
+| `focusId`                     | string           | A unique identifier for this node.                                                                                                |
 | `children`                    | Array\<string\>  | An array of focus IDs representing the children of this node.                                                                     |
 | `focusedChildIndex`           | number\|null     | The index of the focused child of this node, if there is one.                                                                     |
 | `prevFocusedChildIndex`       | number\|null     | The index of the previously-focused child of this node, if there was one.                                                         |

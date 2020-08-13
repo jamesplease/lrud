@@ -119,7 +119,7 @@ export function FocusNode(
   const contextValue = useContext(FocusContext.Context);
   const [staticDefinitions] = useState(() => {
     const nodeDefinition: NodeDefinition = {
-      id: nodeId,
+      focusId: nodeId,
       orientation: orientation || defaultOrientation,
       wrapping: Boolean(wrapping),
       trap: Boolean(isTrap),

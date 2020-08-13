@@ -26,11 +26,11 @@ export default function navigateFromTargetNode({
   const wrapping = parentNode.wrapping;
   const preferEnd = direction === 'forward' ? false : true;
 
-  const targetNodeId = targetNode.id;
+  const targetNodeId = targetNode.focusId;
 
   const allParentsChildren = parentNode.children || [];
 
-  const parentsChildren = allParentsChildren.filter((nodeId) => {
+  const parentsChildren = allParentsChildren.filter(nodeId => {
     const node = focusState.nodes[nodeId];
 
     if (!node) {

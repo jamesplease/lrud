@@ -71,7 +71,7 @@ export default function gridNavigation({
   });
 
   // TODO: maybe add a check here to verify this is true?
-  const updatedGridNode = updatedFocusTree.nodes[gridNode.id] as Node;
+  const updatedGridNode = updatedFocusTree.nodes[gridNode.focusId] as Node;
 
   const rowChanged = currentRowIndex !== newRowIndex;
   const columnChanged = currentColumnIndex !== newColumnIndex;
@@ -102,7 +102,7 @@ export default function gridNavigation({
     ...updatedFocusTree,
     nodes: {
       ...updatedFocusTree.nodes,
-      [gridNode.id]: {
+      [gridNode.focusId]: {
         ...updatedGridNode,
         _gridColumnIndex: newColumnIndex,
         _gridRowIndex: newRowIndex,
