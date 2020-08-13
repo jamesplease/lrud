@@ -111,7 +111,7 @@ export default function bubbleKey(focusTree: FocusStore, key: LRUDKey) {
     }
 
     if (isSelect) {
-      executeFunction(node, 'onSelect', {
+      executeFunction(node, 'onSelected', {
         isArrow,
         key,
         stopPropagation,

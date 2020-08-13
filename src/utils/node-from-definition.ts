@@ -20,6 +20,9 @@ export default function nodeFromDefinition({
     onFocused,
     onBlurred,
 
+    defaultFocusColumn,
+    defaultFocusRow,
+
     isExiting = false,
 
     onMove,
@@ -61,6 +64,9 @@ export default function nodeFromDefinition({
     ),
     navigationStyle,
     nodeNavigationItem,
+
+    defaultFocusColumn: defaultFocusColumn ?? 0,
+    defaultFocusRow: defaultFocusRow ?? 0,
 
     restoreTrapFocusHierarchy: Boolean(
       nodeDefinition.restoreTrapFocusHierarchy ?? true

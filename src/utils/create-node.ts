@@ -1,5 +1,6 @@
 import warning from '../utils/warning';
 import { NodeDefinition, FocusState, NodeMap, Id, Node } from '../types';
+import getIndex from './get-index';
 
 interface createNodeDefinitionHierarchyState {
   focusState: FocusState;
@@ -26,6 +27,7 @@ export default function createNodeDefinitionHierarchy({
 
   for (let i = 0; i < nodeDefinitionHierarchy.length; i++) {
     const node = nodeHierarchy[i];
+    const isLastNode = i === nodeDefinitionHierarchy.length - 1;
 
     const nodeDefinition = nodeDefinitionHierarchy[i];
     const currentNode = focusState.nodes[nodeDefinition.focusId];
@@ -44,13 +46,47 @@ export default function createNodeDefinitionHierarchy({
       onMountAssignFocusTo = nodeDefinition.onMountAssignFocusTo;
 
       // We only actually assign the focus when this thing happens
-      const isLastNode = i === nodeDefinitionHierarchy.length - 1;
       if (isLastNode) {
         // We disable the focus lock whenever we "apply" an `onMountAssignFocusTo`
         shouldLockFocus = false;
         onMountAssignFocusToReturn = nodeDefinition.onMountAssignFocusTo;
       } else {
         shouldLockFocus = true;
+      }
+    }
+
+    if (nodeDefinition.defaultFocusColumn || nodeDefinition.defaultFocusRow) {
+      if (isLastNode) {
+        shouldLockFocus = false;
+        const gridNode = node;
+
+        const rowIndex = getIndex(
+          gridNode.children.length,
+          nodeDefinition.defaultFocusRow ?? 0, 
+          gridNode.wrapGridRows
+        );
+        
+        const newRowNodeId = gridNode.children[rowIndex];
+        const rowNode = focusState.nodes[newRowNodeId];
+
+          // TODO: fix this
+        const rowNodeChildrenLength = rowNode?.children?.length ?? 0;
+
+        const columnIndex = getIndex(
+          rowNodeChildrenLength,
+          nodeDefinition.defaultFocusColumn ?? 0,
+          gridNode.wrapGridColumns
+        )
+      
+        const itemIndex = Math.min(columnIndex, Math.max(rowNodeChildrenLength - 1, 0));
+        const focusedItemId = rowNode?.children[itemIndex];
+        
+        if (focusedItemId) {
+          onMountAssignFocusToReturn = focusedItemId;
+        }
+      } else {
+        shouldLockFocus = true;
+        // TODO: warn. This is likely a bug.
       }
     }
 

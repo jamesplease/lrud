@@ -62,6 +62,9 @@ export function FocusNode(
     canReceiveFocusFromArrows = true,
     restoreTrapFocusHierarchy,
 
+    defaultFocusColumn,
+    defaultFocusRow,
+
     disabled,
 
     onMountAssignFocusTo,
@@ -138,6 +141,9 @@ export function FocusNode(
           ? restoreTrapFocusHierarchy
           : defaultRestoreFocusTrap,
       navigationStyle: isGrid ? 'grid' : 'first-child',
+
+      defaultFocusColumn: defaultFocusColumn ?? 0,
+      defaultFocusRow: defaultFocusRow ?? 0,
 
       onKey,
       onArrow,

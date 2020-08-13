@@ -174,7 +174,7 @@ export default function Profile() {
     <FocusNode
       elementType="button"
       className="profileBtn"
-      onSelect={({ node }) => {
+      onSelected={({ node }) => {
         console.log('The user just selected this profile', node);
       }}>
       Profile

@@ -44,6 +44,8 @@ export default function createFocusStore({
         isFocusedLeaf: true,
         trap: false,
         disabled: false,
+        defaultFocusColumn: 0,
+        defaultFocusRow: 0,
         orientation,
         wrapping,
         navigationStyle: 'first-child',
@@ -121,14 +123,14 @@ export default function createFocusStore({
           _updatingFocusIsLocked: true,
         };
       } else {
-        const nodeHierarchyIds = nodeHierarchy.map(node => node.focusId);
+        const nodeHierarchyIds = nodeHierarchy.map((node) => node.focusId);
 
         const focusedItemIndex = nodeHierarchyIds.indexOf(
           currentState.focusedNodeId
         );
 
         const assigningFocusOnMount = nodeDefinitionHierarchy.findIndex(
-          v => v.onMountAssignFocusTo
+          (v) => v.onMountAssignFocusTo
         );
 
         let updatedFocusState = possibleNewState;
@@ -280,7 +282,7 @@ export default function createFocusStore({
       );
 
       const nodeWasFocused = currentState.focusHierarchy.find(
-        v => v === nodeId
+        (v) => v === nodeId
       );
 
       let updatedState = {

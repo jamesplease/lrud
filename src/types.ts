@@ -67,6 +67,9 @@ export interface RootFocusNode extends BaseNode {
   disabled: boolean;
   trap: boolean;
 
+  defaultFocusColumn: number;
+  defaultFocusRow: number;
+
   restoreTrapFocusHierarchy: boolean;
 
   navigationStyle: NavigationStyle;
@@ -99,6 +102,9 @@ export interface FocusNode extends BaseNode {
   navigationStyle: NavigationStyle;
   nodeNavigationItem: NodeNavigationItem;
   canReceiveFocusFromArrows: boolean;
+
+  defaultFocusColumn: number;
+  defaultFocusRow: number;
 
   restoreTrapFocusHierarchy: boolean;
 
@@ -137,6 +143,9 @@ export interface NodeDefinition extends FocusNodeEvents {
   wrapGridColumns?: boolean;
 
   isExiting?: boolean;
+
+  defaultFocusColumn?: number;
+  defaultFocusRow?: number;
 
   restoreTrapFocusHierarchy?: boolean;
 
@@ -190,6 +199,9 @@ export interface FocusNodeProps extends FocusNodeEvents {
   isExiting?: boolean;
   onMountAssignFocusTo?: Id;
   disabled?: boolean;
+
+  defaultFocusColumn?: number;
+  defaultFocusRow?: number;
 
   focusedClass?: string;
   focusedLeafClass?: string;

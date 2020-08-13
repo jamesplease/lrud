@@ -1,5 +1,5 @@
 import { FocusState, Node, Orientation, Direction, Arrow } from '../../types';
-import getIndex from '../../utils/get-index';
+import getGridFocusData from '../../utils/get-grid-focus-data';
 import updateFocus from '../../update-focus/update-focus';
 
 interface GridNavigationOptions {
@@ -20,53 +20,30 @@ export default function gridNavigation({
   direction,
   arrow,
 }: GridNavigationOptions): FocusState | null {
-  const isVertical = orientation === 'vertical';
-  const isForward = direction === 'forward';
+  const gridFocusData = getGridFocusData({
+    focusState,
+    orientation,
+    direction,
+    gridNode,
+    rowNode,
+  });
 
-  const currentRowIndex = gridNode._gridRowIndex ?? 0;
-  const currentColumnIndex = gridNode._gridColumnIndex ?? 0;
-
-  const actualRowIndex = Math.min(
-    currentRowIndex,
-    gridNode.children.length - 1
-  );
-
-  const actualColumnIndex = Math.min(
-    currentColumnIndex,
-    rowNode.children.length - 1
-  );
-
-  const distance = isForward ? 1 : -1;
-  const newRowIndex = isVertical
-    ? getIndex(
-        gridNode.children.length,
-        actualRowIndex + distance,
-        gridNode.wrapGridRows
-      )
-    : actualRowIndex;
-  const newColumnIndex = !isVertical
-    ? getIndex(
-        rowNode.children.length,
-        actualColumnIndex + distance,
-        gridNode.wrapGridColumns
-      )
-    : currentColumnIndex;
-
-  const newRowNodeId = gridNode.children[newRowIndex];
-
-  const newRowNode = focusState.nodes[newRowNodeId];
-
-  if (!newRowNode) {
+  if (!gridFocusData) {
     return null;
   }
 
-  const itemIndex = Math.min(newColumnIndex, newRowNode.children.length - 1);
-  const newItemNodeId = newRowNode.children[itemIndex];
+  const {
+    targetFocusId,
+    currentRowIndex,
+    currentColumnIndex,
+    newRowIndex,
+    newColumnIndex,
+  } = gridFocusData;
 
   const updatedFocusTree = updateFocus({
     focusState,
     orientation,
-    assignFocusTo: newItemNodeId,
+    assignFocusTo: targetFocusId,
     preferEnd: false,
   });
 
