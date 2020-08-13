@@ -2,7 +2,15 @@
 
 [![npm version](https://img.shields.io/npm/v/@please/lrud.svg)](https://www.npmjs.com/package/@please/lrud)
 
-A React library for managing focus in TV apps.
+A React library for managing focus in LRUD applications.
+
+## Motivation
+
+The native focus system that ships with browsers is one-dimensional: users may only move forward and back. Some applications
+(typically those that use remote controls or video game controllers) require a two dimensional focus system.
+
+Because of this, it is up to the application to manage its own focus state. That's where this library comes in: it makes working
+with two dimensional focus seamless.
 
 ## Installation
 
@@ -98,10 +106,10 @@ Serves as the root node of a new focus hierarchy. There should only ever be one 
 
 All props are optional.
 
-| Prop          | Type    | Default value | Description                                                                                             |
-| ------------- | ------- | ------------- | ------------------------------------------------------------------------------------------------------- |
-| `orientation` | string  | 'horizontal'  | Whether the children of the root node are arranged horizontally or vertically.                          |
-| `wrapping`    | boolean | 'false'       | Set to `true` for the navigation to wrap when the user reaches the start or end of the root's children. |
+| Prop          | Type    | Default value  | Description                                                                                             |
+| ------------- | ------- | -------------- | ------------------------------------------------------------------------------------------------------- |
+| `orientation` | string  | `'horizontal'` | Whether the children of the root node are arranged horizontally or vertically.                          |
+| `wrapping`    | boolean | `false`        | Set to `true` for the navigation to wrap when the user reaches the start or end of the root's children. |
 
 ```jsx
 import { FocusRoot } from '@please/lrud';
@@ -197,18 +205,18 @@ export default function MyComponent() {
 }
 ```
 
-Each callback receives a single argument, the focus node.
+Each callback receives a single argument, the [focus node](#focusnode).
 
 The available event keys are:
 
-| Event key  | Description                                     |
-| ---------- | ----------------------------------------------- |
-| `focus`    | Called when the focus node receives focus.      |
-| `blur`     | Called when the focus node loses focus.         |
-| `active`   | Called when the focus node becomes active.      |
-| `inactive` | Called when the focus node is no longer active. |
-| `disabled` | Called when the focus node is set as disabled.  |
-| `enabled`  | Called when the focus node is enabled.          |
+| Event key  | Called when                         |
+| ---------- | ----------------------------------- |
+| `focus`    | the focus node receives focus.      |
+| `blur`     | the focus node loses focus.         |
+| `active`   | the focus node becomes active.      |
+| `inactive` | the focus node is no longer active. |
+| `disabled` | the focus node is set as disabled.  |
+| `enabled`  | the focus node is enabled.          |
 
 ### `useFocusHierarchy()`
 
@@ -223,17 +231,20 @@ export default function MyComponent() {
 
   console.log(focusHierarchy);
   // => [
-  //   { nodeId: 'root', ... },
-  //   { nodeId: 'homePage', ... },
-  //   { nodeId: 'mainNav', ... },
+  //   { id: 'root', ... },
+  //   { id: 'homePage', ... },
+  //   { id: 'mainNav', ... },
   // ]
 }
 ```
 
 ### `useFocusStore()`
 
+> ⚠️ Heads up! The FocusStore is an internal API. We strongly discourage you from accessing properties or calling
+> methods on the FocusStore directly!
+
 A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the
-focus store. Typically, you should not need to use this hook.
+[FocusStore](#focusstore). Typically, you should not need to use this hook.
 
 ```js
 import { useFocusStore } from '@please/lrud';
@@ -253,7 +264,33 @@ These are the objects you will encounter when using this library.
 
 ### `FocusNode`
 
-Coming soon.
+A focus node. Each `<FocusNode/>` React component creates one of these.
+
+| Property                      | Type             | Description                                                                                                                       |
+| ----------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                          | string           | A unique identifier for this node.                                                                                                |
+| `children`                    | Array\<string\>  | An array of focus IDs representing the children of this node.                                                                     |
+| `focusedChildIndex`           | number\|null     | The index of the focused child of this node, if there is one.                                                                     |
+| `prevFocusedChildIndex`       | number\|null     | The index of the previously-focused child of this node, if there was one.                                                         |
+| `isFocused`                   | boolean          | `true` when this node is focused.                                                                                                 |
+| `isFocusedLeaf`               | boolean          | Whether or not this node is the leaf of the focus hierarchy.                                                                      |
+| `active`                      | boolean          | `true` this node is active.                                                                                                       |
+| `disabled`                    | boolean          | `true` when this node is disabled.                                                                                                |
+| `isExiting`                   | boolean          | Set to `true` to indicate that the node will be animating out. Useful for certain exit animations.                                |
+| `wrapping`                    | boolean          | `true` when the navigation at the end of the node will wrap around to the other side.                                             |
+| `wrapGridRows`                | boolean          | `true` when grid rows will wrap.                                                                                                  |
+| `wrapGridColumns`             | boolean          | `true` when grid columns will wrap.                                                                                               |
+| `isRoot`                      | boolean          | `true` this is the root node.                                                                                                     |
+| `trap`                        | boolean          | `true` when this node is a focus trap.                                                                                            |
+| `restoreTrapFocusHierarchy`   | boolean          | Set to `true` and a focus trap will restore its previous hierarchy upon becoming re-focused.                                      |
+| `parentId`                    | string \| `null` | The focus ID of the parent node. `null` for the root node.                                                                        |
+| `orientation`                 | string           | A string representing the orientation of the node (either `"horizontal"` or `"vertical"`)                                         |
+| `navigationStyle`             | string           | One of `'first-child'` or `'grid'`                                                                                                |
+| `nodeNavigationItem`          | string           | How this node is used in the navigation algorithm. Possible values are 'default'`, 'grid-container'`, `'grid-row'`, `'grid-item'` |
+| `canReceiveFocusFromArrows`   | boolean          | Set to `false` and this node will not receive focus due to arrow navigation.                                                      |
+| `_gridColumnIndex`            | number \| `null` | The focused column index of a grid.                                                                                               |
+| `_gridRowIndex`               | number \| `null` | The focused row index of a grid.                                                                                                  |
+| `_focusTrapPreviousHierarchy` | Array\<string\>  | The previous focus hierarchy of a trap.                                                                                           |
 
 ### `LRUDEvent`
 
