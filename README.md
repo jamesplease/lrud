@@ -269,7 +269,7 @@ An object that is passed to you in the event callbacks of a `FocusNode`, such as
 
 ### `FocusStore`
 
-> ⚠️ Heads up: the API of the FocusStore is considered to be internal. We strongly discourage you from calling
+> ⚠️ Heads up: the API of the FocusStore is considered to be internal. We strongly discourage you from accessing properties or calling
 > methods on the FocusStore directly!
 
 An object that represents the store that contains all of the state related to what is in focus.
