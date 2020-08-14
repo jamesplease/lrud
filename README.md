@@ -47,6 +47,7 @@ This library has the following peer dependencies:
 - [**Interfaces**](#interfaces)
   - [FocusNode](#focusnode)
   - [LRUDEvent](#lrudevent)
+  - [MoveEvent](#moveevent)
   - [FocusStore](#focusstore)
   - [FocusState](#focusstate)
 - [**Prior Art**](#prior-art)
@@ -335,7 +336,16 @@ A focus node. Each `<FocusNode/>` React component creates one of these.
 
 ### `LRUDEvent`
 
-An object that is passed to you in the event callbacks of a `FocusNode`, such as `onFocus`.
+An object that is passed to you in the LRUD-related callbacks of a [`FocusNode` component](#FocusNode-):
+
+- `onKey`
+- `onArrow`
+- `onLeft`
+- `onRight`
+- `onUp`
+- `onDown`
+- `onSelected`
+- `onBack`
 
 | Property          | Type                    | Description                                                                                                            |
 | ----------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -344,6 +354,20 @@ An object that is passed to you in the event callbacks of a `FocusNode`, such as
 | `node`            | [FocusNode](#focusnode) | The [`FocusNode`](#focusnode) that received this event.                                                                |
 | `preventDefault`  | function                | Call this to stop the default behavior of the event. Commonly used to override the navigation behavior                 |
 | `stopPropagation` | function                | Call this to stop the propagation of the event.                                                                        |
+
+### `MoveEvent`
+
+An object that is passed to you in the `onMove` callback of a [`FocusNode` component](#FocusNode-).
+
+| Property         | Type                              | Description                                                                  |
+| ---------------- | --------------------------------- | ---------------------------------------------------------------------------- |
+| `orientation`    | string                            | The orientation of the move. Either `"horizontal"` or `"vertical"`.          |
+| `direction`      | string                            | The direction of the move. Either `"forward"` or `"back"`.                   |
+| `arrow`          | string                            | The arrow that was pressed. One of `"up"`, `"down"`, `"left"`, or `"right"`. |
+| `prevChildIndex` | number                            | The index of the previously-focused child [`FocusNode`](#focusnode).         |
+| `nextChildIndex` | number                            | The index of the child [`FocusNode`](#focusnode) that is now focused.        |
+| `prevChildNode`  | [FocusNode](#focusnode) \| `null` | The previously-focused [`FocusNode`](#focusnode).                            |
+| `nextChildNode`  | [FocusNode](#focusnode)           | The child [`FocusNode`](#focusnode) that is now focused.                     |
 
 ### `FocusStore`
 

@@ -42,15 +42,11 @@ export default function defaultNavigation({
   const stateChanged = newState !== focusState;
 
   if (stateChanged && parentNode && typeof parentNode.onMove === 'function') {
-    const nextChildIndex = parentNode.focusedChildIndex;
+    const nextChildIndex = parentNode.focusedChildIndex as number;
     const prevChildIndex = parentNode.prevFocusedChildIndex;
 
-    const currentFocusedNodeId =
-      nextChildIndex === null ? null : parentNode.children[nextChildIndex];
-    const currentFocusedNode =
-      currentFocusedNodeId === null
-        ? null
-        : newState.nodes[currentFocusedNodeId];
+    const currentFocusedNodeId = parentNode.children[nextChildIndex];
+    const currentFocusedNode = newState.nodes[currentFocusedNodeId] as Node;
 
     const prevFocusedNodeId =
       prevChildIndex === null ? null : parentNode.children[prevChildIndex];
@@ -64,7 +60,7 @@ export default function defaultNavigation({
       node: parentNode,
       prevChildIndex,
       nextChildIndex,
-      prevChildNode: prevFocusedNode,
+      prevChildNode: prevFocusedNode ?? null,
       nextChildNode: currentFocusedNode,
     });
   }

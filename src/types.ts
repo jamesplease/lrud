@@ -22,6 +22,17 @@ export interface LRUDEvent {
   stopPropagation: () => void;
 }
 
+export interface MoveEvent {
+  orientation: Orientation;
+  direction: Direction;
+  arrow: Arrow;
+  node: Node;
+  prevChildIndex: number | null;
+  nextChildIndex: number;
+  prevChildNode: Node | null;
+  nextChildNode: Node;
+}
+
 export type NodeNavigationItem =
   | 'default'
   | 'grid-container'
@@ -38,7 +49,7 @@ export interface FocusNodeEvents {
   onSelected?: (e: LRUDEvent) => void;
   onBack?: (e: LRUDEvent) => void;
 
-  onMove?: (e: any) => void;
+  onMove?: (e: MoveEvent) => void;
   onGridMove?: (e: any) => void;
 
   onFocused?: (e: any) => void;
