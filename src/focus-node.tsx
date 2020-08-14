@@ -92,6 +92,9 @@ export function FocusNode(
     onFocused,
     onBlurred,
 
+    onClick,
+    onMouseOver,
+
     ...otherProps
   }: FocusNodeProps,
   ref: Ref
@@ -116,6 +119,12 @@ export function FocusNode(
       return id;
     }
   });
+
+  const onClickRef = useRef(onClick);
+  const onMouseOverRef = useRef(onMouseOver);
+
+  onClickRef.current = onClick;
+  onMouseOverRef.current = onMouseOver;
 
   const defaultRestoreFocusTrap = isTrap ? true : undefined;
   const defaultOrientation = !isGrid ? undefined : 'horizontal';
@@ -313,6 +322,23 @@ export function FocusNode(
         ref,
         className: classNameString,
         children,
+        onMouseOver(e:any) {
+          // We only set focus via mouse to the leaf nodes
+          if (nodeRef.current && nodeRef.current.children.length === 0) {
+            staticDefinitions.providerValue.store.setFocus(nodeId);
+          }
+
+          if (typeof onMouseOverRef.current === 'function') {
+            onMouseOverRef.current(e);
+          }
+        },
+        onClick(e:any) {
+          staticDefinitions.providerValue.store.handleSelect(nodeId);
+
+          if (typeof onClickRef.current === 'function') {
+            onClickRef.current(e);
+          }
+        }
       })}
     </FocusContext.Context.Provider>
   );
