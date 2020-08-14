@@ -48,6 +48,7 @@ This library has the following peer dependencies:
   - [FocusNode](#focusnode)
   - [LRUDEvent](#lrudevent)
   - [MoveEvent](#moveevent)
+  - [GridMoveEvent](#gridmoveevent)
   - [FocusStore](#focusstore)
   - [FocusState](#focusstate)
 - [**Prior Art**](#prior-art)
@@ -131,43 +132,43 @@ A [Component](https://reactjs.org/docs/react-component.html) that represents a f
 
 All props are optional. Example usage appears beneath the props table.
 
-| Prop                        | Type                | Default value    | Description                                                                                                                                            |
-| --------------------------- | ------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `propsFromNode`             | function            |                  | A function you can supply to compute additional props to apply to the element. The function is passed one argument, the [focus node](#focusnode).      |
-| `className`                 | string              |                  | A class name to apply to this element.                                                                                                                 |
-| `focusedClass`              | string              | "isFocused"      | A class name that is applied when this element is focused.                                                                                             |
-| `focusedLeafClass`          | string              | "isFocusedExact" | A class name that is applied this element is exactly focused.                                                                                          |
-| `activeClass`               | string              | "isActive"       | A class name that is applied this element is active.                                                                                                   |
-| `disabledClass`             | string              | "focusDisabled"  | A class name that is applied this element is disabled.                                                                                                 |
-| `elementType`               | string\|elementType | 'div'            | The React element type to render. For instance, `"img"` or [`motion.div`](https://www.framer.com/api/motion/component/).                               |
-| `focusId`                   | string              | `{unique_id}`    | A unique identifier for this node. Specify this yourself for debugging purposes, or when you will need to manually set focus to the node.              |
-| `orientation`               | string              | 'horizontal'     | Whether the children of this node are arranged horizontally or vertically. Pass `"vertical"` for vertical lists.                                       |
-| `wrapping`                  | boolean             | 'false'          | Set to `true` for the navigation to wrap when the user reaches the start or end of the children list. For grids this sets wrapping in both directions. |
-| `wrapGridColumns`           | boolean             | 'false'          | Set to `true` for horizontal navigation in grids to wrap.                                                                                              |
-| `wrapGridRows`              | boolean             | 'false'          | Set to `true` for vertical navigation in grids to wrap.                                                                                                |
-| `disabled`                  | boolean             | 'false'          | This node will not receive focus when `true`.                                                                                                          |
-| `isGrid`                    | boolean             | 'false'          | Pass `true` to make this a grid.                                                                                                                       |
-| `isTrap`                    | boolean             | 'false'          | Pass `true` to make this a focus trap.                                                                                                                 |
-| `canReceiveFocusFromArrows` | boolean             | 'true'           | Pass `false` and this node will not receive focus from arrows. Commonly paired with `isTrap`.                                                          |
-| `restoreTrapFocusHierarchy` | boolean             | 'true'           | Pass `false` and, if this node is a trap, it will not restore their previous focus hierarchy when becoming focused again.                              |
-| `onMountAssignFocusTo`      | string              |                  | A focus ID of a nested child to default focus to when this node mounts.                                                                                |
-| `defaultFocusColumn`        | number              | `0`              | The column index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                           |
-| `defaultFocusRow`           | number              | `0`              | The row index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                              |
-| `isExiting`                 | boolean             |                  | Pass `true` to signal that this node is animating out. Useful for certain kinds of exit transitions.                                                   |
-| `onFocused`                 | function            |                  | A function that is called when the node receives focus. Passed one argument, an [LRUDEvent](#lrudevent).                                               |
-| `onBlurred`                 | function            |                  | A function that is called when the node loses focus. Passed one argument, an [LRUDEvent](#lrudevent).                                                  |
-| `onKey`                     | function            |                  | A function that is called when the user presses any TV remote key while this element has focus. Passed one argument, an [LRUDEvent](#lrudevent).       |
-| `onArrow`                   | function            |                  | A function that is called when the user presses a directional button. Passed one argument, an [LRUDEvent](#lrudevent).                                 |
-| `onLeft`                    | function            |                  | A function that is called when the user presses the left button. Passed one argument, an [LRUDEvent](#lrudevent).                                      |
-| `onUp`                      | function            |                  | A function that is called when the user presses the up button. Passed one argument, an [LRUDEvent](#lrudevent).                                        |
-| `onDown`                    | function            |                  | A function that is called when the user presses the down button. Passed one argument, an [LRUDEvent](#lrudevent).                                      |
-| `onRight`                   | function            |                  | A function that is called when the user presses the right button. Passed one argument, an [LRUDEvent](#lrudevent).                                     |
-| `onSelected`                | function            |                  | A function that is called when the user pressed the select button. Passed one argument, an [LRUDEvent](#lrudevent).                                    |
-| `onBack`                    | function            |                  | A function that is called when the user presses the back button. Passed one argument, an [LRUDEvent](#lrudevent).                                      |
-| `onMove`                    | function            |                  | A function that is called when the focused child index of this node changes. Only called for nodes with children that are _not_ grids.                 |
-| `onGridMove`                | function            |                  | A function that is called when the focused child index of this node changes. Only called for grids.                                                    |
-| `children`                  | React Node(s)       |                  | Children of the Focus Node.                                                                                                                            |
-| `...rest`                   | any                 |                  | All other props are applied to the underlying DOM node.                                                                                                |
+| Prop                        | Type                | Default value    | Description                                                                                                                                                                            |
+| --------------------------- | ------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `propsFromNode`             | function            |                  | A function you can supply to compute additional props to apply to the element. The function is passed one argument, the [focus node](#focusnode).                                      |
+| `className`                 | string              |                  | A class name to apply to this element.                                                                                                                                                 |
+| `focusedClass`              | string              | "isFocused"      | A class name that is applied when this element is focused.                                                                                                                             |
+| `focusedLeafClass`          | string              | "isFocusedExact" | A class name that is applied this element is exactly focused.                                                                                                                          |
+| `activeClass`               | string              | "isActive"       | A class name that is applied this element is active.                                                                                                                                   |
+| `disabledClass`             | string              | "focusDisabled"  | A class name that is applied this element is disabled.                                                                                                                                 |
+| `elementType`               | string\|elementType | 'div'            | The React element type to render. For instance, `"img"` or [`motion.div`](https://www.framer.com/api/motion/component/).                                                               |
+| `focusId`                   | string              | `{unique_id}`    | A unique identifier for this node. Specify this yourself for debugging purposes, or when you will need to manually set focus to the node.                                              |
+| `orientation`               | string              | 'horizontal'     | Whether the children of this node are arranged horizontally or vertically. Pass `"vertical"` for vertical lists.                                                                       |
+| `wrapping`                  | boolean             | 'false'          | Set to `true` for the navigation to wrap when the user reaches the start or end of the children list. For grids this sets wrapping in both directions.                                 |
+| `wrapGridColumns`           | boolean             | 'false'          | Set to `true` for horizontal navigation in grids to wrap.                                                                                                                              |
+| `wrapGridRows`              | boolean             | 'false'          | Set to `true` for vertical navigation in grids to wrap.                                                                                                                                |
+| `disabled`                  | boolean             | 'false'          | This node will not receive focus when `true`.                                                                                                                                          |
+| `isGrid`                    | boolean             | 'false'          | Pass `true` to make this a grid.                                                                                                                                                       |
+| `isTrap`                    | boolean             | 'false'          | Pass `true` to make this a focus trap.                                                                                                                                                 |
+| `canReceiveFocusFromArrows` | boolean             | 'true'           | Pass `false` and this node will not receive focus from arrows. Commonly paired with `isTrap`.                                                                                          |
+| `restoreTrapFocusHierarchy` | boolean             | 'true'           | Pass `false` and, if this node is a trap, it will not restore their previous focus hierarchy when becoming focused again.                                                              |
+| `onMountAssignFocusTo`      | string              |                  | A focus ID of a nested child to default focus to when this node mounts.                                                                                                                |
+| `defaultFocusColumn`        | number              | `0`              | The column index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                                                           |
+| `defaultFocusRow`           | number              | `0`              | The row index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                                                              |
+| `isExiting`                 | boolean             |                  | Pass `true` to signal that this node is animating out. Useful for certain kinds of exit transitions.                                                                                   |
+| `onFocused`                 | function            |                  | A function that is called when the node receives focus. Passed one argument, an [LRUDEvent](#lrudevent).                                                                               |
+| `onBlurred`                 | function            |                  | A function that is called when the node loses focus. Passed one argument, an [LRUDEvent](#lrudevent).                                                                                  |
+| `onKey`                     | function            |                  | A function that is called when the user presses any TV remote key while this element has focus. Passed one argument, an [LRUDEvent](#lrudevent).                                       |
+| `onArrow`                   | function            |                  | A function that is called when the user presses a directional button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                 |
+| `onLeft`                    | function            |                  | A function that is called when the user presses the left button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                      |
+| `onUp`                      | function            |                  | A function that is called when the user presses the up button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                        |
+| `onDown`                    | function            |                  | A function that is called when the user presses the down button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                      |
+| `onRight`                   | function            |                  | A function that is called when the user presses the right button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                     |
+| `onSelected`                | function            |                  | A function that is called when the user pressed the select button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                    |
+| `onBack`                    | function            |                  | A function that is called when the user presses the back button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                      |
+| `onMove`                    | function            |                  | A function that is called when the focused child index of this node changes. Only called for nodes with children that are _not_ grids. Passed one argument, a [MoveEvent](#moveevent). |
+| `onGridMove`                | function            |                  | A function that is called when the focused child index of this node changes. Only called for grids. Passed one argument, a [GridMoveEvent].                                            |
+| `children`                  | React Node(s)       |                  | Children of the Focus Node.                                                                                                                                                            |
+| `...rest`                   | any                 |                  | All other props are applied to the underlying DOM node.                                                                                                                                |
 
 ```jsx
 import { FocusNode } from '@please/lrud';
@@ -368,6 +369,20 @@ An object that is passed to you in the `onMove` callback of a [`FocusNode` compo
 | `nextChildIndex` | number                            | The index of the child [`FocusNode`](#focusnode) that is now focused.        |
 | `prevChildNode`  | [FocusNode](#focusnode) \| `null` | The previously-focused [`FocusNode`](#focusnode).                            |
 | `nextChildNode`  | [FocusNode](#focusnode)           | The child [`FocusNode`](#focusnode) that is now focused.                     |
+
+### `GridMoveEvent`
+
+An object that is passed to you in the `onGridMove` callback of a [`FocusNode` component](#FocusNode-).
+
+| Property          | Type   | Description                                                                  |
+| ----------------- | ------ | ---------------------------------------------------------------------------- |
+| `orientation`     | string | The orientation of the move. Either `"horizontal"` or `"vertical"`.          |
+| `direction`       | string | The direction of the move. Either `"forward"` or `"back"`.                   |
+| `arrow`           | string | The arrow that was pressed. One of `"up"`, `"down"`, `"left"`, or `"right"`. |
+| `prevRowIndex`    | number | The index of the previously-focused row.                                     |
+| `nextRowIndex`    | number | The index of the newly-focused row.                                          |
+| `prevColumnIndex` | number | The index of the previously-focused column.                                  |
+| `nextColumnIndex` | number | The index of the newly-focused column.                                       |
 
 ### `FocusStore`
 

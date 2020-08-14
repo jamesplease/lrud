@@ -33,6 +33,25 @@ export interface MoveEvent {
   nextChildNode: Node;
 }
 
+export interface GridMoveEvent {
+  orientation: Orientation;
+  direction: Direction;
+  arrow: Arrow;
+  gridNode: Node;
+
+  prevRowIndex: number;
+  nextRowIndex: number;
+
+  prevColumnIndex: number;
+  nextColumnIndex: number;
+
+  // TODO: add these
+  // currentRowNode,
+  // nextRowNode,
+  // currentItemNode,
+  // nextItemNode
+}
+
 export type NodeNavigationItem =
   | 'default'
   | 'grid-container'
@@ -50,7 +69,7 @@ export interface FocusNodeEvents {
   onBack?: (e: LRUDEvent) => void;
 
   onMove?: (e: MoveEvent) => void;
-  onGridMove?: (e: any) => void;
+  onGridMove?: (e: GridMoveEvent) => void;
 
   onFocused?: (e: any) => void;
   onBlurred?: (e: any) => void;
