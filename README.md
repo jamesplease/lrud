@@ -372,7 +372,7 @@ An object that is passed to you in the `onMove` callback of a [`FocusNode` compo
 
 ### `GridMoveEvent`
 
-An object that is passed to you in the `onGridMove` callback of a [`FocusNode` component](#FocusNode-).
+An object that is passed to you in the `onGridMove` callback of a [`FocusNode` component](#FocusNode-) that is a grid.
 
 | Property          | Type   | Description                                                                  |
 | ----------------- | ------ | ---------------------------------------------------------------------------- |
@@ -383,6 +383,16 @@ An object that is passed to you in the `onGridMove` callback of a [`FocusNode` c
 | `nextRowIndex`    | number | The index of the newly-focused row.                                          |
 | `prevColumnIndex` | number | The index of the previously-focused column.                                  |
 | `nextColumnIndex` | number | The index of the newly-focused column.                                       |
+
+### `FocusEvent`
+
+An object that is passed to you in the `onFocused` and `onBlurred` callbacks of a [`FocusNode` component](#FocusNode-).
+
+| Property      | Type                                 | Description                                                                                                                                                                                               |
+| ------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `focusNode`   | [FocusNode](#focusnode)\|`undefined` | The newly-focused leaf [`FocusNode`](#focusnode).                                                                                                                                                         |
+| `blurNode`    | [FocusNode](#focusnode)\|`undefined` | The previously-focused leaf [`FocusNode`](#focusnode).                                                                                                                                                    |
+| `currentNode` | [FocusNode](#focusnode)              | The [`FocusNode`](#focusnode) that is receiving the event, as it traverses the focus hierarchy. Analogous to [event.currentTarget](https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget). |
 
 ### `FocusStore`
 

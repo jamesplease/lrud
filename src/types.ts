@@ -52,6 +52,12 @@ export interface GridMoveEvent {
   // nextItemNode
 }
 
+export interface FocusEvent {
+  focusNode: Node | undefined;
+  blurNode: Node | undefined;
+  currentNode: Node;
+}
+
 export type NodeNavigationItem =
   | 'default'
   | 'grid-container'
@@ -71,8 +77,8 @@ export interface FocusNodeEvents {
   onMove?: (e: MoveEvent) => void;
   onGridMove?: (e: GridMoveEvent) => void;
 
-  onFocused?: (e: any) => void;
-  onBlurred?: (e: any) => void;
+  onFocused?: (e: FocusEvent) => void;
+  onBlurred?: (e: FocusEvent) => void;
 }
 
 export interface BaseNode extends FocusNodeEvents {
