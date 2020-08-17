@@ -1,6 +1,6 @@
-import { FocusStore, Node, FocusNodeEvents, LRUDKey } from '../types';
+import { FocusStore, Node, LRUDKey, LRUDFocusEvents } from '../types';
 
-type FocusCallbackNames = keyof FocusNodeEvents;
+type FocusCallbackNames = keyof LRUDFocusEvents;
 type PreventDefault = () => void;
 type StopPropagation = () => void;
 

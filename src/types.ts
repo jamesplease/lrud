@@ -64,7 +64,7 @@ export type NodeNavigationItem =
   | 'grid-row'
   | 'grid-item';
 
-export interface FocusNodeEvents {
+export interface LRUDFocusEvents {
   onKey?: (e: LRUDEvent) => void;
   onArrow?: (e: LRUDEvent) => void;
   onLeft?: (e: LRUDEvent) => void;
@@ -73,7 +73,9 @@ export interface FocusNodeEvents {
   onDown?: (e: LRUDEvent) => void;
   onSelected?: (e: LRUDEvent) => void;
   onBack?: (e: LRUDEvent) => void;
+}
 
+export interface FocusNodeEvents extends LRUDFocusEvents {
   onMove?: (e: MoveEvent) => void;
   onGridMove?: (e: GridMoveEvent) => void;
 
