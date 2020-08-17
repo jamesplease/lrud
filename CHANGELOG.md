@@ -1,5 +1,21 @@
 # Changelog
 
+### v0.0.6 (2020/8/17)
+
+**Breaking Changes**
+
+- `useNodeEvents` has been renamed to `useFocusEvents`
+- `onFocus`/`onBlur`/`onSelect` have been renamed to avoid collisions with existing React APIs
+
+**New Features**
+
+- Introduces `useActiveNode`
+- Grids now support a default column and row
+
+**Other**
+
+- Improved docs
+
 ### v0.0.5 (2020/8/12)
 
 - You can now pass in a `ref` to `FocusNode`
