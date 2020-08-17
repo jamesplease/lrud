@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect, useRef } from 'react';
 import FocusContext from '../focus-context';
 import warning from '../utils/warning';
-import { Id, Node } from '../types';
+import { Node } from '../types';
 
-export default function useFocusNode(focusId: Id): Node | null {
+export default function useActiveNode(): Node | null {
   const contextValue = useContext(FocusContext.Context);
 
   const [focusNode, setFocusNode] = useState<Node | null>(() => {
@@ -17,18 +17,13 @@ export default function useFocusNode(focusId: Id): Node | null {
 
       return null;
     } else {
-      if (process.env.NODE_ENV !== 'production') {
-        if (typeof focusId !== 'string') {
-          warning(
-            `You passed a non-string focus ID to useFocusNode: ${focusId}. Focus IDs are always strings. ` +
-              'This may represent an error in your code.',
-            'FOCUS_ID_NOT_STRING'
-          );
-        }
+      const focusState = contextValue.store.getState();
+
+      if (focusState.activeNodeId === null) {
+        return null;
       }
 
-      const focusState = contextValue.store.getState();
-      const possibleNode = focusState.nodes[focusId];
+      const possibleNode = focusState.nodes[focusState.activeNodeId];
       return possibleNode ?? null;
     }
   });
@@ -36,32 +31,23 @@ export default function useFocusNode(focusId: Id): Node | null {
   const focusNodeRef = useRef(focusNode);
   focusNodeRef.current = focusNode;
 
-  const focusIdRef = useRef(focusId);
-  focusIdRef.current = focusId;
-
   function checkForSync() {
     if (!contextValue) {
       return;
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-      if (typeof focusIdRef.current !== 'string') {
-        warning(
-          `You passed a non-string focus ID to useFocusNode: ${focusId}. Focus IDs are always strings. ` +
-            'This may represent an error in your code.',
-          'FOCUS_ID_NOT_STRING'
-        );
-      }
+    const currentState = contextValue.store.getState();
+
+    if (!currentState.activeNodeId) {
+      setFocusNode(null);
+      return;
     }
 
-    const currentNode =
-      contextValue.store.getState().nodes[focusIdRef.current] ?? null;
+    const currentNode = currentState.nodes[currentState.activeNodeId] ?? null;
     if (currentNode !== focusNodeRef.current) {
       setFocusNode(currentNode);
     }
   }
-
-  useEffect(checkForSync, [focusId]);
 
   useEffect(() => {
     if (!contextValue) {

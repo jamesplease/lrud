@@ -40,6 +40,7 @@ This library has the following peer dependencies:
   - [\<FocusRoot/\>](#focusroot-)
   - [\<FocusNode/\>](#FocusNode-)
   - [useFocusNode()](#usefocusnode-focusid-)
+  - [useActiveNode()](#useactivenode)
   - [useSetFocus()](#usesetfocus)
   - [useNodeEvents()](#usenodeevents-focusid-events-)
   - [useFocusHierarchy()](#usefocushierarchy)
@@ -199,6 +200,20 @@ export default function MyComponent() {
   const navFocusNode = useFocusNode('nav');
 
   console.log('Is the nav focused?', navFocusNode?.isFocused);
+}
+```
+
+### `useActiveNode()`
+
+A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the active focus node, or `null` if no node is active.
+
+```js
+import { useActiveNode } from '@please/lrud';
+
+export default function MyComponent() {
+  const activeNode = useActiveNode();
+
+  console.log('The active node:', activeNode);
 }
 ```
 
