@@ -355,6 +355,7 @@ export default function createFocusStore({
 
     const updatedState = {
       ...currentState,
+      activeNodeId: leafNodeId,
       nodes: {
         ...currentState.nodes,
         ...newNodes,
