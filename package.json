@@ -8,7 +8,7 @@
   "scripts": {
     "test": "NODE_ENV=test jest",
     "test:watch": "jest --watch",
-    "clean": "rimraf ./dist ./es ./tmp ./lib",
+    "clean": "rimraf ./dist ./es ./tmp ./lib ./types",
     "prepublishOnly": "npm run build",
     "postpublish": "npm run clean",
     "prebuild": "npm run clean",
