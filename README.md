@@ -52,6 +52,7 @@ This library has the following peer dependencies:
   - [GridMoveEvent](#gridmoveevent)
   - [FocusStore](#focusstore)
   - [FocusState](#focusstate)
+- [**Examples**](#examples)
 - [**Prior Art**](#prior-art)
 - [**Limitations**](#limitations)
 
@@ -441,6 +442,16 @@ An object representing the state of the focus in the app.
 | `activeNodeId`           | string \| `null` | The ID of the active node, if there is one.                          |
 | `nodes`                  | Object           | A mapping of all of the focus nodes that exist.                      |
 | `_updatingFocusIsLocked` | boolean          | A boolean used internally for managing the creation of nested nodes. |
+
+## Examples
+
+This repository contains example projects showing common patterns when using this library. Each example
+is located in the [`./examples`](./examples) folder.
+
+Instructions for running the examples are found in the README file for each example.
+
+- [Basic Layout](./examples/basic-layout) - Demonstrates using `orientation` for vertical and horizontal lists
+- [Grid](./examples/grid) - Shows how to build a grid of focus nodes
 
 ## Limitations
 
