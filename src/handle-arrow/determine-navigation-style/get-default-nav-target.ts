@@ -15,11 +15,12 @@ export default function getDefaultNavTarget(
 
   if (parentNode.trap) {
     if (parentNode.orientation === orientation) {
-      return parentNode;
+      return node;
     } else {
       return null;
     }
   }
+
   if (parentNode.orientation === orientation) {
     if (parentNode.wrapping) {
       return node;
@@ -27,7 +28,7 @@ export default function getDefaultNavTarget(
       const unfilteredChildren = parentNode.children || [];
 
       // We only consider children nodes that are enabled
-      const parentsChildren = unfilteredChildren.filter(nodeId => {
+      const parentsChildren = unfilteredChildren.filter((nodeId) => {
         const node = focusState.nodes[nodeId];
 
         if (node && (node.disabled || node.isExiting)) {
