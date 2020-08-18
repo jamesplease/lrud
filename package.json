@@ -13,6 +13,7 @@
     "postpublish": "npm run clean",
     "prebuild": "npm run clean",
     "prettier": "prettier --config ./.prettierrc --write **/*.{js,css}",
+    "publish-beta": "npm publish --tag=beta",
     "build": "npm run build:types && npm run build:es",
     "build:types": "tsc --emitDeclarationOnly",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --extensions '.ts,.tsx'"
