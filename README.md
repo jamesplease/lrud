@@ -453,6 +453,7 @@ Instructions for running the examples are found in the README file for each exam
 - [Basic Layout](./examples/basic-layout) - Demonstrates using the `orientation` prop for vertical and horizontal lists
 - [Grid](./examples/grid) - Shows how to build a grid of focus nodes
 - [Disabled Focus Nodes](./examples/disabled-focus-nodes) - Shows how to disable focus nodes using the `disabled` prop
+- [Focus Trap](./examples/focus-trap) - Demonstrates how to create focus traps
 
 ## Limitations
 
