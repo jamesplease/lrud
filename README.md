@@ -465,6 +465,7 @@ These are examples showing the basics of using this library.
 These examples show more complicated UI examples.
 
 - [**Animated Page Transition**](./examples/animated-page-transition) - Animate between two pages
+- [**`isExiting` Page Transition**](./examples/animated-page-transition) - Animating between pages _without_ user input
 
 ## Limitations
 

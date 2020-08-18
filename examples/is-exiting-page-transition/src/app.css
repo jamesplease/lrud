@@ -1,0 +1,62 @@
+.app {
+  display: flex;
+  align-items: center;
+  margin: 100px;
+  position: relative;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 900;
+  margin: 0.5rem 0;
+  color: white;
+}
+
+.block-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #3e3e3e;
+  margin: 10px;
+  padding: 0.325rem;
+  border-radius: 0.5rem;
+  transition: border 0.18s ease-out, transform 0.45s ease-out,
+    opacity 0.45s ease-out;
+  opacity: 0;
+  transform: translateY(-90px) scale(0.75);
+}
+
+.block-container.isFocused {
+  border-color: #530db1;
+}
+
+.block-container-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.block-container-unmounted {
+  opacity: 0;
+  transform: translateY(90px) scale(1);
+}
+
+.block {
+  color: white;
+  display: grid;
+  place-content: center;
+  background: #3c3c3c;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 1rem 1.75rem;
+  margin: 0.325rem;
+  border-radius: 0.4rem;
+  transition: border 0.18s ease-out;
+}
+
+.block.isFocusedLeaf {
+  background: #7700ff;
+}
+
+.flex {
+  display: flex;
+}
