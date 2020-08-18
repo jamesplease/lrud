@@ -1,6 +1,11 @@
 # Focus Trap
 
-This example shows a layout that includes a focus trap.
+This example shows a layout that includes a focus trap. You cannot navigate into the trap using
+arrows. Instead, you must navigate to the button that says "Select to move into Trap" and press
+the Enter key on your keyboard or remote.
+
+Similarly, you cannot leave the focus trap by navigating with arrows. To exit, you must move focus
+to the button that says "Return" and press Enter.
 
 ### Running the Example
 
