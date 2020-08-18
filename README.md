@@ -464,7 +464,7 @@ These are examples showing the basics of using this library.
 
 These examples show more complicated UI examples.
 
-> _Coming soon._
+- [**Animated Page Transition**](./examples/animated-page-transition) - Animate between two pages
 
 ## Limitations
 
