@@ -35,6 +35,10 @@ function processNode({
   direction,
   orientation,
 }: ProcessNodeOptions): GridStyle | DefaultStyle | null {
+  if (node.trap) {
+    return null;
+  }
+
   const parentId = node.parentId as Id;
   const parentNode = focusState.nodes[parentId];
 
