@@ -63,7 +63,12 @@ export function getChildren({
   if (nodeChildren.length === 0) {
     return currentFocusHierarchy;
   } else {
-    if (node.navigationStyle === 'grid') {
+    // When the node is a grid, and it has no preferred hierarchy, then we respect the defaultFocusRow/defaultFocusColumn
+    // attributes. Preferred children represent a focus trap.
+    if (
+      node.navigationStyle === 'grid' &&
+      (!preferredChildren || preferredChildren.length === 0)
+    ) {
       const preferredRowIndex = node.defaultFocusRow ?? 0;
       const rowIndex = clamp(preferredRowIndex, 0, node.children.length - 1);
       const rowId = node.children[rowIndex];
@@ -82,7 +87,12 @@ export function getChildren({
       );
       const columnId = row.children[columnIndex];
 
-      return [...currentFocusHierarchy, rowId, columnId];
+      return getChildren({
+        focusState,
+        nodeId: columnId,
+        currentFocusHierarchy: [...currentFocusHierarchy, rowId, columnId],
+        preferredChildren: [],
+      });
     }
 
     let nextChildId = nodeChildren[0];
