@@ -1,3 +1,4 @@
+import clamp from './clamp';
 import { FocusState, Id, NodeHierarchy, Orientation } from '../types';
 
 interface GetParentsOptions {
@@ -64,7 +65,7 @@ export function getChildren({
   } else {
     if (node.navigationStyle === 'grid') {
       const preferredRowIndex = node.defaultFocusRow ?? 0;
-      const rowIndex = Math.max(preferredRowIndex, node.children.length - 1);
+      const rowIndex = clamp(preferredRowIndex, 0, node.children.length - 1);
       const rowId = node.children[rowIndex];
 
       const row = focusState.nodes[rowId];
@@ -74,8 +75,9 @@ export function getChildren({
       }
 
       const preferredColumnIndex = node.defaultFocusColumn ?? 0;
-      const columnIndex = Math.max(
+      const columnIndex = clamp(
         preferredColumnIndex,
+        0,
         row.children.length - 1
       );
       const columnId = row.children[columnIndex];
