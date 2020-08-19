@@ -62,6 +62,27 @@ export function getChildren({
   if (nodeChildren.length === 0) {
     return currentFocusHierarchy;
   } else {
+    if (node.navigationStyle === 'grid') {
+      const preferredRowIndex = node.defaultFocusRow ?? 0;
+      const rowIndex = Math.max(preferredRowIndex, node.children.length - 1);
+      const rowId = node.children[rowIndex];
+
+      const row = focusState.nodes[rowId];
+
+      if (!row || row.children.length === 0) {
+        return [...currentFocusHierarchy, rowId];
+      }
+
+      const preferredColumnIndex = node.defaultFocusColumn ?? 0;
+      const columnIndex = Math.max(
+        preferredColumnIndex,
+        row.children.length - 1
+      );
+      const columnId = row.children[columnIndex];
+
+      return [...currentFocusHierarchy, rowId, columnId];
+    }
+
     let nextChildId = nodeChildren[0];
 
     if (preferredChildren && preferredChildren.length) {
@@ -74,6 +95,10 @@ export function getChildren({
     }
 
     if (orientation && orientation === node.orientation) {
+      // TODO: leaving this here in the event that I refactor the
+      // preferred column/row implementation above, even though
+      // it is currently redundant.
+      // @ts-ignore
       const isGridNavigation = node.navigationStyle === 'grid';
       const useLastNode = !isGridNavigation && preferEnd;
 
