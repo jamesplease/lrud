@@ -107,7 +107,7 @@ export default function getNodesFromFocusChange({
     }
 
     if (nodeToUpdate.trap && nodeToUpdate.restoreTrapFocusHierarchy) {
-      const childHierarchy = blurHierarchy.slice(i);
+      const childHierarchy = blurHierarchy.slice(i + 1);
       // @ts-ignore
       result[nodeId]._focusTrapPreviousHierarchy = childHierarchy;
     }
