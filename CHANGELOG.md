@@ -1,5 +1,13 @@
 # Changelog
 
+### v0.0.7 (2020/8/20)
+
+**Bug Fixes**
+
+- Nodes should now become inactive
+- Multiple fixes related to focus traps
+- Preferred grid columns/rows are now respected every time the grid receives focus
+
 ### v0.0.6 (2020/8/17)
 
 **Breaking Changes**
