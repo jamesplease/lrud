@@ -145,14 +145,14 @@ All props are optional. Example usage appears beneath the props table.
 | `elementType`               | string\|elementType | 'div'            | The React element type to render. For instance, `"img"` or [`motion.div`](https://www.framer.com/api/motion/component/).                                                               |
 | `focusId`                   | string              | `{unique_id}`    | A unique identifier for this node. Specify this yourself for debugging purposes, or when you will need to manually set focus to the node.                                              |
 | `orientation`               | string              | 'horizontal'     | Whether the children of this node are arranged horizontally or vertically. Pass `"vertical"` for vertical lists.                                                                       |
-| `wrapping`                  | boolean             | 'false'          | Set to `true` for the navigation to wrap when the user reaches the start or end of the children list. For grids this sets wrapping in both directions.                                 |
-| `wrapGridColumns`           | boolean             | 'false'          | Set to `true` for horizontal navigation in grids to wrap.                                                                                                                              |
-| `wrapGridRows`              | boolean             | 'false'          | Set to `true` for vertical navigation in grids to wrap.                                                                                                                                |
-| `disabled`                  | boolean             | 'false'          | This node will not receive focus when `true`.                                                                                                                                          |
-| `isGrid`                    | boolean             | 'false'          | Pass `true` to make this a grid.                                                                                                                                                       |
-| `isTrap`                    | boolean             | 'false'          | Pass `true` to make this a focus trap.                                                                                                                                                 |
-| `canReceiveFocusFromArrows` | boolean             | 'true'           | Pass `false` and this node will not receive focus from arrows. Commonly paired with `isTrap`.                                                                                          |
-| `restoreTrapFocusHierarchy` | boolean             | 'true'           | Pass `false` and, if this node is a trap, it will not restore their previous focus hierarchy when becoming focused again.                                                              |
+| `wrapping`                  | boolean             | `false`          | Set to `true` for the navigation to wrap when the user reaches the start or end of the children list. For grids this sets wrapping in both directions.                                 |
+| `wrapGridColumns`           | boolean             | `false`          | Set to `true` for horizontal navigation in grids to wrap.                                                                                                                              |
+| `wrapGridRows`              | boolean             | `false`          | Set to `true` for vertical navigation in grids to wrap.                                                                                                                                |
+| `disabled`                  | boolean             | `false`          | This node will not receive focus when `true`.                                                                                                                                          |
+| `isGrid`                    | boolean             | `false`          | Pass `true` to make this a grid.                                                                                                                                                       |
+| `isTrap`                    | boolean             | `false`          | Pass `true` to make this a focus trap.                                                                                                                                                 |
+| `canReceiveFocusFromArrows` | boolean             | `true`           | Pass `false` and this node will not receive focus from arrows. Commonly paired with `isTrap`.                                                                                          |
+| `restoreTrapFocusHierarchy` | boolean             | `true`           | Pass `false` and, if this node is a trap, it will not restore their previous focus hierarchy when becoming focused again.                                                              |
 | `onMountAssignFocusTo`      | string              |                  | A focus ID of a nested child to default focus to when this node mounts.                                                                                                                |
 | `defaultFocusColumn`        | number              | `0`              | The column index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                                                           |
 | `defaultFocusRow`           | number              | `0`              | The row index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                                                              |
@@ -303,6 +303,9 @@ export default function MyComponent() {
 A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the
 [FocusStore](#focusstore). Typically, you should not need to use this hook.
 
+One use-case for this hook is attaching the `focusStore` to the window when developing, which can be useful
+for debugging purposes.
+
 ```js
 import { useFocusStoreDangerously } from '@please/lrud';
 
@@ -310,7 +313,9 @@ export default function MyComponent() {
   const focusStore = useFocusStoreDangerously();
 
   useEffect(() => {
-    console.log('the current focus state:', focusStore.getState());
+    if (process.env.NODE_ENV !== 'production') {
+      window.focusStore = focusStore;
+    }
   }, []);
 }
 ```
