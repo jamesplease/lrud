@@ -13,14 +13,6 @@ export default function getDefaultNavTarget(
     return null;
   }
 
-  if (parentNode.trap) {
-    if (parentNode.orientation === orientation) {
-      return node;
-    } else {
-      return null;
-    }
-  }
-
   if (parentNode.orientation === orientation) {
     if (parentNode.wrapping) {
       return node;
