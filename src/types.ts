@@ -206,7 +206,7 @@ export interface FocusStore {
   setFocus: (nodeId: Id) => void;
   updateNode: UpdateNode;
   handleArrow: (arrow: Arrow) => void;
-  handleSelect: () => void;
+  handleSelect: (nodeId?: Id) => void;
 }
 
 export interface ProviderValue {
@@ -233,6 +233,9 @@ export interface FocusNodeProps extends FocusNodeEvents {
   isExiting?: boolean;
   onMountAssignFocusTo?: Id;
   disabled?: boolean;
+
+  onClick?: (e: any) => void;
+  onMouseOver?: (e: any) => void;
 
   defaultFocusColumn?: number;
   defaultFocusRow?: number;

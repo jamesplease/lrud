@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.0.10 (2020/8/21)
+
+**New Features**
+
+- Pointer events now work. Hovering a leaf node focuses it, and clicking a leaf node
+  will call `onSelected` as well as make it active.
+
 ### v0.0.9 (2020/8/21)
 
 **Breaking Changes**

@@ -323,10 +323,16 @@ export default function createFocusStore({
     }
   }
 
-  function handleSelect() {
+  function handleSelect(focusId?: string) {
     const leafNodeId =
-      currentState.focusHierarchy[currentState.focusHierarchy.length - 1];
+      typeof focusId === 'string'
+        ? focusId
+        : currentState.focusHierarchy[currentState.focusHierarchy.length - 1];
     const leafNode = currentState.nodes[leafNodeId];
+
+    if (leafNodeId === currentState.activeNodeId) {
+      return;
+    }
 
     if (!leafNode) {
       return;
