@@ -23,7 +23,7 @@ export default function handleArrow({
     return null;
   }
 
-  const navigationStylePls = determineNavigationStyle({
+  const navigationStyle = determineNavigationStyle({
     arrow,
     focusState,
     focusedNode,
@@ -31,23 +31,23 @@ export default function handleArrow({
     orientation,
   });
 
-  if (!navigationStylePls) {
+  if (!navigationStyle) {
     return null;
-  } else if (navigationStylePls.style === 'default') {
+  } else if (navigationStyle.style === 'default') {
     return defaultNavigation({
       arrow,
       focusState,
-      targetNode: navigationStylePls.targetNode,
+      targetNode: navigationStyle.targetNode,
       direction,
       orientation,
     });
-  } else if (navigationStylePls.style === 'grid') {
+  } else if (navigationStyle.style === 'grid') {
     return gridNavigation({
       arrow,
       focusState,
       focusedNode,
-      gridNode: navigationStylePls.gridNode,
-      rowNode: navigationStylePls.rowNode,
+      gridNode: navigationStyle.gridNode,
+      rowNode: navigationStyle.rowNode,
       direction,
       orientation,
     });

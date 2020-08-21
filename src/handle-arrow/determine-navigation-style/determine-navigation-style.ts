@@ -35,6 +35,11 @@ function processNode({
   direction,
   orientation,
 }: ProcessNodeOptions): GridStyle | DefaultStyle | null {
+  // This is the operative line of code that makes focus traps function.
+  // When a trap node is encountered, we return null, which signifies
+  // no navigation at all.
+  // Without this check, this function start traversing up the tree outside of the focus
+  // trap, which could potentially cause focus to leave the trap.
   if (node.trap) {
     return null;
   }

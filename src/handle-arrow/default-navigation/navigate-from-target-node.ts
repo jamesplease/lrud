@@ -30,7 +30,7 @@ export default function navigateFromTargetNode({
 
   const allParentsChildren = parentNode.children || [];
 
-  const parentsChildren = allParentsChildren.filter(nodeId => {
+  const parentsChildren = allParentsChildren.filter((nodeId) => {
     const node = focusState.nodes[nodeId];
 
     if (!node) {
@@ -54,10 +54,6 @@ export default function navigateFromTargetNode({
   if (!newFocusedNode || newFocusedNode.disabled || newFocusedNode.isExiting) {
     return null;
   }
-
-  // const currentFocusedIndex = parentNode.focusedChildIndex;
-  // const currentFocusedNodeId = parentNode.children[currentFocusedIndex];
-  // const currentFocusedNode = focusState.nodes[currentFocusedNodeId];
 
   return {
     newFocusedId,
