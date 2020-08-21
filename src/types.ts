@@ -227,8 +227,6 @@ export interface FocusNodeProps extends FocusNodeEvents {
   wrapGridColumns?: boolean;
   orientation?: Orientation;
   isGrid?: boolean;
-  focusOnMouseOver?: boolean;
-  selectOnClick?: boolean;
   isTrap?: boolean;
   restoreTrapFocusHierarchy?: boolean;
   propsFromNode?: PropsFromNode;
