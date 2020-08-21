@@ -54,7 +54,6 @@ This library has the following peer dependencies:
   - [FocusState](#focusstate)
 - [**Examples**](#examples)
 - [**Prior Art**](#prior-art)
-- [**Limitations**](#limitations)
 
 ## Guides
 
@@ -96,10 +95,6 @@ learn more about those props, refer to the API documentation below.
 
 LRUD is an acronym that stands for left-right-up-down, and it refers to the directional buttons typically found on remotes. In LRUD systems,
 input devices usually also have some kind of "submit" button, and, less commonly, a back button.
-
-#### Is this library right for me?
-
-The [limitations](#limitations) described below may help you to determine that.
 
 ## API Reference
 
@@ -469,11 +464,6 @@ These examples show more complicated UI examples.
 
 - [**Animated Page Transition**](./examples/animated-page-transition) - Animate between two pages
 - [**`isExiting` Page Transition**](./examples/animated-page-transition) - Animating between pages _without_ user input
-
-## Limitations
-
-- No support for pointer (mouse) inputs
-- Navigation is determined based on a grid-like system, rather than nodes' spatial position on the page
 
 ## Prior Art
 

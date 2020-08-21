@@ -322,7 +322,7 @@ export function FocusNode(
         ref,
         className: classNameString,
         children,
-        onMouseOver(e:any) {
+        onMouseOver(e: any) {
           // We only set focus via mouse to the leaf nodes
           if (nodeRef.current && nodeRef.current.children.length === 0) {
             staticDefinitions.providerValue.store.setFocus(nodeId);
@@ -332,13 +332,26 @@ export function FocusNode(
             onMouseOverRef.current(e);
           }
         },
-        onClick(e:any) {
-          staticDefinitions.providerValue.store.handleSelect(nodeId);
+        onClick(e: any) {
+          if (
+            nodeRef.current &&
+            typeof nodeRef.current.onSelected === 'function'
+          ) {
+            nodeRef.current.onSelected({
+              node: nodeRef.current,
+              isArrow: false,
+              key: 'select',
+              preventDefault: () => {},
+              stopPropagation: () => {},
+            });
+          }
 
           if (typeof onClickRef.current === 'function') {
             onClickRef.current(e);
           }
-        }
+
+          staticDefinitions.providerValue.store.handleSelect(nodeId);
+        },
       })}
     </FocusContext.Context.Provider>
   );
