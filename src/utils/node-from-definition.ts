@@ -62,9 +62,6 @@ export default function nodeFromDefinition({
     orientation: nodeDefinition.orientation ?? 'horizontal',
     wrapping: Boolean(nodeDefinition.wrapping),
     disabled: Boolean(nodeDefinition.initiallyDisabled),
-    canReceiveFocusFromArrows: Boolean(
-      nodeDefinition.canReceiveFocusFromArrows ?? true
-    ),
     navigationStyle,
     nodeNavigationItem,
 

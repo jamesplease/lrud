@@ -19,7 +19,6 @@ The example will be running at `localhost:3000`.
 ### Features Demonstrated
 
 - The `isTrap` prop, which creates a focus trap
-- The `canReceiveFocusFromArrows` prop, which prevents the trap was receiving focus from arrows
 - The `restoreTrapFocusHierarchy` prop, which makes it so that re-entering the trap does not preserve
   the previous hierarchy.
 - The `useSetFocus` hook to imperatively set the focus

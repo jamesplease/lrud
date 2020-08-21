@@ -59,7 +59,6 @@ export function FocusNode(
     orientation,
     isGrid = false,
     isTrap = false,
-    canReceiveFocusFromArrows = true,
     restoreTrapFocusHierarchy,
 
     defaultFocusColumn,
@@ -135,7 +134,6 @@ export function FocusNode(
       trap: Boolean(isTrap),
       wrapGridColumns: wrapGridColumnsValue,
       wrapGridRows: wrapGridRowsValue,
-      canReceiveFocusFromArrows,
       restoreTrapFocusHierarchy:
         restoreTrapFocusHierarchy !== undefined
           ? restoreTrapFocusHierarchy

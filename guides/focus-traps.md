@@ -7,7 +7,13 @@ focus does not leave the element. Examples include:
 - Dropdown menus
 - Sidebar navigation menus
 
-`@please/lrud` supports focus traps out of the box.
+Focus trap nodes exhibit the following behavior:
+
+- A user cannot navigate into the trap using arrow keys
+- A user cannot navigate out of the trap using arrow keys
+
+What this means is that you must imperatively move focus into and out of the trap
+using the `setFocus()` function.
 
 ## Creating a Focus Trap
 
@@ -15,19 +21,6 @@ Pass the `isTrap` prop.
 
 ```jsx
 <FocusNode isTrap>
-  This is a trap
-</FocusNode>
-```
-
-## Preventing Navigating into the Trap
-
-By default, all focus nodes can receive focus by navigating with arrows into them. You'll typically
-want to disable this for focus traps. To do this, pass `false` as `canReceiveFocusFromArrows={false}` prop.
-
-```jsx
-<FocusNode
-  isTrap
-  canReceiveFocusFromArrows={false}>
   This is a trap
 </FocusNode>
 ```
@@ -53,8 +46,7 @@ export default function App() {
       {/* This is the focus trap */}
       <FocusNode
         focusId="trap"
-        isTrap
-        canReceiveFocusFromArrows={false}>
+        isTrap>
         {/* When the user selects this button, they will leave the trap */}
         <FocusNode onSelected={() => setFocus('enter-trap-button')}>
           Exit Focus Trap

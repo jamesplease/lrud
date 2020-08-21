@@ -29,7 +29,6 @@ export default function App() {
       <FocusNode
         focusId="trap"
         className="block-container focus-trap"
-        canReceiveFocusFromArrows={false}
         restoreTrapFocusHierarchy={false}
         isTrap
         orientation="vertical">

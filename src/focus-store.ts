@@ -50,7 +50,6 @@ export default function createFocusStore({
         wrapping,
         navigationStyle: 'first-child',
         nodeNavigationItem: 'default',
-        canReceiveFocusFromArrows: true,
         restoreTrapFocusHierarchy: true,
         children: [],
         focusedChildIndex: null,

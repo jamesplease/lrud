@@ -39,7 +39,7 @@ export default function navigateFromTargetNode({
 
     const isEnabled = !node.disabled;
     const isExiting = node.isExiting;
-    const canReceiveFocusFromArrow = node.canReceiveFocusFromArrows;
+    const canReceiveFocusFromArrow = !node.trap;
 
     return isEnabled && !isExiting && canReceiveFocusFromArrow;
   });
