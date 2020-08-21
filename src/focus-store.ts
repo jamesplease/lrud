@@ -330,6 +330,10 @@ export default function createFocusStore({
         : currentState.focusHierarchy[currentState.focusHierarchy.length - 1];
     const leafNode = currentState.nodes[leafNodeId];
 
+    if (leafNodeId === currentState.activeNodeId) {
+      return;
+    }
+
     if (!leafNode) {
       return;
     }

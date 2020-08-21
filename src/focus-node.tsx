@@ -333,6 +333,17 @@ export function FocusNode(
           }
         },
         onClick(e: any) {
+          if (typeof onClickRef.current === 'function') {
+            onClickRef.current(e);
+          }
+
+          const isLeaf =
+            nodeRef.current && nodeRef.current.children.length === 0;
+
+          if (!isLeaf) {
+            return;
+          }
+
           if (
             nodeRef.current &&
             typeof nodeRef.current.onSelected === 'function'
@@ -344,10 +355,6 @@ export function FocusNode(
               preventDefault: () => {},
               stopPropagation: () => {},
             });
-          }
-
-          if (typeof onClickRef.current === 'function') {
-            onClickRef.current(e);
           }
 
           staticDefinitions.providerValue.store.handleSelect(nodeId);
