@@ -1,6 +1,13 @@
 # Changelog
 
-### v0.0.8 (2020/8/20)
+### v0.0.9 (2020/8/21)
+
+**Breaking Changes**
+
+- The `canReceiveFocusFromArrows` prop has been removed. Focus traps now automatically prevent
+  navigation via arrow input.
+
+### v0.0.8 (2020/8/21)
 
 **Bug Fixes**
 
