@@ -448,9 +448,7 @@ is located in the [`./examples`](./examples) folder.
 
 Instructions for running the examples are found in the README file for each example.
 
-### Basic Examples
-
-These are examples showing the basics of using this library.
+#### Basic Examples
 
 - [**Basic Layout**](./examples/basic-layout) - Demonstrates using the `orientation` prop for vertical and horizontal lists
 - [**Wrapping**](./examples/wrapping) - Includes usage of the `wrapping` prop
@@ -458,9 +456,7 @@ These are examples showing the basics of using this library.
 - [**Disabled Focus Nodes**](./examples/disabled-focus-nodes) - Shows how to disable focus nodes using the `disabled` prop
 - [**Focus Trap**](./examples/focus-trap) - Demonstrates how to create focus traps
 
-### Advanced Examples
-
-These examples show more complicated UI examples.
+#### Advanced Examples
 
 - [**Animated Page Transition**](./examples/animated-page-transition) - Animate between two pages
 - [**`isExiting` Page Transition**](./examples/animated-page-transition) - Animating between pages _without_ user input
