@@ -323,8 +323,12 @@ export function FocusNode(
         className: classNameString,
         children,
         onMouseOver(e: any) {
-          // We only set focus via mouse to the leaf nodes
-          if (nodeRef.current && nodeRef.current.children.length === 0) {
+          // We only set focus via mouse to the leaf nodes that aren't disabled
+          if (
+            nodeRef.current &&
+            nodeRef.current.children.length === 0 &&
+            !nodeRef.current.disabled
+          ) {
             staticDefinitions.providerValue.store.setFocus(nodeId);
           }
 
@@ -339,8 +343,9 @@ export function FocusNode(
 
           const isLeaf =
             nodeRef.current && nodeRef.current.children.length === 0;
+          const isDisabled = nodeRef.current && nodeRef.current.disabled;
 
-          if (!isLeaf) {
+          if (!isLeaf || isDisabled) {
             return;
           }
 
