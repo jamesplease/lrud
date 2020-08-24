@@ -267,14 +267,6 @@ export function FocusNode(
   nodeRef.current = node;
 
   useEffect(() => {
-    store.updateNode(nodeId, {
-      disabled: Boolean(disabled),
-      isExiting: Boolean(isExiting),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [disabled, isExiting]);
-
-  useEffect(() => {
     store.createNodes(
       staticDefinitions.providerValue.focusNodesHierarchy,
       staticDefinitions.providerValue.focusDefinitionHierarchy
@@ -305,6 +297,14 @@ export function FocusNode(
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    store.updateNode(nodeId, {
+      disabled: Boolean(disabled),
+      isExiting: Boolean(isExiting),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disabled, isExiting]);
 
   const classNameString = `${className} ${node.isFocused ? focusedClass : ''} ${
     node.isFocusedLeaf ? focusedLeafClass : ''
