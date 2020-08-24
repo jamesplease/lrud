@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.0.11 (2020/8/24)
+
+**Bug Fixes**
+
+- Removed a warning that could sometimes happen when disabling focus nodes on mount
+- Pointer events now respect disabled nodes
+
 ### v0.0.10 (2020/8/21)
 
 **New Features**
