@@ -77,6 +77,12 @@ export function FocusNode(
     disabledClass = 'focusDisabled',
     activeClass = 'isActive',
 
+    style = {},
+    focusedStyle = {},
+    focusedLeafStyle = {},
+    disabledStyle = {},
+    activeStyle = {},
+
     onKey,
     onArrow,
     onLeft,
@@ -314,6 +320,14 @@ export function FocusNode(
       : ''
   } ${node.active ? activeClass : ''}`;
 
+  const computedStyle = {
+    ...style,
+    ...(node.isFocused ? focusedStyle : {}),
+    ...(node.isFocusedLeaf ? focusedLeafStyle : {}),
+    ...(node.disabled ? disabledStyle : {}),
+    ...(node.active ? activeStyle : {}),
+  };
+
   return (
     <FocusContext.Context.Provider value={staticDefinitions.providerValue}>
       {createElement(elementType, {
@@ -321,6 +335,7 @@ export function FocusNode(
         ...computedProps,
         ref,
         className: classNameString,
+        style: computedStyle,
         children,
         onMouseOver(e: any) {
           // We only set focus via mouse to the leaf nodes that aren't disabled

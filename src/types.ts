@@ -244,6 +244,12 @@ export interface FocusNodeProps extends FocusNodeEvents {
   focusedLeafClass?: string;
   disabledClass?: string;
   activeClass?: string;
+
+  style?: object;
+  focusedStyle?: object;
+  focusedLeafStyle?: object;
+  disabledStyle?: object;
+  activeStyle?: object;
 }
 
 export interface GridStyle {
