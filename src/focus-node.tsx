@@ -322,10 +322,10 @@ export function FocusNode(
 
   const computedStyle = {
     ...style,
-    ...(node.isFocused ? focusedStyle : {}),
-    ...(node.isFocusedLeaf ? focusedLeafStyle : {}),
-    ...(node.disabled ? disabledStyle : {}),
-    ...(node.active ? activeStyle : {}),
+    ...(node.isFocused && focusedStyle),
+    ...(node.isFocusedLeaf && focusedLeafStyle),
+    ...(node.disabled && disabledStyle),
+    ...(node.active && activeStyle),
   };
 
   return (
