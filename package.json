@@ -1,6 +1,6 @@
 {
   "name": "@please/lrud",
-  "version": "0.0.12-beta.3",
+  "version": "0.0.12-beta.4",
   "description": "A React library for managing focus in TV apps.",
   "main": "es/index.js",
   "module": "es/index.js",
