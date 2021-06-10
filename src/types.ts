@@ -1,3 +1,5 @@
+import { Ref } from 'react';
+
 export type Orientation = 'horizontal' | 'vertical';
 export type Direction = 'forward' | 'backward';
 
@@ -14,10 +16,7 @@ export type NavigationStyle = 'first-child' | 'grid';
 export type ButtonKey = 'select' | 'back';
 export type LRUDKey = Arrow | 'select' | 'back';
 
-export type ReactNodeRef =
-  | React.MutableRefObject<HTMLElement | null>
-  | ((instance: HTMLElement | null) => void)
-  | null;
+export type ReactNodeRef = Ref<HTMLElement>;
 
 export interface LRUDEvent {
   key: LRUDKey;
