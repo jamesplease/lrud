@@ -47,6 +47,7 @@ export default function nodeFromDefinition({
   const defaultFocusRowValue = defaultFocusRow ?? 0;
 
   const node: FocusNode = {
+    elRef: nodeDefinition.elRef,
     focusId: nodeDefinition.focusId,
     isRoot: false,
     parentId,

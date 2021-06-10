@@ -14,6 +14,11 @@ export type NavigationStyle = 'first-child' | 'grid';
 export type ButtonKey = 'select' | 'back';
 export type LRUDKey = Arrow | 'select' | 'back';
 
+export type ReactNodeRef =
+  | React.MutableRefObject<HTMLElement | null>
+  | ((instance: HTMLElement | null) => void)
+  | null;
+
 export interface LRUDEvent {
   key: LRUDKey;
   isArrow: boolean;
@@ -96,6 +101,7 @@ export interface BaseNode extends FocusNodeEvents {
 }
 
 export interface RootFocusNode extends BaseNode {
+  elRef: null;
   isRoot: true;
   parentId: null;
   isFocused: boolean;
@@ -128,6 +134,7 @@ export interface NodeUpdate {
 }
 
 export interface FocusNode extends BaseNode {
+  elRef: ReactNodeRef;
   isRoot: false;
   parentId: string;
   isFocused: boolean;
@@ -167,6 +174,7 @@ export interface FocusState {
 }
 
 export interface NodeDefinition extends FocusNodeEvents {
+  elRef: ReactNodeRef;
   focusId: Id;
   wrapping?: boolean;
   orientation?: Orientation;

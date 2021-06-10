@@ -18,14 +18,10 @@ import {
   FocusNode as FocusNodeType,
   NodeDefinition,
   ProviderValue,
+  ReactNodeRef
 } from './types';
 
 let uniqueId = 0;
-
-type Ref =
-  | React.MutableRefObject<HTMLElement | null>
-  | ((instance: HTMLElement | null) => void)
-  | null;
 
 function checkForUpdate({
   focusStore,
@@ -97,7 +93,7 @@ export function FocusNode(
 
     ...otherProps
   }: FocusNodeProps,
-  ref: Ref
+  ref: ReactNodeRef
 ) {
   const [nodeId] = useState(() => {
     const isInvalidId = focusId === 'root';
@@ -137,6 +133,7 @@ export function FocusNode(
       typeof wrapGridColumns === 'boolean' ? wrapGridColumns : wrapping;
 
     const nodeDefinition: NodeDefinition = {
+      elRef: ref,
       focusId: nodeId,
       orientation: orientation || defaultOrientation,
       wrapping: Boolean(wrapping),

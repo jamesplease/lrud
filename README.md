@@ -324,6 +324,7 @@ A focus node. Each `<FocusNode/>` React component creates one of these.
 
 | Property                      | Type             | Description                                                                                                                       |
 | ----------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `elRef`                       | ref              | A ref containing the HTML element for this node.                                                                                  |
 | `focusId`                     | string           | A unique identifier for this node.                                                                                                |
 | `children`                    | Array\<string\>  | An array of focus IDs representing the children of this node.                                                                     |
 | `focusedChildIndex`           | number\|null     | The index of the focused child of this node, if there is one.                                                                     |
