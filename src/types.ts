@@ -174,7 +174,7 @@ export interface FocusState {
 
 export interface NodeDefinition extends FocusNodeEvents {
   focusId: Id;
-  elRef: ReactNodeRef;
+  elRef: RefObject<HTMLElement | null>;
   wrapping?: boolean;
   orientation?: Orientation;
   trap?: boolean;

@@ -147,7 +147,7 @@ export function FocusNode(
       typeof wrapGridColumns === 'boolean' ? wrapGridColumns : wrapping;
 
     const nodeDefinition: NodeDefinition = {
-      elRef: ref,
+      elRef,
       focusId: nodeId,
       orientation: orientation || defaultOrientation,
       wrapping: Boolean(wrapping),

@@ -35,7 +35,11 @@ export default function createFocusStore({
     _updatingFocusIsLocked: false,
     nodes: {
       root: {
-        elRef: null,
+        // Note: this a "fake" React ref in that React isn't ensuring
+        // that it stays constant.
+        elRef: {
+          current: null,
+        },
         focusId: 'root',
         isRoot: true,
         parentId: null,
