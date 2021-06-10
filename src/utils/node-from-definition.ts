@@ -8,7 +8,7 @@ export default function nodeFromDefinition({
   parentNode: Node;
 }) {
   const {
-    elRef = null,
+    elRef,
     onKey,
     onArrow,
     onLeft,

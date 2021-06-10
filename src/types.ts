@@ -100,7 +100,7 @@ export interface BaseNode extends FocusNodeEvents {
 }
 
 export interface RootFocusNode extends BaseNode {
-  elRef: null;
+  elRef: Ref<null>;
   isRoot: true;
   parentId: null;
   isFocused: boolean;
@@ -174,7 +174,7 @@ export interface FocusState {
 
 export interface NodeDefinition extends FocusNodeEvents {
   focusId: Id;
-  elRef?: ReactNodeRef;
+  elRef: ReactNodeRef;
   wrapping?: boolean;
   orientation?: Orientation;
   trap?: boolean;
