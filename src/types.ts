@@ -1,4 +1,4 @@
-import { Ref } from 'react';
+import { Ref, RefObject } from 'react';
 
 export type Orientation = 'horizontal' | 'vertical';
 export type Direction = 'forward' | 'backward';
@@ -100,7 +100,7 @@ export interface BaseNode extends FocusNodeEvents {
 }
 
 export interface RootFocusNode extends BaseNode {
-  elRef: Ref<null>;
+  elRef: RefObject<null>;
   isRoot: true;
   parentId: null;
   isFocused: boolean;
@@ -133,7 +133,7 @@ export interface NodeUpdate {
 }
 
 export interface FocusNode extends BaseNode {
-  elRef: ReactNodeRef;
+  elRef: RefObject<HTMLElement | null>;
   isRoot: false;
   parentId: string;
   isFocused: boolean;

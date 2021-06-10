@@ -326,7 +326,7 @@ export function FocusNode(
       {createElement(elementType, {
         ...otherProps,
         ...computedProps,
-        ref,
+        ref: elRef,
         className: classNameString,
         children,
         onMouseOver(e: any) {
