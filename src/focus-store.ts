@@ -35,6 +35,7 @@ export default function createFocusStore({
     _updatingFocusIsLocked: false,
     nodes: {
       root: {
+        elRef: null,
         focusId: 'root',
         isRoot: true,
         parentId: null,
