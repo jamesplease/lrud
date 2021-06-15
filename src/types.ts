@@ -130,6 +130,11 @@ export type Listener = () => void;
 export interface NodeUpdate {
   disabled?: boolean;
   isExiting?: boolean;
+  wrapping?: boolean;
+  trap?: boolean;
+  restoreTrapFocusHierarchy?: boolean;
+  defaultFocusColumn?: number;
+  defaultFocusRow?: number;
 }
 
 export interface FocusNode extends BaseNode {

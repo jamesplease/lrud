@@ -313,9 +313,22 @@ export function FocusNode(
     store.updateNode(nodeId, {
       disabled: Boolean(disabled),
       isExiting: Boolean(isExiting),
+      defaultFocusColumn,
+      defaultFocusRow,
+      wrapping,
+      trap: isTrap,
+      restoreTrapFocusHierarchy,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [disabled, isExiting]);
+  }, [
+    disabled,
+    isExiting,
+    defaultFocusColumn,
+    defaultFocusRow,
+    wrapping,
+    isTrap,
+    restoreTrapFocusHierarchy,
+  ]);
 
   const classNameString = `${className} ${node.isFocused ? focusedClass : ''} ${
     node.isFocusedLeaf ? focusedLeafClass : ''
