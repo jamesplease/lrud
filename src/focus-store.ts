@@ -466,7 +466,6 @@ export default function createFocusStore({
     updateNode,
     handleArrow,
     handleSelect,
-    setInteractionMode,
     configurePointerEvents,
     destroy,
   };
