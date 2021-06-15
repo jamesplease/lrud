@@ -26,6 +26,18 @@ interface CreateFocusStoreOptions {
   pointerEvents?: boolean;
 }
 
+// When these props of a node change, then the store
+// will alert subscribers.
+const dynamicNodeProps = [
+  'disabled',
+  'isExiting',
+  'defaultFocusColumn',
+  'defaultFocusRow',
+  'wrapping',
+  'trap',
+  'restoreTrapFocusHierarchy',
+];
+
 export default function createFocusStore({
   orientation = 'horizontal',
   wrapping = false,
@@ -284,26 +296,37 @@ export default function createFocusStore({
       return;
     }
 
-    const newDisabledState = Boolean(update.disabled);
-    const newExitState = Boolean(update.isExiting);
+    update.disabled = Boolean(update.disabled);
+    update.isExiting = Boolean(update.isExiting);
 
-    const disableChanged = currentNode.disabled !== newDisabledState;
-    const exitChanged = currentNode.isExiting !== newExitState;
-    const nodeChanged = disableChanged || exitChanged;
+    const nodeChanged = dynamicNodeProps.some((prop) => {
+      // @ts-ignore
+      return currentNode[prop] !== update[prop];
+    });
 
     if (update && nodeChanged) {
       const newNode: Node = {
         ...currentNode,
-        disabled: newDisabledState,
-        isExiting: newExitState,
+        disabled: update.disabled,
+        isExiting: update.isExiting,
+        defaultFocusColumn:
+          update.defaultFocusColumn ?? currentNode.defaultFocusColumn,
+        defaultFocusRow: update.defaultFocusRow ?? currentNode.defaultFocusRow,
+        wrapping: update.wrapping ?? currentNode.wrapping,
+        trap: update.wrapping ?? currentNode.trap,
+        restoreTrapFocusHierarchy:
+          update.restoreTrapFocusHierarchy ??
+          currentNode.restoreTrapFocusHierarchy,
       };
 
       const updatedChildren = recursivelyUpdateChildren(
         currentState.nodes,
         newNode.children,
+        // Note: we don't pass the full update as the other attributes (trap, wrapping, etc)
+        // only affect the parent, whereas these specific values affect the children.
         {
-          disabled: newDisabledState,
-          isExiting: newExitState,
+          disabled: update.disabled,
+          isExiting: update.isExiting,
         }
       );
 
@@ -320,7 +343,7 @@ export default function createFocusStore({
         },
       };
 
-      if (nodeWasFocused && (newDisabledState || newExitState)) {
+      if (nodeWasFocused && (update.disabled || update.isExiting)) {
         const parentId = newNode.parentId as Id;
 
         updatedState = updateFocus({
