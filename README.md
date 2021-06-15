@@ -418,15 +418,17 @@ An object that represents the store that contains all of the state related to wh
 Typically, you should not need to interact with this object directly, but it is made available to you
 for advanced use cases that you may have.
 
-| Property       | Type     | Description                                                            |
-| -------------- | -------- | ---------------------------------------------------------------------- |
-| `getState`     | function | Returns the current [FocusState](#focusstate)                          |
-| `createNodes`  | function | Creates one or more focus nodes in the tree.                           |
-| `deleteNode`   | function | Deletes a focus node from the tree.                                    |
-| `setFocus`     | function | Imperatively assign focus to a particular focus node.                  |
-| `updateNode`   | function | Update an existing node. Used to, for example, set a node as disabled. |
-| `handleArrow`  | function | Call this to navigate based on an arrow key press.                     |
-| `handleSelect` | function | Call this to cause the focus tree to respond to a "select" key press.  |
+| Property                 | Type     | Description                                                            |
+| ------------------------ | -------- | ---------------------------------------------------------------------- |
+| `getState`               | function | Returns the current [FocusState](#focusstate)                          |
+| `createNodes`            | function | Creates one or more focus nodes in the tree.                           |
+| `deleteNode`             | function | Deletes a focus node from the tree.                                    |
+| `setFocus`               | function | Imperatively assign focus to a particular focus node.                  |
+| `updateNode`             | function | Update an existing node. Used to, for example, set a node as disabled. |
+| `handleArrow`            | function | Call this to navigate based on an arrow key press.                     |
+| `handleSelect`           | function | Call this to cause the focus tree to respond to a "select" key press.  |
+| `configurePointerEvents` | function | Enable or disable pointer events. Receives one argument, a `boolean`.  | 
+| `destroy`                | function | Call when disposing of the store. Cleans up event listeners.           |
 
 ### `FocusState`
 
@@ -434,13 +436,16 @@ for advanced use cases that you may have.
 
 An object representing the state of the focus in the app.
 
-| Property                 | Type             | Description                                                          |
-| ------------------------ | ---------------- | -------------------------------------------------------------------- |
-| `focusedNodeId`          | string           | The ID of the leaf node in the focus hierarchy.                      |
-| `focusHierarchy`         | Array            | An array of node IDs representing the focus hierarchy.               |
-| `activeNodeId`           | string \| `null` | The ID of the active node, if there is one.                          |
-| `nodes`                  | Object           | A mapping of all of the focus nodes that exist.                      |
-| `_updatingFocusIsLocked` | boolean          | A boolean used internally for managing the creation of nested nodes. |
+| Property                   | Type             | Description                                                             |
+| -------------------------- | ---------------- | ----------------------------------------------------------------------- |
+| `focusedNodeId`            | string           | The ID of the leaf node in the focus hierarchy.                         |
+| `focusHierarchy`           | Array            | An array of node IDs representing the focus hierarchy.                  |
+| `activeNodeId`             | string \| `null` | The ID of the active node, if there is one.                             |
+| `nodes`                    | Object           | A mapping of all of the focus nodes that exist.                         |
+| `interactionMode`          | string           | The active interaction mode of the app. Either `"lrud"` or `"pointer"`. |
+| `_hasPointerEventsEnabled` | boolean          | A boolean used internally for managing the creation of nested nodes.    |
+| `_hasPointerEventsEnabled` | boolean          | Whether or not pointer events are currently enabled.                    |
+| `_updatingFocusIsLocked`   | boolean          | A boolean used internally for managing the creation of nested nodes.    |
 
 ## Examples
 

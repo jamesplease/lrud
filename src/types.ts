@@ -218,7 +218,6 @@ export interface FocusStore {
   updateNode: UpdateNode;
   handleArrow: (arrow: Arrow) => void;
   handleSelect: (nodeId?: Id) => void;
-  setInteractionMode: (interactionMode: InteractionMode) => void;
   configurePointerEvents: (enablePointerEvents: boolean) => void;
   destroy: () => void;
 }
