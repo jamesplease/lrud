@@ -16,22 +16,31 @@ import {
   NodeUpdate,
   Listener,
   NodeDefinition,
+  InteractionMode,
 } from './types';
 
 interface CreateFocusStoreOptions {
   orientation?: Orientation;
   wrapping?: boolean;
   navigationStyle?: NavigationStyle;
+  pointerEvents?: boolean;
 }
 
 export default function createFocusStore({
   orientation = 'horizontal',
   wrapping = false,
+  pointerEvents = false,
 }: CreateFocusStoreOptions = {}): FocusStore {
   let currentState: FocusState = {
     focusedNodeId: 'root',
     activeNodeId: null,
     focusHierarchy: ['root'],
+
+    // TODO: should the interaction state values be moved out of the state and placed
+    // on the store directly?
+    interactionMode: 'lrud',
+    _hasPointerEventsEnabled: pointerEvents,
+
     _updatingFocusIsLocked: false,
     nodes: {
       root: {
@@ -216,6 +225,19 @@ export default function createFocusStore({
     });
   }
 
+  function setInteractionMode(newMode: InteractionMode) {
+    if (newMode === currentState.interactionMode) {
+      return;
+    }
+
+    const newFocusState: FocusState = {
+      ...currentState,
+      interactionMode: newMode,
+    };
+
+    currentState = newFocusState;
+  }
+
   function updateNode(nodeId: Id, update: NodeUpdate) {
     const currentNode = currentState.nodes[nodeId];
 
@@ -322,6 +344,10 @@ export default function createFocusStore({
       return;
     }
 
+    if (newState.interactionMode !== 'lrud') {
+      newState.interactionMode = 'lrud';
+    }
+
     if (newState !== currentState) {
       currentState = newState;
       onUpdate();
@@ -376,6 +402,61 @@ export default function createFocusStore({
     onUpdate();
   }
 
+  // This boolean tracks whether or not we have registered our pointer listeners.
+  // This ensures that we never register those listeners more than once.
+  let isListeningToPointerEvents = false;
+
+  // This allows a user to dynamically enable/disable pointer events.
+  function configurePointerEvents(enablePointerEvents: boolean) {
+    const existingState = currentState;
+
+    currentState = {
+      ...existingState,
+      _hasPointerEventsEnabled: enablePointerEvents,
+    };
+
+    if (enablePointerEvents && !isListeningToPointerEvents) {
+      addPointerListeners();
+    }
+
+    if (!enablePointerEvents) {
+      removePointerListeners();
+    }
+  }
+
+  let handlingPointerEvent = false;
+  function onPointerEvent() {
+    if (handlingPointerEvent) {
+      return;
+    }
+
+    handlingPointerEvent = true;
+    requestAnimationFrame(() => {
+      setInteractionMode('pointer');
+      handlingPointerEvent = false;
+    });
+  }
+
+  function addPointerListeners() {
+    isListeningToPointerEvents = true;
+    window.addEventListener('mousemove', onPointerEvent);
+    window.addEventListener('mousedown', onPointerEvent);
+  }
+
+  function removePointerListeners() {
+    isListeningToPointerEvents = false;
+    window.removeEventListener('mousemove', onPointerEvent);
+    window.removeEventListener('mousedown', onPointerEvent);
+  }
+
+  function destroy() {
+    removePointerListeners();
+  }
+
+  if (pointerEvents) {
+    addPointerListeners();
+  }
+
   return {
     subscribe,
     getState,
@@ -385,5 +466,7 @@ export default function createFocusStore({
     updateNode,
     handleArrow,
     handleSelect,
+    configurePointerEvents,
+    destroy,
   };
 }
