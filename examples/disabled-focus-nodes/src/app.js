@@ -1,4 +1,3 @@
-import React from 'react';
 import { FocusNode } from '@please/lrud';
 import './app.css';
 

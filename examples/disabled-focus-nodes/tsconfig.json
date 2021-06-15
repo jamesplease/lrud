@@ -3,7 +3,14 @@
     "target": "es5",
     "allowJs": true,
     "skipLibCheck": true,
-    "lib": ["dom", "webworker", "es6", "dom.iterable", "scripthost", "es2019"],
+    "lib": [
+      "dom",
+      "webworker",
+      "es6",
+      "dom.iterable",
+      "scripthost",
+      "es2019"
+    ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -14,8 +21,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "jsx": "react-jsx",
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types"
+    ],
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
