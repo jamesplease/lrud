@@ -98,6 +98,73 @@ export function FocusNode(
 ) {
   const elRef = useRef(null);
 
+  // We store the callbacks in a ref so that we can pass a wrapper function into the underlying
+  // focus node within the focus state. This wrapper function stays constant throughout the lifetime
+  // of the node, and that wrapper calls this ref.
+  // The reason for this roundabout solution is to avoid a situation of an infinite rerenders: if the node
+  // itself were updated when the callbacks changed, then this would cause all consumers of the store state
+  // to render. Unless consumers are using `useCallback`, this would recreate the handlers, creating an infinite
+  // loop.
+  const callbacksRef = useRef({
+    onKey,
+    onArrow,
+    onLeft,
+    onRight,
+    onUp,
+    onDown,
+    onSelected,
+    onBack,
+
+    onMove,
+    onGridMove,
+
+    onFocused,
+    onBlurred,
+
+    onClick,
+    onMouseOver,
+  });
+
+  useEffect(() => {
+    callbacksRef.current = {
+      onKey,
+      onArrow,
+      onLeft,
+      onRight,
+      onUp,
+      onDown,
+      onSelected,
+      onBack,
+
+      onMove,
+      onGridMove,
+
+      onFocused,
+      onBlurred,
+
+      onClick,
+      onMouseOver,
+    };
+  }, [
+    onKey,
+    onArrow,
+    onLeft,
+    onRight,
+    onUp,
+    onDown,
+    onSelected,
+    onBack,
+
+    onMove,
+    onGridMove,
+
+    onFocused,
+    onBlurred,
+
+    onClick,
+    onMouseOver,
+  ]);
+
   useImperativeHandle(
     ref,
     // I may need to update this based on this comment to make TS happy:
@@ -146,6 +213,20 @@ export function FocusNode(
     const wrapGridColumnsValue =
       typeof wrapGridColumns === 'boolean' ? wrapGridColumns : wrapping;
 
+    function createCallbackWrapper(fnName: string) {
+      return function callbackWrapper(...args: any[]) {
+        // @ts-ignore
+        if (
+          callbacksRef.current &&
+          // @ts-ignore
+          typeof callbacksRef.current[fnName] === 'function'
+        ) {
+          // @ts-ignore
+          callbacksRef.current[fnName](...args);
+        }
+      };
+    }
+
     const nodeDefinition: NodeDefinition = {
       elRef,
       focusId: nodeId,
@@ -163,17 +244,17 @@ export function FocusNode(
       defaultFocusColumn: defaultFocusColumn ?? 0,
       defaultFocusRow: defaultFocusRow ?? 0,
 
-      onKey,
-      onArrow,
-      onLeft,
-      onRight,
-      onUp,
-      onDown,
-      onSelected,
-      onBack,
+      onKey: createCallbackWrapper('onKey'),
+      onArrow: createCallbackWrapper('onArrow'),
+      onLeft: createCallbackWrapper('onLeft'),
+      onRight: createCallbackWrapper('onRight'),
+      onUp: createCallbackWrapper('onUp'),
+      onDown: createCallbackWrapper('onDown'),
+      onSelected: createCallbackWrapper('onSelected'),
+      onBack: createCallbackWrapper('onBack'),
 
-      onMove,
-      onGridMove,
+      onMove: createCallbackWrapper('onMove'),
+      onGridMove: createCallbackWrapper('onGridMove'),
 
       initiallyDisabled: Boolean(disabled),
       onMountAssignFocusTo,
