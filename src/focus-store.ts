@@ -29,7 +29,7 @@ interface CreateFocusStoreOptions {
 export default function createFocusStore({
   orientation = 'horizontal',
   wrapping = false,
-  pointerEvents = true,
+  pointerEvents = false,
 }: CreateFocusStoreOptions = {}): FocusStore {
   let currentState: FocusState = {
     focusedNodeId: 'root',
@@ -39,9 +39,9 @@ export default function createFocusStore({
     // TODO: should the interaction state values be moved out of the state and placed
     // on the store directly?
     interactionMode: 'lrud',
-    _updatingFocusIsLocked: false,
     _hasPointerEventsEnabled: pointerEvents,
 
+    _updatingFocusIsLocked: false,
     nodes: {
       root: {
         // Note: this a "fake" React ref in that React isn't ensuring

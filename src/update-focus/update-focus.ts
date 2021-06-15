@@ -58,6 +58,8 @@ export default function updateFocus({
     focusHierarchy: newFocusHierarchy,
     focusedNodeId,
     activeNodeId: focusState.activeNodeId,
+    interactionMode: focusState.interactionMode,
+    _hasPointerEventsEnabled: focusState._hasPointerEventsEnabled,
   };
 
   emitFocusStateEvents({
