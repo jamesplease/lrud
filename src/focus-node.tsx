@@ -259,6 +259,11 @@ export function FocusNode(
   });
 
   const { store } = contextValue as ProviderValue;
+  const storeRef = useRef(store);
+
+  useEffect(() => {
+    storeRef.current = store;
+  }, [store]);
 
   const [node, setNode] = useState<FocusNodeType>(() => {
     return staticDefinitions.initialNode;
@@ -331,10 +336,14 @@ export function FocusNode(
         children,
         onMouseOver(e: any) {
           // We only set focus via mouse to the leaf nodes that aren't disabled
+          const focusState = storeRef.current.getState();
+
           if (
             nodeRef.current &&
             nodeRef.current.children.length === 0 &&
-            !nodeRef.current.disabled
+            !nodeRef.current.disabled &&
+            focusState._hasPointerEventsEnabled &&
+            focusState.interactionMode === 'pointer'
           ) {
             staticDefinitions.providerValue.store.setFocus(nodeId);
           }
@@ -353,6 +362,11 @@ export function FocusNode(
           const isDisabled = nodeRef.current && nodeRef.current.disabled;
 
           if (!isLeaf || isDisabled) {
+            return;
+          }
+
+          const focusState = storeRef.current.getState();
+          if (!focusState._hasPointerEventsEnabled) {
             return;
           }
 

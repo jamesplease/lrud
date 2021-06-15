@@ -164,12 +164,16 @@ export interface NodeMap {
   [key: string]: Node | undefined;
 }
 
+export type InteractionMode = 'lrud' | 'pointer';
+
 export interface FocusState {
   focusedNodeId: Id;
   activeNodeId: Id | null;
   focusHierarchy: Id[];
+  interactionMode: InteractionMode;
   nodes: NodeMap;
   _updatingFocusIsLocked: boolean;
+  _hasPointerEventsEnabled: boolean;
 }
 
 export interface NodeDefinition extends FocusNodeEvents {
@@ -214,6 +218,9 @@ export interface FocusStore {
   updateNode: UpdateNode;
   handleArrow: (arrow: Arrow) => void;
   handleSelect: (nodeId?: Id) => void;
+  setInteractionMode: (interactionMode: InteractionMode) => void;
+  configurePointerEvents: (enablePointerEvents: boolean) => void;
+  destroy: () => void;
 }
 
 export interface ProviderValue {
