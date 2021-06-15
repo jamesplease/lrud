@@ -309,11 +309,21 @@ export default function createFocusStore({
         ...currentNode,
         disabled: update.disabled,
         isExiting: update.isExiting,
+        defaultFocusColumn:
+          update.defaultFocusColumn ?? currentNode.defaultFocusColumn,
+        defaultFocusRow: update.defaultFocusRow ?? currentNode.defaultFocusRow,
+        wrapping: update.wrapping ?? currentNode.wrapping,
+        trap: update.wrapping ?? currentNode.trap,
+        restoreTrapFocusHierarchy:
+          update.restoreTrapFocusHierarchy ??
+          currentNode.restoreTrapFocusHierarchy,
       };
 
       const updatedChildren = recursivelyUpdateChildren(
         currentState.nodes,
         newNode.children,
+        // Note: we don't pass the full update as the other attributes (trap, wrapping, etc)
+        // only affect the parent, whereas these specific values affect the children.
         {
           disabled: update.disabled,
           isExiting: update.isExiting,
@@ -343,6 +353,7 @@ export default function createFocusStore({
       }
 
       currentState = updatedState;
+      onUpdate();
     }
   }
 
