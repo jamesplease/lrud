@@ -273,11 +273,14 @@ export function FocusNode(
   const nodeRef = useRef(node);
   nodeRef.current = node;
 
+  let isReadyForPointerEvents = useRef(false);
+
   useEffect(() => {
     store.createNodes(
       staticDefinitions.providerValue.focusNodesHierarchy,
       staticDefinitions.providerValue.focusDefinitionHierarchy
     );
+    isReadyForPointerEvents.current = true;
 
     const unsubscribe = store.subscribe(() =>
       checkForUpdate({
@@ -299,6 +302,7 @@ export function FocusNode(
     });
 
     return () => {
+      isReadyForPointerEvents.current = false;
       store.deleteNode(nodeId);
       unsubscribe();
     };
@@ -338,7 +342,8 @@ export function FocusNode(
             nodeRef.current.children.length === 0 &&
             !nodeRef.current.disabled &&
             focusState._hasPointerEventsEnabled &&
-            focusState.interactionMode === 'pointer'
+            focusState.interactionMode === 'pointer' &&
+            isReadyForPointerEvents.current
           ) {
             staticDefinitions.providerValue.store.setFocus(nodeId);
           }
@@ -361,7 +366,10 @@ export function FocusNode(
           }
 
           const focusState = staticDefinitions.providerValue.store.getState();
-          if (!focusState._hasPointerEventsEnabled) {
+          if (
+            !focusState._hasPointerEventsEnabled ||
+            !isReadyForPointerEvents.current
+          ) {
             return;
           }
 
