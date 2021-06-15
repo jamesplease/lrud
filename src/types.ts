@@ -1,3 +1,5 @@
+import { Ref, RefObject } from 'react';
+
 export type Orientation = 'horizontal' | 'vertical';
 export type Direction = 'forward' | 'backward';
 
@@ -13,6 +15,8 @@ export type NavigationStyle = 'first-child' | 'grid';
 
 export type ButtonKey = 'select' | 'back';
 export type LRUDKey = Arrow | 'select' | 'back';
+
+export type ReactNodeRef = Ref<HTMLElement>;
 
 export interface LRUDEvent {
   key: LRUDKey;
@@ -96,6 +100,7 @@ export interface BaseNode extends FocusNodeEvents {
 }
 
 export interface RootFocusNode extends BaseNode {
+  elRef: RefObject<null>;
   isRoot: true;
   parentId: null;
   isFocused: boolean;
@@ -128,6 +133,7 @@ export interface NodeUpdate {
 }
 
 export interface FocusNode extends BaseNode {
+  elRef: RefObject<HTMLElement | null>;
   isRoot: false;
   parentId: string;
   isFocused: boolean;
@@ -168,6 +174,7 @@ export interface FocusState {
 
 export interface NodeDefinition extends FocusNodeEvents {
   focusId: Id;
+  elRef: RefObject<HTMLElement | null>;
   wrapping?: boolean;
   orientation?: Orientation;
   trap?: boolean;

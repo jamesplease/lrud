@@ -8,6 +8,7 @@ export default function nodeFromDefinition({
   parentNode: Node;
 }) {
   const {
+    elRef,
     onKey,
     onArrow,
     onLeft,
@@ -47,6 +48,7 @@ export default function nodeFromDefinition({
   const defaultFocusRowValue = defaultFocusRow ?? 0;
 
   const node: FocusNode = {
+    elRef,
     focusId: nodeDefinition.focusId,
     isRoot: false,
     parentId,

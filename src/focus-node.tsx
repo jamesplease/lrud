@@ -1,6 +1,7 @@
 import React, {
   createElement,
   useState,
+  useImperativeHandle,
   useContext,
   useEffect,
   useRef,
@@ -18,14 +19,10 @@ import {
   FocusNode as FocusNodeType,
   NodeDefinition,
   ProviderValue,
+  ReactNodeRef,
 } from './types';
 
 let uniqueId = 0;
-
-type Ref =
-  | React.MutableRefObject<HTMLElement | null>
-  | ((instance: HTMLElement | null) => void)
-  | null;
 
 function checkForUpdate({
   focusStore,
@@ -97,8 +94,21 @@ export function FocusNode(
 
     ...otherProps
   }: FocusNodeProps,
-  ref: Ref
+  ref: ReactNodeRef
 ) {
+  const elRef = useRef(null);
+
+  useImperativeHandle(
+    ref,
+    // I may need to update this based on this comment to make TS happy:
+    // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/46266#issuecomment-662543885
+    // However, this code works as expected so I'm @ts-ignoring it.
+    // @ts-ignore
+    () => {
+      return elRef.current;
+    }
+  );
+
   const [nodeId] = useState(() => {
     const isInvalidId = focusId === 'root';
 
@@ -137,6 +147,7 @@ export function FocusNode(
       typeof wrapGridColumns === 'boolean' ? wrapGridColumns : wrapping;
 
     const nodeDefinition: NodeDefinition = {
+      elRef,
       focusId: nodeId,
       orientation: orientation || defaultOrientation,
       wrapping: Boolean(wrapping),
@@ -220,11 +231,8 @@ export function FocusNode(
       throw new Error('No FocusProvider.');
     }
 
-    const {
-      store,
-      focusDefinitionHierarchy,
-      focusNodesHierarchy,
-    } = contextValue;
+    const { store, focusDefinitionHierarchy, focusNodesHierarchy } =
+      contextValue;
 
     const parentNode = focusNodesHierarchy[focusNodesHierarchy.length - 1];
     const initialNode = nodeFromDefinition({
@@ -232,9 +240,8 @@ export function FocusNode(
       parentNode,
     });
 
-    const newDefinitionHierarchy = focusDefinitionHierarchy.concat(
-      nodeDefinition
-    );
+    const newDefinitionHierarchy =
+      focusDefinitionHierarchy.concat(nodeDefinition);
 
     const newNodesHierarchy = focusNodesHierarchy.concat(initialNode);
 
@@ -319,7 +326,7 @@ export function FocusNode(
       {createElement(elementType, {
         ...otherProps,
         ...computedProps,
-        ref,
+        ref: elRef,
         className: classNameString,
         children,
         onMouseOver(e: any) {

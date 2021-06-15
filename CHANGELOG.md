@@ -1,5 +1,16 @@
 # Changelog
 
+### v0.0.12 (2021/6/15)
+
+**New Features**
+
+- `elRef` is now an attribute of the `FocusNode`, allowing you to more easily
+  access the underlying DOM node.
+
+**Bug Fixes**
+
+- `useFocusHierarchy` now functions correctly
+
 ### v0.0.11 (2020/8/24)
 
 **Bug Fixes**
