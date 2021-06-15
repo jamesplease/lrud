@@ -273,14 +273,40 @@ export function FocusNode(
   const nodeRef = useRef(node);
   nodeRef.current = node;
 
-  let isReadyForPointerEvents = useRef(false);
+  let nodeExistsInTree = useRef(false);
+
+  useEffect(() => {
+    // This ensures that we don't check for updates on the first render.
+    if (!nodeExistsInTree.current) {
+      return;
+    }
+
+    store.updateNode(nodeId, {
+      disabled: Boolean(disabled),
+      isExiting: Boolean(isExiting),
+      defaultFocusColumn,
+      defaultFocusRow,
+      wrapping,
+      trap: isTrap,
+      restoreTrapFocusHierarchy,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    disabled,
+    isExiting,
+    defaultFocusColumn,
+    defaultFocusRow,
+    wrapping,
+    isTrap,
+    restoreTrapFocusHierarchy,
+  ]);
 
   useEffect(() => {
     store.createNodes(
       staticDefinitions.providerValue.focusNodesHierarchy,
       staticDefinitions.providerValue.focusDefinitionHierarchy
     );
-    isReadyForPointerEvents.current = true;
+    nodeExistsInTree.current = true;
 
     const unsubscribe = store.subscribe(() =>
       checkForUpdate({
@@ -302,33 +328,12 @@ export function FocusNode(
     });
 
     return () => {
-      isReadyForPointerEvents.current = false;
+      nodeExistsInTree.current = false;
       store.deleteNode(nodeId);
       unsubscribe();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    store.updateNode(nodeId, {
-      disabled: Boolean(disabled),
-      isExiting: Boolean(isExiting),
-      defaultFocusColumn,
-      defaultFocusRow,
-      wrapping,
-      trap: isTrap,
-      restoreTrapFocusHierarchy,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    disabled,
-    isExiting,
-    defaultFocusColumn,
-    defaultFocusRow,
-    wrapping,
-    isTrap,
-    restoreTrapFocusHierarchy,
-  ]);
 
   const classNameString = `${className} ${node.isFocused ? focusedClass : ''} ${
     node.isFocusedLeaf ? focusedLeafClass : ''
@@ -356,7 +361,7 @@ export function FocusNode(
             !nodeRef.current.disabled &&
             focusState._hasPointerEventsEnabled &&
             focusState.interactionMode === 'pointer' &&
-            isReadyForPointerEvents.current
+            nodeExistsInTree.current
           ) {
             staticDefinitions.providerValue.store.setFocus(nodeId);
           }
@@ -381,7 +386,7 @@ export function FocusNode(
           const focusState = staticDefinitions.providerValue.store.getState();
           if (
             !focusState._hasPointerEventsEnabled ||
-            !isReadyForPointerEvents.current
+            !nodeExistsInTree.current
           ) {
             return;
           }
