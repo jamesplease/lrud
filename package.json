@@ -6,8 +6,8 @@
   "module": "es/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "test": "NODE_ENV=test jest --watchAll",
-    "test:watch": "jest --watch",
+    "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test jest --watchAll",
     "clean": "rimraf ./dist ./es ./tmp ./lib ./types",
     "prepublishOnly": "npm run build",
     "postpublish": "npm run clean",
