@@ -77,6 +77,47 @@ describe('Mounting', () => {
       expect(Object.values(focusState.nodes)).toHaveLength(3);
     });
 
+    it('does not leap over disabled parent nodes', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <>
+            <FocusNode focusId="nodeA" data-testid="nodeA" disabled />
+            <FocusNode focusId="nodeB" data-testid="nodeB" disabled>
+              <FocusNode focusId="nodeB-A" data-testid="nodeB-A" />
+            </FocusNode>
+          </>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      const nodeAEl = screen.getByTestId('nodeA');
+      expect(nodeAEl).not.toHaveClass('isFocused');
+      expect(nodeAEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeBEl = screen.getByTestId('nodeB');
+      expect(nodeBEl).not.toHaveClass('isFocused');
+      expect(nodeBEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeBA = screen.getByTestId('nodeB-A');
+      expect(nodeBA).not.toHaveClass('isFocused');
+      expect(nodeBA).not.toHaveClass('isFocusedLeaf');
+
+      const focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('root');
+      expect(focusState.focusHierarchy).toEqual(['root']);
+      expect(focusState.activeNodeId).toEqual(null);
+      expect(Object.values(focusState.nodes)).toHaveLength(4);
+    });
+
     it('automatically assigns focus to the first node', () => {
       let focusStore;
 
