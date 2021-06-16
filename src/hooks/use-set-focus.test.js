@@ -86,7 +86,7 @@ describe('useSetFocus', () => {
     expect(nodeB).not.toHaveClass('isFocused');
     expect(nodeB).not.toHaveClass('isFocusedLeaf');
 
-    const focusState = focusStore.getState();
+    let focusState = focusStore.getState();
     expect(focusState.focusedNodeId).toEqual('nodeA');
     expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
     expect(focusState.activeNodeId).toEqual(null);
@@ -101,5 +101,77 @@ describe('useSetFocus', () => {
     nodeB = screen.getByTestId('nodeB');
     expect(nodeB).toHaveClass('isFocused');
     expect(nodeB).toHaveClass('isFocusedLeaf');
+
+    focusState = focusStore.getState();
+    expect(focusState.focusedNodeId).toEqual('nodeB');
+    expect(focusState.focusHierarchy).toEqual(['root', 'nodeB']);
+    expect(focusState.activeNodeId).toEqual(null);
+    expect(Object.values(focusState.nodes)).toHaveLength(3);
+  });
+
+  it('can be used to assign focus deeply by focusing a parent', () => {
+    let focusStore;
+    let setFocus;
+
+    function TestComponent() {
+      focusStore = useFocusStoreDangerously();
+      setFocus = useSetFocus();
+
+      return (
+        <>
+          <FocusNode focusId="nodeA" data-testid="nodeA">
+            <FocusNode focusId="nodeA-A" data-testid="nodeA-A">
+              <FocusNode focusId="nodeA-A-A" data-testid="nodeA-A-A">
+                A
+              </FocusNode>
+            </FocusNode>
+            <FocusNode focusId="nodeA-B" data-testid="nodeA-B" />
+          </FocusNode>
+          <FocusNode focusId="nodeB" data-testid="nodeB">
+            <FocusNode focusId="nodeB-A" data-testid="nodeB-A" />
+          </FocusNode>
+        </>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    let nodeAAA = screen.getByTestId('nodeA-A-A');
+    expect(nodeAAA).toHaveClass('isFocused');
+    expect(nodeAAA).toHaveClass('isFocusedLeaf');
+
+    let focusState = focusStore.getState();
+    expect(focusState.focusedNodeId).toEqual('nodeA-A-A');
+    expect(focusState.focusHierarchy).toEqual([
+      'root',
+      'nodeA',
+      'nodeA-A',
+      'nodeA-A-A',
+    ]);
+    expect(focusState.activeNodeId).toEqual(null);
+    expect(Object.values(focusState.nodes)).toHaveLength(7);
+
+    act(() => setFocus('nodeB'));
+
+    nodeAAA = screen.getByTestId('nodeA-A-A');
+    expect(nodeAAA).not.toHaveClass('isFocused');
+    expect(nodeAAA).not.toHaveClass('isFocusedLeaf');
+
+    let nodeB = screen.getByTestId('nodeB');
+    expect(nodeB).toHaveClass('isFocused');
+    expect(nodeB).not.toHaveClass('isFocusedLeaf');
+
+    let nodeBA = screen.getByTestId('nodeB-A');
+    expect(nodeBA).toHaveClass('isFocused');
+    expect(nodeBA).toHaveClass('isFocusedLeaf');
+
+    focusState = focusStore.getState();
+    expect(focusState.focusedNodeId).toEqual('nodeB-A');
+    expect(focusState.focusHierarchy).toEqual(['root', 'nodeB', 'nodeB-A']);
+    expect(focusState.activeNodeId).toEqual(null);
   });
 });
