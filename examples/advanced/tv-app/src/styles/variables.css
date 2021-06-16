@@ -1,0 +1,6 @@
+:root {
+  --appWidth: 1280px;
+  --appHeight: 720px;
+
+  --weightedEase: cubic-bezier(0.5, 0, 0.1, 1);
+}
