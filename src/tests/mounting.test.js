@@ -184,6 +184,69 @@ describe('Mounting', () => {
   });
 
   describe('a deep tree', () => {
-    it('resolves the initial focus state as expected', () => {});
+    it('resolves the initial focus state as expected', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <>
+            <FocusNode focusId="nodeA" data-testid="nodeA">
+              <FocusNode focusId="nodeA-A" data-testid="nodeA-A">
+                <FocusNode focusId="nodeA-A-A" data-testid="nodeA-A-A">
+                  A
+                </FocusNode>
+              </FocusNode>
+              <FocusNode focusId="nodeA-B" data-testid="nodeA-B" />
+            </FocusNode>
+            <FocusNode focusId="nodeB" data-testid="nodeB">
+              <FocusNode focusId="nodeB-A" data-testid="nodeB-A" />
+            </FocusNode>
+          </>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      const nodeAEl = screen.getByTestId('nodeA');
+      expect(nodeAEl).toHaveClass('isFocused');
+      expect(nodeAEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeAAEl = screen.getByTestId('nodeA-A');
+      expect(nodeAAEl).toHaveClass('isFocused');
+      expect(nodeAAEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeAAAEl = screen.getByTestId('nodeA-A-A');
+      expect(nodeAAAEl).toHaveClass('isFocused');
+      expect(nodeAAAEl).toHaveClass('isFocusedLeaf');
+
+      const nodeABEl = screen.getByTestId('nodeA-B');
+      expect(nodeABEl).not.toHaveClass('isFocused');
+      expect(nodeABEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeBEl = screen.getByTestId('nodeB');
+      expect(nodeBEl).not.toHaveClass('isFocused');
+      expect(nodeBEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeBAEl = screen.getByTestId('nodeB-A');
+      expect(nodeBAEl).not.toHaveClass('isFocused');
+      expect(nodeBAEl).not.toHaveClass('isFocusedLeaf');
+
+      const focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeA-A-A');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'nodeA',
+        'nodeA-A',
+        'nodeA-A-A',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+      expect(Object.values(focusState.nodes)).toHaveLength(7);
+    });
   });
 });
