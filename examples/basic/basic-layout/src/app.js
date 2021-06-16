@@ -7,9 +7,7 @@ export default function App() {
       <FocusNode
         orientation="vertical"
         className="block-container block-container-vertical">
-        <FocusNode className="block" disabled>
-          One
-        </FocusNode>
+        <FocusNode className="block">One</FocusNode>
         <FocusNode className="block">Two</FocusNode>
         <FocusNode className="block">Three</FocusNode>
       </FocusNode>
@@ -18,15 +16,11 @@ export default function App() {
         orientation="vertical"
         className="block-container block-container-vertical">
         <FocusNode className="block">One</FocusNode>
-        <FocusNode className="block" disabled>
-          Two
-        </FocusNode>
+        <FocusNode className="block">Two</FocusNode>
         <FocusNode className="block">Three</FocusNode>
       </FocusNode>
 
-      <FocusNode
-        className="block-container block-container-horizontal"
-        disabled>
+      <FocusNode className="block-container block-container-horizontal">
         <FocusNode className="block">One</FocusNode>
         <FocusNode className="block">Two</FocusNode>
         <FocusNode className="block">Three</FocusNode>

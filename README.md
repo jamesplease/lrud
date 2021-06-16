@@ -456,16 +456,19 @@ Instructions for running the examples are found in the README file for each exam
 
 #### Basic Examples
 
-- [**Basic Layout**](./examples/basic-layout) - Demonstrates using the `orientation` prop for vertical and horizontal lists
-- [**Wrapping**](./examples/wrapping) - Includes usage of the `wrapping` prop
-- [**Grid**](./examples/grid) - Shows how to build a grid of focus nodes
-- [**Disabled Focus Nodes**](./examples/disabled-focus-nodes) - Shows how to disable focus nodes using the `disabled` prop
-- [**Focus Trap**](./examples/focus-trap) - Demonstrates how to create focus traps
+- [**Basic Layout**](./examples/basic/basic-layout) - Demonstrates using the `orientation` prop for vertical and horizontal lists
+- [**Wrapping**](./examples/basic/wrapping) - Includes usage of the `wrapping` prop
+- [**Grid**](./examples/basic/grid) - Shows how to build a grid of focus nodes
+- [**Disabled Focus Nodes**](./examples/basic/disabled-focus-nodes) - Shows how to disable focus nodes using the `disabled` prop
+- [**Focus Trap**](./examples/basic/focus-trap) - Demonstrates how to create focus traps
 
 #### Advanced Examples
 
-- [**Animated Page Transition**](./examples/animated-page-transition) - Animate between two pages
-- [**`isExiting` Page Transition**](./examples/animated-page-transition) - Animating between pages _without_ user input
+- [**Modal**](./examples/advanced/modal) - Show and hide an animated modal overlay
+- [**Animated Page Transition**](./examples/advanced/animated-page-transition) - Animate between two pages
+- [**`isExiting` Page Transition**](./examples/advanced/animated-page-transition) - Animating between pages _without_ user input
+- [**Pointer Events**](./examples/advanced/pointer-events) - An interface that supports both pointer and LRUD input
+- [**Grid That Remembers Position**](./examples/advanced/grid-remembers-position) - A grid that returns you to your previous position when you exit and re-enter it
 
 ## Prior Art
 
