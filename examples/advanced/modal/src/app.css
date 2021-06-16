@@ -1,0 +1,76 @@
+.app {
+  display: flex;
+  align-items: center;
+  padding: 50px;
+}
+
+.block-container {
+  border: 1px solid #3e3e3e;
+  margin: 10px;
+  padding: 0.325rem;
+  border-radius: 0.5rem;
+  transition: border 0.18s ease-out;
+}
+
+.block-container.isFocused {
+  border-color: #530db1;
+}
+
+.block-container-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.block-container-horizontal {
+  display: flex;
+}
+
+.block {
+  color: white;
+  display: grid;
+  place-content: center;
+  background: #3c3c3c;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 1rem 1.75rem;
+  margin: 0.325rem;
+  border-radius: 0.4rem;
+  transition: border 0.18s ease-out;
+}
+
+.block.isFocusedLeaf {
+  background: #7700ff;
+}
+
+.block-header {
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: white;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.modal-background {
+  background: rgba(0, 0, 0, 0.75);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.focus-trap {
+  background: #1c1c1c;
+  position: absolute;
+  top: 80px;
+  margin: 0 auto;
+  box-shadow: 0 5px 50px rgba(0, 0, 0, 0.8);
+}
+
+.focus-trap .block {
+  background: #505050;
+}
+
+.focus-trap .block.block.isFocusedLeaf {
+  background: #7700ff;
+}

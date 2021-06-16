@@ -464,6 +464,7 @@ Instructions for running the examples are found in the README file for each exam
 
 #### Advanced Examples
 
+- [**Modal**](./examples/advanced/modal) - Show and hide an animated modal overlay
 - [**Animated Page Transition**](./examples/advanced/animated-page-transition) - Animate between two pages
 - [**`isExiting` Page Transition**](./examples/advanced/animated-page-transition) - Animating between pages _without_ user input
 
