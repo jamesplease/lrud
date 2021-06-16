@@ -205,6 +205,8 @@ export default function createFocusStore({
       }
 
       return;
+    } else if (currentNode.disabled) {
+      return;
     } else if (currentNode.isExiting) {
       if (process.env.NODE_ENV !== 'production') {
         warning(
