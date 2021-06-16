@@ -468,6 +468,7 @@ Instructions for running the examples are found in the README file for each exam
 - [**Animated Page Transition**](./examples/advanced/animated-page-transition) - Animate between two pages
 - [**`isExiting` Page Transition**](./examples/advanced/animated-page-transition) - Animating between pages _without_ user input
 - [**Pointer Events**](./examples/advanced/pointer-events) - An interface that supports both pointer and LRUD input
+- [**Grid That Remembers Position**](./examples/advanced/grid-remembers-position) - A grid that returns you to your previous position when you exit and re-enter it
 
 ## Prior Art
 
