@@ -24,3 +24,31 @@ direction you must write CSS to arrange the list of focus nodes to match that di
 
 The orientation of a focus node cannot be changed once it is set.
 
+## Examples
+
+### Horizontal Orientation
+
+This is a focus node with horizontal orientation.
+
+```js
+<FocusNode>
+  <FocusNode>Child A</FocusNode>
+  <FocusNode>Child B</FocusNode>
+  <FocusNode>Child C</FocusNode>
+</FocusNode>
+```
+
+It's horizontal because the default orientation is horizontal.
+
+### Vertical Orientation
+
+This is a focus node with horizontal orientation.
+
+```js
+<FocusNode orientation="vertical">
+  <FocusNode>Child A</FocusNode>
+  <FocusNode>Child B</FocusNode>
+  <FocusNode>Child C</FocusNode>
+</FocusNode>
+```
+
