@@ -83,7 +83,7 @@ describe('Mounting', () => {
       expect(Object.values(focusState.nodes)).toHaveLength(3);
     });
 
-    it('does not move focus when the left arrow is pressed', () => {
+    it('does not move focus when arrows other than right are pressed', () => {
       let focusStore;
 
       function TestComponent() {
@@ -124,6 +124,20 @@ describe('Mounting', () => {
       fireEvent.keyDown(window, {
         code: 'ArrowLeft',
         key: 'ArrowLeft',
+      });
+
+      expect(focusStore.getState().focusedNodeId).toEqual('nodeA');
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowDown',
+        key: 'ArrowDown',
+      });
+
+      expect(focusStore.getState().focusedNodeId).toEqual('nodeA');
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowUp',
+        key: 'ArrowUp',
       });
 
       expect(focusStore.getState().focusedNodeId).toEqual('nodeA');
