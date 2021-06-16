@@ -1,6 +1,6 @@
-# TV App
+# TV App (WIP)
 
-This example shows how you can use this library to build a TV app.
+This WIP example shows how you can use this library to build a TV app.
 
 ### Running the Example
 
