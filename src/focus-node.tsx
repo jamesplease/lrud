@@ -467,7 +467,8 @@ export function FocusNode(
           const focusState = staticDefinitions.providerValue.store.getState();
           if (
             !focusState._hasPointerEventsEnabled ||
-            !nodeExistsInTree.current
+            !nodeExistsInTree.current ||
+            focusState.interactionMode !== 'pointer'
           ) {
             return;
           }
