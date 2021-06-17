@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import '@testing-library/jest-dom';
-import { render, fireEvent, act } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  createEvent,
+  screen,
+  act,
+} from '@testing-library/react';
 import {
   FocusRoot,
   FocusNode,
@@ -216,6 +222,105 @@ describe('useFocusEvents', () => {
       expect(nodeAOnEnabled.mock.calls.length).toBe(1);
       expect(nodeBOnDisabled.mock.calls.length).toBe(0);
       expect(nodeBOnEnabled.mock.calls.length).toBe(0);
+    });
+  });
+
+  describe('active/inactive', () => {
+    it('calls them when appropriate', (done) => {
+      const nodeAOnActive = jest.fn();
+      const nodeAOnInactive = jest.fn();
+      const nodeBOnActive = jest.fn();
+      const nodeBOnInactive = jest.fn();
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        useFocusEvents('nodeA', {
+          active: nodeAOnActive,
+          inactive: nodeAOnInactive,
+        });
+
+        useFocusEvents('nodeB', {
+          active: nodeBOnActive,
+          inactive: nodeBOnInactive,
+        });
+
+        return (
+          <>
+            <FocusNode focusId="nodeA" data-testid="nodeA" />
+            <FocusNode focusId="nodeB" data-testid="nodeB" />
+          </>
+        );
+      }
+
+      render(
+        <FocusRoot pointerEvents>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      let focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeA');
+      expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
+
+      expect(nodeAOnActive.mock.calls.length).toBe(0);
+      expect(nodeAOnInactive.mock.calls.length).toBe(0);
+      expect(nodeBOnActive.mock.calls.length).toBe(0);
+      expect(nodeBOnInactive.mock.calls.length).toBe(0);
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowRight',
+        key: 'ArrowRight',
+      });
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeB');
+      expect(focusState.focusHierarchy).toEqual(['root', 'nodeB']);
+
+      expect(nodeAOnActive.mock.calls.length).toBe(0);
+      expect(nodeAOnInactive.mock.calls.length).toBe(0);
+      expect(nodeBOnActive.mock.calls.length).toBe(0);
+      expect(nodeBOnInactive.mock.calls.length).toBe(0);
+
+      fireEvent.mouseMove(window);
+
+      requestAnimationFrame(() => {
+        const nodeA = screen.getByTestId('nodeA');
+        const nodeB = screen.getByTestId('nodeB');
+
+        fireEvent.mouseOver(nodeB);
+
+        const clickEventB = createEvent.click(nodeB, { button: 0 });
+        fireEvent(nodeB, clickEventB);
+
+        expect(nodeAOnActive.mock.calls.length).toBe(0);
+        expect(nodeAOnInactive.mock.calls.length).toBe(0);
+        expect(nodeBOnActive.mock.calls.length).toBe(1);
+        expect(nodeBOnInactive.mock.calls.length).toBe(0);
+
+        // Okay
+        fireEvent.mouseOver(nodeA);
+
+        focusState = focusStore.getState();
+        expect(focusState.focusedNodeId).toEqual('nodeA');
+        expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
+
+        expect(nodeAOnActive.mock.calls.length).toBe(0);
+        expect(nodeAOnInactive.mock.calls.length).toBe(0);
+        expect(nodeBOnActive.mock.calls.length).toBe(1);
+        expect(nodeBOnInactive.mock.calls.length).toBe(0);
+
+        const clickEventA = createEvent.click(nodeA, { button: 0 });
+        fireEvent(nodeA, clickEventA);
+
+        expect(nodeAOnActive.mock.calls.length).toBe(1);
+        expect(nodeAOnInactive.mock.calls.length).toBe(0);
+        expect(nodeBOnActive.mock.calls.length).toBe(1);
+        expect(nodeBOnInactive.mock.calls.length).toBe(1);
+
+        done();
+      });
     });
   });
 });

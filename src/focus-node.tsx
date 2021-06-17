@@ -459,12 +459,12 @@ export function FocusNode(
           const isLeaf =
             nodeRef.current && nodeRef.current.children.length === 0;
           const isDisabled = nodeRef.current && nodeRef.current.disabled;
-
           if (!isLeaf || isDisabled) {
             return;
           }
 
           const focusState = staticDefinitions.providerValue.store.getState();
+
           if (
             !focusState._hasPointerEventsEnabled ||
             !nodeExistsInTree.current ||
