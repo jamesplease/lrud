@@ -58,14 +58,16 @@ export default function computeFocusHierarchy({
     // @ts-ignore
     const assignedNode = focusState.nodes[assignFocusTo];
 
-    if (!assignedNode) {
-      warning(
-        'You attempted to explicitly focus a node that was not found in the focus tree. ' +
-          'This may represent a bug in your application. ' +
-          'You should ensure that a node that matches onMountAssignFocusTo is created and not disabled. ' +
-          'This onMountAssignFocusTo value has been ignored; focus will be computed automatically.',
-        'EXPLICIT_FOCUS_ERROR'
-      );
+    if (process.env.NODE_ENV !== 'production') {
+      if (!assignedNode) {
+        warning(
+          'You attempted to explicitly focus a node that was not found in the focus tree. ' +
+            'This may represent a bug in your application. ' +
+            'You should ensure that a node that matches onMountAssignFocusTo is created and not disabled. ' +
+            'This onMountAssignFocusTo value has been ignored; focus will be computed automatically.',
+          'EXPLICIT_FOCUS_ERROR'
+        );
+      }
     }
 
     const focusHierarchy = generateFocusHierarchyFromId({

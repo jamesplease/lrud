@@ -34,13 +34,15 @@ export default function createNodeDefinitionHierarchy({
     const isCreatingNewNode = !currentNode;
 
     if (nodeDefinition.onMountAssignFocusTo !== undefined) {
-      if (onMountAssignFocusTo !== null) {
-        warning(
-          '[Focus]: More than one onMountAssignFocusTo was encountered while creating a new focus subtree. This may represent an error in your code. ' +
-            'We strongly encourage you to ensure that only a single node is assigned an onMountAssignFocusTo when creating a focus subtree. ' +
-            'Your onMountAssignFocusTo has been ignored, and the first child will be assigned focus.',
-          'MORE_THAN_ONE_ONMOUNTFOCUS'
-        );
+      if (process.env.NODE_ENV !== 'production') {
+        if (onMountAssignFocusTo !== null) {
+          warning(
+            '[Focus]: More than one onMountAssignFocusTo was encountered while creating a new focus subtree. This may represent an error in your code. ' +
+              'We strongly encourage you to ensure that only a single node is assigned an onMountAssignFocusTo when creating a focus subtree. ' +
+              'Your onMountAssignFocusTo has been ignored, and the first child will be assigned focus.',
+            'MORE_THAN_ONE_ONMOUNTFOCUS'
+          );
+        }
       }
 
       onMountAssignFocusTo = nodeDefinition.onMountAssignFocusTo;
@@ -105,12 +107,14 @@ export default function createNodeDefinitionHierarchy({
       // The implementation of this feature ties this library very tightly with React.
       const isFinalNode = i === nodeDefinitionHierarchy.length - 1;
       const setFocusGoal = nodeDefinition.onMountAssignFocusTo;
-      if (isFinalNode && setFocusGoal && !focusState.nodes[setFocusGoal]) {
-        warning(
-          'You configured an onMountAssignFocusTo that was not found in the focus tree. This may represent an error in your application. ' +
-            'Please make sure that the node specified by onMountAssignFocusTo is created at the same time as the parent.',
-          'NOT_FOUND_ON_MOUNT_FOCUS'
-        );
+      if (process.env.NODE_ENV !== 'production') {
+        if (isFinalNode && setFocusGoal && !focusState.nodes[setFocusGoal]) {
+          warning(
+            'You configured an onMountAssignFocusTo that was not found in the focus tree. This may represent an error in your application. ' +
+              'Please make sure that the node specified by onMountAssignFocusTo is created at the same time as the parent.',
+            'NOT_FOUND_ON_MOUNT_FOCUS'
+          );
+        }
       }
 
       continue;

@@ -50,11 +50,13 @@ export default function useFocusEvents(nodeId: Id, events: Events = {}): void {
       return;
     }
 
-    if (currentId !== prevId) {
-      warning(
-        `The nodeId passed into useFocusEvents changed. This change has been ignored: the nodeId cannot be changed.`,
-        'FOCUS_EVENTS_NODE_ID_CHANGED'
-      );
+    if (process.env.NODE_ENV !== 'production') {
+      if (currentId !== prevId) {
+        warning(
+          `The nodeId passed into useFocusEvents changed. This change has been ignored: the nodeId cannot be changed.`,
+          'FOCUS_EVENTS_NODE_ID_CHANGED'
+        );
+      }
     }
   });
 
