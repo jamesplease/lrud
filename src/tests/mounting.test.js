@@ -329,5 +329,75 @@ describe('Mounting', () => {
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(7);
     });
+
+    it('handles `onMountAssignFocusTo`', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode focusId="testRoot" onMountAssignFocusTo="nodeB">
+            <FocusNode focusId="nodeA" data-testid="nodeA">
+              <FocusNode focusId="nodeA-A" data-testid="nodeA-A">
+                <FocusNode focusId="nodeA-A-A" data-testid="nodeA-A-A">
+                  A
+                </FocusNode>
+              </FocusNode>
+              <FocusNode focusId="nodeA-B" data-testid="nodeA-B" />
+            </FocusNode>
+            <FocusNode focusId="nodeB" data-testid="nodeB">
+              <FocusNode focusId="nodeB-A" data-testid="nodeB-A" />
+              <FocusNode focusId="nodeB-B" data-testid="nodeB-B" />
+            </FocusNode>
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      const nodeAEl = screen.getByTestId('nodeA');
+      expect(nodeAEl).not.toHaveClass('isFocused');
+      expect(nodeAEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeAAEl = screen.getByTestId('nodeA-A');
+      expect(nodeAAEl).not.toHaveClass('isFocused');
+      expect(nodeAAEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeAAAEl = screen.getByTestId('nodeA-A-A');
+      expect(nodeAAAEl).not.toHaveClass('isFocused');
+      expect(nodeAAAEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeABEl = screen.getByTestId('nodeA-B');
+      expect(nodeABEl).not.toHaveClass('isFocused');
+      expect(nodeABEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeBEl = screen.getByTestId('nodeB');
+      expect(nodeBEl).toHaveClass('isFocused');
+      expect(nodeBEl).not.toHaveClass('isFocusedLeaf');
+
+      const nodeBAEl = screen.getByTestId('nodeB-A');
+      expect(nodeBAEl).toHaveClass('isFocused');
+      expect(nodeBAEl).toHaveClass('isFocusedLeaf');
+
+      const nodeBB = screen.getByTestId('nodeB-B');
+      expect(nodeBB).not.toHaveClass('isFocused');
+      expect(nodeBB).not.toHaveClass('isFocusedLeaf');
+
+      const focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeB-A');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'testRoot',
+        'nodeB',
+        'nodeB-A',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+      expect(Object.values(focusState.nodes)).toHaveLength(9);
+    });
   });
 });
