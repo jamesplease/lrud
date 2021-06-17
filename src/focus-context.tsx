@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import createFocusStore from './focus-store';
 import lrudInput from './lrud-input/focus-lrud';
 import { ProviderValue, RootFocusNode, Orientation } from './types';
-import warning from './utils/warning';
+import { warning } from './utils/warning';
 
 const FocusContext = React.createContext<null | ProviderValue>(null);
 

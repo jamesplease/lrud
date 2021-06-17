@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useRef } from 'react';
 import FocusContext from '../focus-context';
-import warning from '../utils/warning';
+import { warning } from '../utils/warning';
 import { Node, NodeHierarchy } from '../types';
 
 function hierarchiesAreEqual(

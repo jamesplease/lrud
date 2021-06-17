@@ -1,5 +1,5 @@
 import nodeIdIsFocused from './node-id-is-focused';
-import warning from './warning';
+import { warning } from './warning';
 import updateFocus from '../update-focus/update-focus';
 import { FocusState, Id, NodeMap, Node } from '../types';
 

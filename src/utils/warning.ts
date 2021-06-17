@@ -4,7 +4,7 @@ interface CodeCache {
 
 let codeCache: CodeCache = {};
 
-export default function warning(message: string, code: string) {
+export function warning(message: string, code: string) {
   // This ensures that each warning type is only logged out one time
   if (code) {
     if (codeCache[code]) {

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import FocusContext from '../focus-context';
-import warning from '../utils/warning';
+import { warning } from '../utils/warning';
 import { Id } from '../types';
 
 export default function useSetFocus(): (focusId: Id) => void {

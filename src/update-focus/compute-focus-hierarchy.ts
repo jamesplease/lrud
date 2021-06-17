@@ -1,5 +1,5 @@
 import { getParents, getChildren } from '../utils/tree-navigation';
-import warning from '../utils/warning';
+import { warning } from '../utils/warning';
 import { FocusState, Id, Orientation, NodeHierarchy, Node } from '../types';
 
 interface ComputeFocusHierarchyOptions {
@@ -22,7 +22,7 @@ function generateFocusHierarchyFromId({
   orientation,
   preferEnd,
 }: GenerateFocusHierarchyFromIdOptions): Id[] {
-  const node = (focusState.nodes[propagateFromId] as unknown) as Node;
+  const node = focusState.nodes[propagateFromId] as unknown as Node;
   let preferredChildren: NodeHierarchy = [];
   if (node.trap) {
     preferredChildren = node._focusTrapPreviousHierarchy;
@@ -58,14 +58,16 @@ export default function computeFocusHierarchy({
     // @ts-ignore
     const assignedNode = focusState.nodes[assignFocusTo];
 
-    if (!assignedNode) {
-      warning(
-        'You attempted to explicitly focus a node that was not found in the focus tree. ' +
-          'This may represent a bug in your application. ' +
-          'You should ensure that a node that matches onMountAssignFocusTo is created and not disabled. ' +
-          'This onMountAssignFocusTo value has been ignored; focus will be computed automatically.',
-        'EXPLICIT_FOCUS_ERROR'
-      );
+    if (process.env.NODE_ENV !== 'production') {
+      if (!assignedNode) {
+        warning(
+          'You attempted to explicitly focus a node that was not found in the focus tree. ' +
+            'This may represent a bug in your application. ' +
+            'You should ensure that a node that matches onMountAssignFocusTo is created and not disabled. ' +
+            'This onMountAssignFocusTo value has been ignored; focus will be computed automatically.',
+          'EXPLICIT_FOCUS_ERROR'
+        );
+      }
     }
 
     const focusHierarchy = generateFocusHierarchyFromId({

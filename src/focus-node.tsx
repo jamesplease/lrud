@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import FocusContext from './focus-context';
 import nodeFromDefinition from './utils/node-from-definition';
-import warning from './utils/warning';
+import { warning } from './utils/warning';
 import {
   FocusStore,
   Id,
@@ -177,17 +177,30 @@ export function FocusNode(
   );
 
   const [nodeId] = useState(() => {
-    const isInvalidId = focusId === 'root';
+    const nonStringFocusId =
+      typeof focusId !== 'string' && focusId !== undefined;
+    const reservedFocusId = focusId === 'root';
+    const invalidNodeId = nonStringFocusId || reservedFocusId;
 
-    if (isInvalidId) {
-      warning(
-        'A focus node with an invalid focus ID was created: "root". This is a reserved ID, so it has been ' +
-          'ignored. Please choose another ID if you wish to specify an ID.',
-        'ROOT_ID_WAS_PASSED'
-      );
+    if (process.env.NODE_ENV !== 'production') {
+      if (reservedFocusId) {
+        warning(
+          'A focus node with an invalid focus ID was created: "root". This is a reserved ID, so it has been ' +
+            'ignored. Please choose another ID if you wish to specify an ID.',
+          'ROOT_ID_WAS_PASSED'
+        );
+      }
+
+      if (nonStringFocusId) {
+        warning(
+          'A focus node with an invalid focus ID was created: "root". This is a reserved ID, so it has been ' +
+            'ignored. Please choose another ID if you wish to specify an ID.',
+          'INVALID_FOCUS_ID_PASSED'
+        );
+      }
     }
 
-    if (focusId && !isInvalidId) {
+    if (focusId && !invalidNodeId) {
       return focusId;
     } else {
       const id = `node-${uniqueId}`;
@@ -459,15 +472,16 @@ export function FocusNode(
           const isLeaf =
             nodeRef.current && nodeRef.current.children.length === 0;
           const isDisabled = nodeRef.current && nodeRef.current.disabled;
-
           if (!isLeaf || isDisabled) {
             return;
           }
 
           const focusState = staticDefinitions.providerValue.store.getState();
+
           if (
             !focusState._hasPointerEventsEnabled ||
-            !nodeExistsInTree.current
+            !nodeExistsInTree.current ||
+            focusState.interactionMode !== 'pointer'
           ) {
             return;
           }

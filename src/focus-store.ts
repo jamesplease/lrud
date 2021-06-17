@@ -4,7 +4,7 @@ import updateFocus from './update-focus/update-focus';
 import handleArrowUtil from './handle-arrow/handle-arrow';
 import enforceStateStructure from './utils/enforce-state-structure';
 import recursivelyUpdateChildren from './utils/recursively-update-node';
-import warning from './utils/warning';
+import { warning } from './utils/warning';
 import {
   FocusState,
   Orientation,
@@ -205,6 +205,8 @@ export default function createFocusStore({
       }
 
       return;
+    } else if (currentNode.disabled) {
+      return;
     } else if (currentNode.isExiting) {
       if (process.env.NODE_ENV !== 'production') {
         warning(
@@ -276,22 +278,24 @@ export default function createFocusStore({
     }
 
     if (nodeId === 'root') {
-      if (update.disabled) {
-        warning(
-          'You attempted to disable the root node. ' +
-            'The root node of a focus tree cannot be disabled. ' +
-            'This has no effect, but it may represent an error in your code.',
-          'DISABLE_ROOT_NODE'
-        );
-      }
+      if (process.env.NODE_ENV !== 'production') {
+        if (update.disabled) {
+          warning(
+            'You attempted to disable the root node. ' +
+              'The root node of a focus tree cannot be disabled. ' +
+              'This has no effect, but it may represent an error in your code.',
+            'DISABLE_ROOT_NODE'
+          );
+        }
 
-      if (update.isExiting) {
-        warning(
-          'You attempted to exit the root node. ' +
-            'The root node of a focus tree cannot be exited. ' +
-            'This has no effect, but it may represent an error in your code.',
-          'EXIT_ROOT_NODE'
-        );
+        if (update.isExiting) {
+          warning(
+            'You attempted to exit the root node. ' +
+              'The root node of a focus tree cannot be exited. ' +
+              'This has no effect, but it may represent an error in your code.',
+            'EXIT_ROOT_NODE'
+          );
+        }
       }
       return;
     }

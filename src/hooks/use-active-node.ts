@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, useRef } from 'react';
 import FocusContext from '../focus-context';
-import warning from '../utils/warning';
+import { warning } from '../utils/warning';
 import { Node } from '../types';
 
 export default function useActiveNode(): Node | null {
