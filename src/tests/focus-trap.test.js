@@ -10,10 +10,10 @@ import {
 import { warning } from '../utils/warning';
 
 describe('Focus Traps', () => {
-  it('warns when restoreTrapFocusHierarchy is passed to a non-trap', () => {
+  it('warns when forgetTrapFocusHierarchy is passed to a non-trap', () => {
     function TestComponent() {
       return (
-        <FocusNode restoreTrapFocusHierarchy>
+        <FocusNode forgetTrapFocusHierarchy>
           <FocusNode>
             <FocusNode />
           </FocusNode>
@@ -206,7 +206,7 @@ describe('Focus Traps', () => {
     expect(focusStore.getState().focusedNodeId).toEqual('nodeB-B');
   });
 
-  it('supports restoreTrapFocusHierarchy=false', () => {
+  it('supports forgetTrapFocusHierarchy', () => {
     let focusStore;
     let setFocus;
 
@@ -228,7 +228,7 @@ describe('Focus Traps', () => {
             focusId="nodeB"
             data-testid="nodeB"
             isTrap
-            restoreTrapFocusHierarchy={false}>
+            forgetTrapFocusHierarchy>
             <FocusNode focusId="nodeB-A" data-testid="nodeB-A" />
             <FocusNode focusId="nodeB-B" data-testid="nodeB-B" />
           </FocusNode>

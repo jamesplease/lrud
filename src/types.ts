@@ -113,7 +113,7 @@ export interface RootFocusNode extends BaseNode {
   defaultFocusColumn: number;
   defaultFocusRow: number;
 
-  restoreTrapFocusHierarchy: boolean;
+  forgetTrapFocusHierarchy: boolean;
 
   navigationStyle: NavigationStyle;
   nodeNavigationItem: NodeNavigationItem;
@@ -132,7 +132,7 @@ export interface NodeUpdate {
   isExiting?: boolean;
   wrapping?: boolean;
   trap?: boolean;
-  restoreTrapFocusHierarchy?: boolean;
+  forgetTrapFocusHierarchy?: boolean;
   defaultFocusColumn?: number;
   defaultFocusRow?: number;
 }
@@ -153,7 +153,7 @@ export interface FocusNode extends BaseNode {
   defaultFocusColumn: number;
   defaultFocusRow: number;
 
-  restoreTrapFocusHierarchy: boolean;
+  forgetTrapFocusHierarchy: boolean;
 
   wrapGridVertical: boolean;
   wrapGridHorizontal: boolean;
@@ -198,7 +198,7 @@ export interface NodeDefinition extends FocusNodeEvents {
   defaultFocusColumn?: number;
   defaultFocusRow?: number;
 
-  restoreTrapFocusHierarchy?: boolean;
+  forgetTrapFocusHierarchy?: boolean;
 
   // This will seek out this node identifier, and set focus to it.
   // IDs are more general, but child indices work, too.
@@ -246,7 +246,7 @@ export interface FocusNodeProps extends FocusNodeEvents {
   orientation?: Orientation;
   isGrid?: boolean;
   isTrap?: boolean;
-  restoreTrapFocusHierarchy?: boolean;
+  forgetTrapFocusHierarchy?: boolean;
   propsFromNode?: PropsFromNode;
   isExiting?: boolean;
   onMountAssignFocusTo?: Id;

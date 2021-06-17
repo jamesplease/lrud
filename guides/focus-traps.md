@@ -1,6 +1,6 @@
 # Focus Traps
 
-Sometimes, you need to trap the focus in a UI element, so that as a user navigates using LRUD,
+Sometimes, you need to trap the focus in a UI element so that as a user navigates using LRUD,
 focus does not leave the element. Examples include:
 
 - Modals / popups
@@ -56,6 +56,25 @@ export default function App() {
   )
 }
 ```
+
+### Focus Traps Remember Their Hierarchy
+
+When you exit a focus trap, and re-enter it, it will remember what was last focused and place focus there.
+
+If you wish to disable this, use the `forgetTrapFocusHierarchy` prop.
+
+```jsx
+<FocusNode
+  focusId="trap"
+  forgetTrapFocusHierarchy
+  isTrap>
+  <FocusNode onSelected={() => setFocus('enter-trap-button')}>
+    Exit Focus Trap
+  </FocusNode>
+</FocusNode>
+```
+
+
 
 ## Examples
 

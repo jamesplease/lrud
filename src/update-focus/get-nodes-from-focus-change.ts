@@ -18,7 +18,7 @@ function getParentGrid(nodes: NodeMap, node: Node): FocusNode {
   const parentId = node.parentId as Id;
   const rowNode = nodes[parentId] as FocusNode;
 
-  const rowChildren = rowNode.children.filter(nodeId => {
+  const rowChildren = rowNode.children.filter((nodeId) => {
     const node = nodes[nodeId];
     return node && !node.disabled && !node.isExiting;
   });
@@ -28,7 +28,7 @@ function getParentGrid(nodes: NodeMap, node: Node): FocusNode {
   const gridNodeId = rowNode.parentId as Id;
   const gridNode = nodes[gridNodeId] as FocusNode;
 
-  const gridChildren = gridNode.children.filter(nodeId => {
+  const gridChildren = gridNode.children.filter((nodeId) => {
     const node = nodes[nodeId];
     return node && !node.disabled && !node.isExiting;
   });
@@ -106,7 +106,7 @@ export default function getNodesFromFocusChange({
       result[nodeId]._gridRowIndex = 0;
     }
 
-    if (nodeToUpdate.trap && nodeToUpdate.restoreTrapFocusHierarchy) {
+    if (nodeToUpdate.trap && !nodeToUpdate.forgetTrapFocusHierarchy) {
       const childHierarchy = blurHierarchy.slice(i + 1);
       // @ts-ignore
       result[nodeId]._focusTrapPreviousHierarchy = childHierarchy;
