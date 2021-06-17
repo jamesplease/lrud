@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import '@testing-library/jest-dom';
 import { render, act, fireEvent, screen } from '@testing-library/react';
 import {
@@ -134,6 +134,76 @@ describe('FocusNode', () => {
 
       expect(warning).toHaveBeenCalledTimes(1);
       expect(warning.mock.calls[0][1]).toEqual('ROOT_ID_WAS_PASSED');
+    });
+  });
+
+  describe('propsFromNode', () => {
+    it('allows you to pass props based on the node', () => {
+      let focusStore;
+      let setFocus;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+        setFocus = useSetFocus();
+
+        return (
+          <>
+            <FocusNode
+              focusId="nodeA"
+              data-testid="nodeA"
+              propsFromNode={(node) => {
+                return {
+                  className: node.isFocused ? 'sandwiches' : 'spaghetti',
+                };
+              }}
+            />
+            <FocusNode focusId="nodeB" />
+          </>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toBe('nodeA');
+      let nodeA = screen.getByTestId('nodeA');
+      expect(nodeA).toHaveClass('sandwiches');
+
+      act(() => setFocus('nodeB'));
+
+      expect(nodeA).toHaveClass('spaghetti');
+    });
+  });
+
+  describe('ref', () => {
+    it('allows you to pass a ref', () => {
+      let focusStore;
+      let elRef;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+        elRef = useRef();
+
+        return (
+          <>
+            <FocusNode focusId="nodeA" data-testid="nodeA" ref={elRef} />
+            <FocusNode focusId="nodeB" />
+          </>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toBe('nodeA');
+      let nodeA = screen.getByTestId('nodeA');
+      expect(elRef.current).toBe(nodeA);
     });
   });
 });

@@ -189,9 +189,7 @@ export function FocusNode(
           'ROOT_ID_WAS_PASSED'
         );
       }
-    }
 
-    if (process.env.NODE_ENV !== 'production') {
       if (nonStringFocusId) {
         warning(
           'A focus node with an invalid focus ID was created: "root". This is a reserved ID, so it has been ' +
