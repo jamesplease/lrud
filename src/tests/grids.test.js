@@ -2,8 +2,59 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { FocusRoot, FocusNode, useFocusStoreDangerously } from '../index';
+import { warning } from '../utils/warning';
 
 describe('Grids', () => {
+  it('warns when orientation is passed', () => {
+    function TestComponent() {
+      return (
+        <FocusNode
+          focusId="gridRoot"
+          data-testid="gridRoot"
+          isGrid
+          orientation="vertical">
+          <FocusNode focusId="gridRow" data-testid="gridRow">
+            <FocusNode focusId="gridItem" data-testid="gridItem" />
+          </FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('ORIENTATION_ON_GRID');
+  });
+
+  it('warns when onMove is passed', () => {
+    function TestComponent() {
+      return (
+        <FocusNode
+          focusId="gridRoot"
+          data-testid="gridRoot"
+          isGrid
+          onMove={() => {}}>
+          <FocusNode focusId="gridRow" data-testid="gridRow">
+            <FocusNode focusId="gridItem" data-testid="gridItem" />
+          </FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('ON_MOVE_ON_GRID');
+  });
+
   describe('1x1', () => {
     it('mounts correctly', () => {
       let focusStore;
@@ -40,6 +91,8 @@ describe('Grids', () => {
       ]);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(4);
+
+      expect(warning).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -84,6 +137,7 @@ describe('Grids', () => {
       ]);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(8);
+      expect(warning).toHaveBeenCalledTimes(0);
     });
 
     it('mounts correctly, respecting defaultColumnIndex/defaultRowIndex', () => {
@@ -131,6 +185,7 @@ describe('Grids', () => {
       ]);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(8);
+      expect(warning).toHaveBeenCalledTimes(0);
     });
 
     it('navigates correctly (no wrapping)', () => {
@@ -250,6 +305,7 @@ describe('Grids', () => {
         'gridItem1-2',
       ]);
       expect(focusState.activeNodeId).toEqual(null);
+      expect(warning).toHaveBeenCalledTimes(0);
     });
 
     it('navigates correctly (wrapping horizontally)', () => {
@@ -328,6 +384,7 @@ describe('Grids', () => {
         'gridItem1-2',
       ]);
       expect(focusState.activeNodeId).toEqual(null);
+      expect(warning).toHaveBeenCalledTimes(0);
     });
 
     it('navigates correctly (wrapping vertically)', () => {
@@ -404,6 +461,7 @@ describe('Grids', () => {
         'gridItem2-1',
       ]);
       expect(focusState.activeNodeId).toEqual(null);
+      expect(warning).toHaveBeenCalledTimes(0);
     });
   });
 });

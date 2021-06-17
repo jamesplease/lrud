@@ -2,6 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { FocusRoot, FocusNode, useFocusStoreDangerously } from './index';
+import { warning } from './utils/warning';
 
 describe('<FocusRoot/>', () => {
   describe('wrapping', () => {
@@ -164,6 +165,25 @@ describe('<FocusRoot/>', () => {
       });
 
       expect(focusStore.getState().focusedNodeId).toEqual('nodeB');
+    });
+
+    it('warns on invalid orientation values', () => {
+      function TestComponent() {
+        return (
+          <>
+            <FocusNode focusId="nodeA" />
+          </>
+        );
+      }
+
+      render(
+        <FocusRoot orientation={{ hungry: true }}>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(warning).toHaveBeenCalledTimes(1);
+      expect(warning.mock.calls[0][1]).toEqual('INVALID_ROOT_ORIENTATION');
     });
   });
 
