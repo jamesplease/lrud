@@ -9,6 +9,8 @@ export default function nodeCanBeArrowed(focusState: FocusState, node?: Node) {
     return false;
   }
 
+  // This guards against a situation where a child is focusable, but
+  // it is not a leaf and has no focusable children.
   const children = node.children || [];
   if (children.length === 0) {
     return true;
