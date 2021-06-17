@@ -91,6 +91,53 @@ describe('Grids', () => {
       expect(Object.values(focusState.nodes)).toHaveLength(8);
     });
 
+    it('mounts correctly, respecting defaultColumnIndex/defaultRowIndex', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode
+            focusId="gridRoot"
+            data-testid="gridRoot"
+            isGrid
+            defaultFocusColumn={1}
+            defaultFocusRow={1}>
+            <FocusNode focusId="gridRow1" data-testid="gridRow1">
+              <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
+              <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />
+            </FocusNode>
+            <FocusNode focusId="gridRow2" data-testid="gridRow2">
+              <FocusNode focusId="gridItem2-1" data-testid="gridItem2-1" />
+              <FocusNode focusId="gridItem2-2" data-testid="gridItem2-2" />
+            </FocusNode>
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      const gridItem11 = screen.getByTestId('gridItem2-2');
+      expect(gridItem11).toHaveClass('isFocused');
+      expect(gridItem11).toHaveClass('isFocusedLeaf');
+
+      const focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem2-2');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow2',
+        'gridItem2-2',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+      expect(Object.values(focusState.nodes)).toHaveLength(8);
+    });
+
     it('navigates correctly', () => {
       let focusStore;
 
