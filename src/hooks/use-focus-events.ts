@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import useOnChange from './internal/use-on-change';
 import useFocusNode from './use-focus-node';
-import warning from '../utils/warning';
+import { warning } from '../utils/warning';
 import { Id, Node } from '../types';
 
 type EventCallback = (node: Node) => void;

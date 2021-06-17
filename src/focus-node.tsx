@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import FocusContext from './focus-context';
 import nodeFromDefinition from './utils/node-from-definition';
-import warning from './utils/warning';
+import { warning } from './utils/warning';
 import {
   FocusStore,
   Id,

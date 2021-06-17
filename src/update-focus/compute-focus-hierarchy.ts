@@ -1,5 +1,5 @@
 import { getParents, getChildren } from '../utils/tree-navigation';
-import warning from '../utils/warning';
+import { warning } from '../utils/warning';
 import { FocusState, Id, Orientation, NodeHierarchy, Node } from '../types';
 
 interface ComputeFocusHierarchyOptions {
@@ -22,7 +22,7 @@ function generateFocusHierarchyFromId({
   orientation,
   preferEnd,
 }: GenerateFocusHierarchyFromIdOptions): Id[] {
-  const node = (focusState.nodes[propagateFromId] as unknown) as Node;
+  const node = focusState.nodes[propagateFromId] as unknown as Node;
   let preferredChildren: NodeHierarchy = [];
   if (node.trap) {
     preferredChildren = node._focusTrapPreviousHierarchy;

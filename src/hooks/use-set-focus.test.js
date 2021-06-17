@@ -7,6 +7,7 @@ import {
   useSetFocus,
   useFocusStoreDangerously,
 } from '../index';
+import { warning } from '../utils/warning';
 
 describe('useSetFocus', () => {
   it('is a noop when the node is already focused', () => {
@@ -228,7 +229,6 @@ describe('useSetFocus', () => {
     expect(Object.values(focusState.nodes)).toHaveLength(3);
   });
 
-  // TODO: add check for warning
   it('it is a noop if the node does not exist', () => {
     let focusStore;
     let setFocus;
@@ -280,5 +280,64 @@ describe('useSetFocus', () => {
     expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
     expect(focusState.activeNodeId).toEqual(null);
     expect(Object.values(focusState.nodes)).toHaveLength(3);
+
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('NODE_DOES_NOT_EXIST');
+  });
+
+  it('it is a noop with a nonsense argument', () => {
+    let focusStore;
+    let setFocus;
+
+    function TestComponent() {
+      focusStore = useFocusStoreDangerously();
+      setFocus = useSetFocus();
+
+      return (
+        <>
+          <FocusNode focusId="nodeA" data-testid="nodeA" />
+          <FocusNode focusId="nodeB" data-testid="nodeB" />
+        </>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    let nodeA = screen.getByTestId('nodeA');
+    expect(nodeA).toHaveClass('isFocused');
+    expect(nodeA).toHaveClass('isFocusedLeaf');
+
+    let nodeB = screen.getByTestId('nodeB');
+    expect(nodeB).not.toHaveClass('isFocused');
+    expect(nodeB).not.toHaveClass('isFocusedLeaf');
+
+    let focusState = focusStore.getState();
+    expect(focusState.focusedNodeId).toEqual('nodeA');
+    expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
+    expect(focusState.activeNodeId).toEqual(null);
+    expect(Object.values(focusState.nodes)).toHaveLength(3);
+
+    act(() => setFocus({}));
+
+    nodeA = screen.getByTestId('nodeA');
+    expect(nodeA).toHaveClass('isFocused');
+    expect(nodeA).toHaveClass('isFocusedLeaf');
+
+    nodeB = screen.getByTestId('nodeB');
+    expect(nodeB).not.toHaveClass('isFocused');
+    expect(nodeB).not.toHaveClass('isFocusedLeaf');
+
+    focusState = focusStore.getState();
+    expect(focusState.focusedNodeId).toEqual('nodeA');
+    expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
+    expect(focusState.activeNodeId).toEqual(null);
+    expect(Object.values(focusState.nodes)).toHaveLength(3);
+
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('NODE_ID_NOT_STRING_TO_SET_FOCUS');
   });
 });

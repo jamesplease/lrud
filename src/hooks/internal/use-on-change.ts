@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import usePrevious from './use-previous';
-import warning from '../../utils/warning';
+import { warning } from '../../utils/warning';
 
 type ComparatorFn<Value> = (a: Value, b: Value | undefined) => boolean;
 

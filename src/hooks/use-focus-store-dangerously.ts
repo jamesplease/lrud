@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import FocusContext from '../focus-context';
-import warning from '../utils/warning';
+import { warning } from '../utils/warning';
 import { FocusStore } from '../types';
 
 export default function useFocusStoreDangerously(): FocusStore {

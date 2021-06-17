@@ -4,7 +4,7 @@ import updateFocus from './update-focus/update-focus';
 import handleArrowUtil from './handle-arrow/handle-arrow';
 import enforceStateStructure from './utils/enforce-state-structure';
 import recursivelyUpdateChildren from './utils/recursively-update-node';
-import warning from './utils/warning';
+import { warning } from './utils/warning';
 import {
   FocusState,
   Orientation,

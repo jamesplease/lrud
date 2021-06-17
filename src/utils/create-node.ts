@@ -1,4 +1,4 @@
-import warning from '../utils/warning';
+import { warning } from '../utils/warning';
 import { NodeDefinition, FocusState, NodeMap, Id, Node } from '../types';
 import getIndex from './get-index';
 
@@ -120,8 +120,8 @@ export default function createNodeDefinitionHierarchy({
     const parentDefinition = nodeDefinitionHierarchy[parentLoopIndex];
     const parentId = parentDefinition.focusId;
 
-    const parentNode = ((focusState.nodes[parentId] ||
-      nodeUpdates[parentId]) as unknown) as Node;
+    const parentNode = (focusState.nodes[parentId] ||
+      nodeUpdates[parentId]) as unknown as Node;
 
     const parentChildren = parentNode.children;
 
