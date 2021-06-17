@@ -29,6 +29,124 @@ describe('FocusNode', () => {
     expect(warning.mock.calls[1][1]).toEqual('NO_FOCUS_PROVIDER_DETECTED');
   });
 
+  describe('elementType', () => {
+    it('defaults to be a div', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode focusId="testRoot">
+            <FocusNode data-testid="nodeA" focusId="nodeA" />
+            <FocusNode focusId="nodeB" />
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toBe('nodeA');
+
+      const nodeA = screen.getByTestId('nodeA');
+      expect(nodeA instanceof HTMLDivElement).toBe(true);
+    });
+
+    it('can be customized', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode focusId="testRoot">
+            <FocusNode elementType="span" data-testid="nodeA" focusId="nodeA" />
+            <FocusNode focusId="nodeB" />
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toBe('nodeA');
+
+      const nodeA = screen.getByTestId('nodeA');
+      expect(nodeA instanceof HTMLSpanElement).toBe(true);
+    });
+  });
+
+  describe('class names', () => {
+    it('focus/focus leaf', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode focusId="testRoot">
+            <FocusNode
+              focusedClass="focusedPls"
+              focusedLeafClass="focusedLeafPls"
+              data-testid="nodeA"
+              focusId="nodeA"
+            />
+            <FocusNode focusId="nodeB" />
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toBe('nodeA');
+
+      const nodeA = screen.getByTestId('nodeA');
+      expect(nodeA).toHaveClass('focusedPls', 'focusedLeafPls');
+    });
+
+    it('disabled', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode focusId="testRoot">
+            <FocusNode
+              disabled
+              disabledClass="disabledPls"
+              data-testid="nodeA"
+              focusId="nodeA"
+            />
+            <FocusNode focusId="nodeB" />
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toBe('nodeB');
+
+      const nodeA = screen.getByTestId('nodeA');
+      expect(nodeA).toHaveClass('disabledPls');
+    });
+  });
+
   describe('focusId', () => {
     it('uses the ID that you provide', () => {
       let focusStore;
