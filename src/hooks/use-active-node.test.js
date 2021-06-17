@@ -13,8 +13,24 @@ import {
   useFocusStoreDangerously,
   useActiveNode,
 } from '../index';
+import { warning } from '../utils/warning';
 
 describe('useActiveNode', () => {
+  it('warns when there is no FocusRoot', () => {
+    let activeNode;
+    function TestComponent() {
+      activeNode = useActiveNode();
+
+      return <div />;
+    }
+
+    render(<TestComponent />);
+
+    expect(activeNode).toEqual(null);
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('NO_FOCUS_PROVIDER_DETECTED');
+  });
+
   it('returns the expected node', (done) => {
     let focusStore;
     let activeNode;

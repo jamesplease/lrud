@@ -10,6 +10,23 @@ import {
 import { warning } from '../utils/warning';
 
 describe('useSetFocus', () => {
+  it('warns when there is no FocusRoot', () => {
+    function TestComponent() {
+      const setFocus = useSetFocus();
+
+      return <div />;
+    }
+
+    expect(() => {
+      render(<TestComponent />);
+    }).toThrow();
+
+    expect(warning).toHaveBeenCalledTimes(2);
+    expect(warning.mock.calls[0][1]).toEqual('NO_FOCUS_PROVIDER_DETECTED');
+    // Note: I'm not entirely sure why the warning is called twice in this test...but that's OK
+    expect(warning.mock.calls[1][1]).toEqual('NO_FOCUS_PROVIDER_DETECTED');
+  });
+
   it('is a noop when the node is already focused', () => {
     let focusStore;
     let setFocus;
