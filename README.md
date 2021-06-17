@@ -35,7 +35,8 @@ This library has the following peer dependencies:
 ## Table of Contents
 
 - [**Guides**](#guides)
-  - [Getting started](#getting-started)
+  - [Basic Setup](#basic-setup)
+  - [Getting Started](#getting-started)
   - [FAQ](#faq)
 - [**API Reference**](#api-reference)
   - [\<FocusRoot/\>](#focusroot-)
@@ -58,7 +59,7 @@ This library has the following peer dependencies:
 
 ## Guides
 
-### Getting Started
+### Basic Setup
 
 Render the `FocusRoot` high up in your application's component tree.
 
@@ -89,6 +90,13 @@ LRUD commands on their keyboard or remote control.
 
 This behavior can be configured through the props of the FocusNode component. To
 learn more about those props, refer to the API documentation below.
+
+### Getting Started
+
+The recommended way to familiarize yourself with this library is to begin by looking at the [examples](#examples). The examples
+do a great job at demonstrating the kinds of interfaces you can create with this library using little code.
+
+Once you've checked out a few examples you should be in a better position to read through these API docs!
 
 ### FAQ
 
