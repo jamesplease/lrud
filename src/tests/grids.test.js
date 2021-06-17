@@ -645,4 +645,115 @@ describe('Grids', () => {
       expect(warning).toHaveBeenCalledTimes(0);
     });
   });
+
+  describe('onGridMove', () => {
+    it('fires with the correct arguments', () => {
+      let focusStore;
+      let gridMove = jest.fn();
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode
+            focusId="gridRoot"
+            data-testid="gridRoot"
+            isGrid
+            onGridMove={gridMove}>
+            <FocusNode focusId="gridRow1" data-testid="gridRow1">
+              <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
+              <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />
+            </FocusNode>
+            <FocusNode focusId="gridRow2" data-testid="gridRow2">
+              <FocusNode focusId="gridItem2-1" data-testid="gridItem2-1" />
+              <FocusNode focusId="gridItem2-2" data-testid="gridItem2-2" />
+            </FocusNode>
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(gridMove.mock.calls.length).toBe(0);
+
+      let focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem1-1');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow1',
+        'gridItem1-1',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+      expect(Object.values(focusState.nodes)).toHaveLength(8);
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowDown',
+        key: 'ArrowDown',
+      });
+
+      expect(gridMove.mock.calls.length).toBe(1);
+      expect(gridMove).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          orientation: 'vertical',
+          direction: 'forward',
+          arrow: 'down',
+          prevRowIndex: 0,
+          nextRowIndex: 1,
+          prevColumnIndex: 0,
+          nextColumnIndex: 0,
+        })
+      );
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem2-1');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow2',
+        'gridItem2-1',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowRight',
+        key: 'ArrowRight',
+      });
+
+      expect(gridMove.mock.calls.length).toBe(2);
+      expect(gridMove).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          orientation: 'horizontal',
+          direction: 'forward',
+          arrow: 'right',
+          prevRowIndex: 1,
+          nextRowIndex: 1,
+          prevColumnIndex: 0,
+          nextColumnIndex: 1,
+        })
+      );
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem2-2');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow2',
+        'gridItem2-2',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+
+      // This tests that wrapping is off by default
+      fireEvent.keyDown(window, {
+        code: 'ArrowRight',
+        key: 'ArrowRight',
+      });
+
+      expect(gridMove.mock.calls.length).toBe(2);
+    });
+  });
 });
