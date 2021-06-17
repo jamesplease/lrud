@@ -138,7 +138,7 @@ describe('Grids', () => {
       expect(Object.values(focusState.nodes)).toHaveLength(8);
     });
 
-    it('navigates correctly', () => {
+    it('navigates correctly (no wrapping)', () => {
       let focusStore;
 
       function TestComponent() {
@@ -209,6 +209,22 @@ describe('Grids', () => {
       ]);
       expect(focusState.activeNodeId).toEqual(null);
 
+      // This tests that wrapping is off by default
+      fireEvent.keyDown(window, {
+        code: 'ArrowRight',
+        key: 'ArrowRight',
+      });
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem2-2');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow2',
+        'gridItem2-2',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+
       fireEvent.keyDown(window, {
         code: 'ArrowUp',
         key: 'ArrowUp',
@@ -237,6 +253,160 @@ describe('Grids', () => {
         'gridRoot',
         'gridRow1',
         'gridItem1-2',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+    });
+
+    it('navigates correctly (wrapping horizontally)', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode
+            focusId="gridRoot"
+            data-testid="gridRoot"
+            isGrid
+            wrapGridColumns>
+            <FocusNode focusId="gridRow1" data-testid="gridRow1">
+              <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
+              <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />
+            </FocusNode>
+            <FocusNode focusId="gridRow2" data-testid="gridRow2">
+              <FocusNode focusId="gridItem2-1" data-testid="gridItem2-1" />
+              <FocusNode focusId="gridItem2-2" data-testid="gridItem2-2" />
+            </FocusNode>
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      let gridItem11 = screen.getByTestId('gridItem1-1');
+      expect(gridItem11).toHaveClass('isFocused');
+      expect(gridItem11).toHaveClass('isFocusedLeaf');
+
+      let focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem1-1');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow1',
+        'gridItem1-1',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+      expect(Object.values(focusState.nodes)).toHaveLength(8);
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowLeft',
+        key: 'ArrowLeft',
+      });
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem1-2');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow1',
+        'gridItem1-2',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+
+      // This tests that wrapping doesn't work vertically when only `wrapGridColumns`
+      // is specified
+      fireEvent.keyDown(window, {
+        code: 'ArrowUp',
+        key: 'ArrowUp',
+      });
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem1-2');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow1',
+        'gridItem1-2',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+    });
+
+    it('navigates correctly (wrapping vertically)', () => {
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode
+            focusId="gridRoot"
+            data-testid="gridRoot"
+            isGrid
+            wrapGridRows>
+            <FocusNode focusId="gridRow1" data-testid="gridRow1">
+              <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
+              <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />
+            </FocusNode>
+            <FocusNode focusId="gridRow2" data-testid="gridRow2">
+              <FocusNode focusId="gridItem2-1" data-testid="gridItem2-1" />
+              <FocusNode focusId="gridItem2-2" data-testid="gridItem2-2" />
+            </FocusNode>
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      let gridItem11 = screen.getByTestId('gridItem1-1');
+      expect(gridItem11).toHaveClass('isFocused');
+      expect(gridItem11).toHaveClass('isFocusedLeaf');
+
+      let focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem1-1');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow1',
+        'gridItem1-1',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+      expect(Object.values(focusState.nodes)).toHaveLength(8);
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowLeft',
+        key: 'ArrowLeft',
+      });
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem1-1');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow1',
+        'gridItem1-1',
+      ]);
+      expect(focusState.activeNodeId).toEqual(null);
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowUp',
+        key: 'ArrowUp',
+      });
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('gridItem2-1');
+      expect(focusState.focusHierarchy).toEqual([
+        'root',
+        'gridRoot',
+        'gridRow2',
+        'gridItem2-1',
       ]);
       expect(focusState.activeNodeId).toEqual(null);
     });
