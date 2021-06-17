@@ -19,11 +19,11 @@ export default function getDefaultNavTarget(
     } else {
       const unfilteredChildren = parentNode.children || [];
 
-      // We only consider children nodes that are enabled
+      // We only consider children nodes that can receive focus via arrows
       const parentsChildren = unfilteredChildren.filter((nodeId) => {
         const node = focusState.nodes[nodeId];
 
-        if (node && (node.disabled || node.isExiting)) {
+        if (node && (node.disabled || node.isExiting || node.trap)) {
           return false;
         }
 
