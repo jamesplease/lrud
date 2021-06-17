@@ -1,7 +1,12 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { FocusRoot, FocusNode, useFocusStoreDangerously } from '../index';
+import {
+  FocusRoot,
+  useSetFocus,
+  FocusNode,
+  useFocusStoreDangerously,
+} from '../index';
 import { warning } from '../utils/warning';
 
 describe('Grids', () => {
@@ -482,6 +487,161 @@ describe('Grids', () => {
         'gridItem2-1',
       ]);
       expect(focusState.activeNodeId).toEqual(null);
+      expect(warning).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('setFocus', () => {
+    it('behaves as expected when focusing the grid root', () => {
+      let focusStore;
+      let setFocus;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+        setFocus = useSetFocus();
+
+        return (
+          <FocusNode focusId="testRoot">
+            <FocusNode focusId="defaultFocus" />
+            <FocusNode focusId="gridRoot" data-testid="gridRoot" isGrid>
+              <FocusNode focusId="gridRow1" data-testid="gridRow1">
+                <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
+                <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />
+              </FocusNode>
+              <FocusNode focusId="gridRow2" data-testid="gridRow2">
+                <FocusNode focusId="gridItem2-1" data-testid="gridItem2-1" />
+                <FocusNode focusId="gridItem2-2" data-testid="gridItem2-2" />
+              </FocusNode>
+            </FocusNode>
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toEqual('defaultFocus');
+      expect(focusStore.getState().focusHierarchy).toEqual([
+        'root',
+        'testRoot',
+        'defaultFocus',
+      ]);
+
+      setFocus('gridRoot');
+      expect(focusStore.getState().focusedNodeId).toEqual('gridItem1-1');
+      expect(focusStore.getState().focusHierarchy).toEqual([
+        'root',
+        'testRoot',
+        'gridRoot',
+        'gridRow1',
+        'gridItem1-1',
+      ]);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+    });
+
+    it('behaves as expected when focusing a grid row', () => {
+      let focusStore;
+      let setFocus;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+        setFocus = useSetFocus();
+
+        return (
+          <FocusNode focusId="testRoot">
+            <FocusNode focusId="defaultFocus" />
+            <FocusNode focusId="gridRoot" data-testid="gridRoot" isGrid>
+              <FocusNode focusId="gridRow1" data-testid="gridRow1">
+                <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
+                <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />
+              </FocusNode>
+              <FocusNode focusId="gridRow2" data-testid="gridRow2">
+                <FocusNode focusId="gridItem2-1" data-testid="gridItem2-1" />
+                <FocusNode focusId="gridItem2-2" data-testid="gridItem2-2" />
+              </FocusNode>
+            </FocusNode>
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toEqual('defaultFocus');
+      expect(focusStore.getState().focusHierarchy).toEqual([
+        'root',
+        'testRoot',
+        'defaultFocus',
+      ]);
+
+      setFocus('gridRow2');
+      expect(focusStore.getState().focusedNodeId).toEqual('gridItem2-1');
+      expect(focusStore.getState().focusHierarchy).toEqual([
+        'root',
+        'testRoot',
+        'gridRoot',
+        'gridRow2',
+        'gridItem2-1',
+      ]);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+    });
+
+    it('behaves as expected when focusing a grid item', () => {
+      let focusStore;
+      let setFocus;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+        setFocus = useSetFocus();
+
+        return (
+          <FocusNode focusId="testRoot">
+            <FocusNode focusId="defaultFocus" />
+            <FocusNode focusId="gridRoot" data-testid="gridRoot" isGrid>
+              <FocusNode focusId="gridRow1" data-testid="gridRow1">
+                <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
+                <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />
+              </FocusNode>
+              <FocusNode focusId="gridRow2" data-testid="gridRow2">
+                <FocusNode focusId="gridItem2-1" data-testid="gridItem2-1" />
+                <FocusNode focusId="gridItem2-2" data-testid="gridItem2-2" />
+              </FocusNode>
+            </FocusNode>
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toEqual('defaultFocus');
+      expect(focusStore.getState().focusHierarchy).toEqual([
+        'root',
+        'testRoot',
+        'defaultFocus',
+      ]);
+
+      setFocus('gridItem2-2');
+      expect(focusStore.getState().focusedNodeId).toEqual('gridItem2-2');
+      expect(focusStore.getState().focusHierarchy).toEqual([
+        'root',
+        'testRoot',
+        'gridRoot',
+        'gridRow2',
+        'gridItem2-2',
+      ]);
+
       expect(warning).toHaveBeenCalledTimes(0);
     });
   });
