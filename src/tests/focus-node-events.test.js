@@ -296,10 +296,10 @@ describe('FocusNode Events', () => {
   });
 
   describe('onBack', () => {
-    it.skip('calls it when Esc is pressed', () => {
+    it('calls it when Esc is pressed', () => {
       const rootonBack = jest.fn();
-      const nodeAonBack = jest.fn();
-      const nodeBonBack = jest.fn();
+      const nodeAOnBack = jest.fn();
+      const nodeBOnBack = jest.fn();
       let focusStore;
 
       function TestComponent() {
@@ -309,13 +309,13 @@ describe('FocusNode Events', () => {
           <FocusNode focusId="testRoot" onBack={rootonBack}>
             <FocusNode
               focusId="nodeA"
-              onBack={nodeAonBack}
+              onBack={nodeAOnBack}
               data-testid="nodeA"
             />
             <FocusNode
               focusId="nodeB"
               data-testid="nodeB"
-              onBack={nodeBonBack}
+              onBack={nodeBOnBack}
             />
           </FocusNode>
         );
@@ -330,36 +330,33 @@ describe('FocusNode Events', () => {
       expect(focusStore.getState().focusedNodeId).toEqual('nodeA');
 
       expect(rootonBack.mock.calls.length).toBe(0);
-      expect(nodeAonBack.mock.calls.length).toBe(0);
-      expect(nodeBonBack.mock.calls.length).toBe(0);
+      expect(nodeAOnBack.mock.calls.length).toBe(0);
+      expect(nodeBOnBack.mock.calls.length).toBe(0);
 
       fireEvent.keyDown(window, {
-        code: 'Esc',
-        key: 'Esc',
+        code: 'Escape',
+        key: 'Escape',
       });
 
       expect(rootonBack.mock.calls.length).toBe(1);
-      expect(nodeAonBack.mock.calls.length).toBe(1);
-      expect(nodeBonBack.mock.calls.length).toBe(0);
+      expect(nodeAOnBack.mock.calls.length).toBe(1);
+      expect(nodeBOnBack.mock.calls.length).toBe(0);
 
-      // expect(rootonBack).toHaveBeenCalledWith(
-      //   expect.objectContaining({
-      //     key: 'select',
-      //     isArrow: false,
-      //     node: focusStore.getState().nodes.testRoot,
-      //   })
-      // );
+      expect(rootonBack).toHaveBeenCalledWith(
+        expect.objectContaining({
+          key: 'back',
+          isArrow: false,
+          node: focusStore.getState().nodes.testRoot,
+        })
+      );
 
-      // expect(nodeAonBack).toHaveBeenCalledWith(
-      //   expect.objectContaining({
-      //     key: 'select',
-      //     isArrow: false,
-      //     // The event fires before the state updates to reflect the new
-      //     // active state. This allows you to, say, prevent default
-      //     // the action.
-      //     node: preFocusedNodeA,
-      //   })
-      // );
+      expect(nodeAOnBack).toHaveBeenCalledWith(
+        expect.objectContaining({
+          key: 'back',
+          isArrow: false,
+          node: focusStore.getState().nodes.nodeA,
+        })
+      );
     });
   });
 });
