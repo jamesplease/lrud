@@ -3,11 +3,6 @@ import '@testing-library/jest-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { FocusRoot, FocusNode, useFocusStoreDangerously } from '../index';
 
-//
-// These tests verify that the focus tree is accurate during the initial mount.
-// No state changes should be made in these tests...they should only test a static environment.
-//
-
 describe('Grids', () => {
   describe('1x1', () => {
     it('mounts correctly', () => {
