@@ -5,4 +5,5 @@ export default {
   ArrowLeft: 'left',
   ArrowRight: 'right',
   Enter: 'select',
+  Escape: 'back',
 };

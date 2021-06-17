@@ -51,8 +51,8 @@ export function FocusNode(
     className = '',
     children,
     wrapping = false,
-    wrapGridColumns,
-    wrapGridRows,
+    wrapGridHorizontal,
+    wrapGridVertical,
     orientation,
     isGrid = false,
     isTrap = false,
@@ -221,10 +221,10 @@ export function FocusNode(
 
   const contextValue = useContext(FocusContext.Context);
   const [staticDefinitions] = useState(() => {
-    const wrapGridRowsValue =
-      typeof wrapGridRows === 'boolean' ? wrapGridRows : wrapping;
-    const wrapGridColumnsValue =
-      typeof wrapGridColumns === 'boolean' ? wrapGridColumns : wrapping;
+    const wrapGridVerticalValue =
+      typeof wrapGridVertical === 'boolean' ? wrapGridVertical : wrapping;
+    const wrapGridHorizontalValue =
+      typeof wrapGridHorizontal === 'boolean' ? wrapGridHorizontal : wrapping;
 
     function createCallbackWrapper(fnName: string) {
       return function callbackWrapper(...args: any[]) {
@@ -246,8 +246,8 @@ export function FocusNode(
       orientation: orientation || defaultOrientation,
       wrapping: Boolean(wrapping),
       trap: Boolean(isTrap),
-      wrapGridColumns: wrapGridColumnsValue,
-      wrapGridRows: wrapGridRowsValue,
+      wrapGridHorizontal: wrapGridHorizontalValue,
+      wrapGridVertical: wrapGridVerticalValue,
       restoreTrapFocusHierarchy:
         restoreTrapFocusHierarchy !== undefined
           ? restoreTrapFocusHierarchy

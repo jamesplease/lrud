@@ -78,8 +78,8 @@ export default function nodeFromDefinition({
     prevFocusedChildIndex: null,
     _gridColumnIndex: isGridContainer ? defaultFocusColumnValue : null,
     _gridRowIndex: isGridContainer ? defaultFocusRowValue : null,
-    wrapGridColumns: Boolean(nodeDefinition.wrapGridColumns),
-    wrapGridRows: Boolean(nodeDefinition.wrapGridRows),
+    wrapGridHorizontal: Boolean(nodeDefinition.wrapGridHorizontal),
+    wrapGridVertical: Boolean(nodeDefinition.wrapGridVertical),
     _focusTrapPreviousHierarchy: [],
 
     onKey,

@@ -2,11 +2,11 @@ import getIndex from './get-index';
 import { Id, Orientation, Direction, Node, FocusState } from '../types';
 
 interface GetGridFocusDataReturn {
-  targetFocusId: Id,
-  currentRowIndex: number,
-  currentColumnIndex: number,
-  newRowIndex: number,
-  newColumnIndex: number,
+  targetFocusId: Id;
+  currentRowIndex: number;
+  currentColumnIndex: number;
+  newRowIndex: number;
+  newColumnIndex: number;
 }
 
 export default function getGridFocusData({
@@ -14,14 +14,14 @@ export default function getGridFocusData({
   orientation,
   direction,
   gridNode,
-  rowNode
+  rowNode,
 }: {
   focusState: FocusState;
   orientation: Orientation;
   direction: Direction;
   gridNode: Node;
   rowNode: Node;
-}):GetGridFocusDataReturn|null {
+}): GetGridFocusDataReturn | null {
   const isVertical = orientation === 'vertical';
   const isForward = direction === 'forward';
 
@@ -43,14 +43,14 @@ export default function getGridFocusData({
     ? getIndex(
         gridNode.children.length,
         actualRowIndex + distance,
-        gridNode.wrapGridRows
+        gridNode.wrapGridVertical
       )
     : actualRowIndex;
   const newColumnIndex = !isVertical
     ? getIndex(
         rowNode.children.length,
         actualColumnIndex + distance,
-        gridNode.wrapGridColumns
+        gridNode.wrapGridHorizontal
       )
     : currentColumnIndex;
 
@@ -74,5 +74,5 @@ export default function getGridFocusData({
     currentColumnIndex,
     newRowIndex,
     newColumnIndex,
-  }
+  };
 }
