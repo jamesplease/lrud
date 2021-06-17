@@ -299,7 +299,6 @@ describe('useFocusEvents', () => {
         expect(nodeBOnActive.mock.calls.length).toBe(1);
         expect(nodeBOnInactive.mock.calls.length).toBe(0);
 
-        // Okay
         fireEvent.mouseOver(nodeA);
 
         focusState = focusStore.getState();

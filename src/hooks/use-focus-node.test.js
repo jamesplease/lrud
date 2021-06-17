@@ -56,4 +56,27 @@ describe('useFocusNode', () => {
 
     expect(focusNode).toBe(focusStore.getState().nodes.nodeA);
   });
+
+  it('returns null if the node does not exist', () => {
+    let focusNode;
+
+    function TestComponent() {
+      focusNode = useFocusNode('nodeABC');
+
+      return (
+        <>
+          <FocusNode focusId="nodeA" data-testid="nodeA" />
+          <FocusNode focusId="nodeB" data-testid="nodeB" />
+        </>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(focusNode).toEqual(null);
+  });
 });
