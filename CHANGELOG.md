@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.0.14 (2021/6/17)
+
+**Bug Fixes**
+
+- Fixed an edge case where navigating in a tree with a trap would not behave
+  as expected.
+
 ### v0.0.13 (2021/6/17)
 
 **Bug Fixes**
