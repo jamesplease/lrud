@@ -30,6 +30,27 @@ describe('Grids', () => {
     expect(warning.mock.calls[0][1]).toEqual('ORIENTATION_ON_GRID');
   });
 
+  it('warns when onGridMove is passed to a non-grid', () => {
+    function TestComponent() {
+      return (
+        <FocusNode onGridMove={() => {}}>
+          <FocusNode>
+            <FocusNode />
+          </FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('GRID_MOVE_NOT_ON_GRID');
+  });
+
   it('warns when onMove is passed', () => {
     function TestComponent() {
       return (

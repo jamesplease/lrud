@@ -177,7 +177,8 @@ export function FocusNode(
   );
 
   const [nodeId] = useState(() => {
-    const nonStringFocusId = typeof focusId !== 'string';
+    const nonStringFocusId =
+      typeof focusId !== 'string' && focusId !== undefined;
     const reservedFocusId = focusId === 'root';
     const invalidNodeId = nonStringFocusId || reservedFocusId;
 
