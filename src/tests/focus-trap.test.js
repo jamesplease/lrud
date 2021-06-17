@@ -206,6 +206,93 @@ describe('Focus Traps', () => {
     expect(focusStore.getState().focusedNodeId).toEqual('nodeB-B');
   });
 
+  it('supports restoreTrapFocusHierarchy=false', () => {
+    let focusStore;
+    let setFocus;
+
+    function TestComponent() {
+      focusStore = useFocusStoreDangerously();
+      setFocus = useSetFocus();
+
+      return (
+        <FocusNode focusId="testRoot">
+          <FocusNode focusId="nodeA" data-testid="nodeA">
+            <FocusNode focusId="nodeA-A" data-testid="nodeA-A">
+              <FocusNode focusId="nodeA-A-A" data-testid="nodeA-A-A">
+                A
+              </FocusNode>
+            </FocusNode>
+            <FocusNode focusId="nodeA-B" data-testid="nodeA-B" />
+          </FocusNode>
+          <FocusNode
+            focusId="nodeB"
+            data-testid="nodeB"
+            isTrap
+            restoreTrapFocusHierarchy={false}>
+            <FocusNode focusId="nodeB-A" data-testid="nodeB-A" />
+            <FocusNode focusId="nodeB-B" data-testid="nodeB-B" />
+          </FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeA-A-A');
+    setFocus('nodeB');
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeB-A');
+
+    fireEvent.keyDown(window, {
+      code: 'ArrowLeft',
+      key: 'ArrowLeft',
+    });
+
+    fireEvent.keyDown(window, {
+      code: 'ArrowLeft',
+      key: 'ArrowLeft',
+    });
+
+    fireEvent.keyDown(window, {
+      code: 'ArrowLeft',
+      key: 'ArrowLeft',
+    });
+
+    fireEvent.keyDown(window, {
+      code: 'ArrowLeft',
+      key: 'ArrowLeft',
+    });
+
+    fireEvent.keyDown(window, {
+      code: 'ArrowLeft',
+      key: 'ArrowLeft',
+    });
+
+    fireEvent.keyDown(window, {
+      code: 'ArrowLeft',
+      key: 'ArrowLeft',
+    });
+
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeB-A');
+
+    // Now we test that the focus trap does NOT restore focus
+    fireEvent.keyDown(window, {
+      code: 'ArrowRight',
+      key: 'ArrowRight',
+    });
+
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeB-B');
+
+    setFocus('nodeA');
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeA-A-A');
+
+    setFocus('nodeB');
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeB-A');
+  });
+
   it('cannot be arrowed into when its deeply nested', () => {
     let focusStore;
 
