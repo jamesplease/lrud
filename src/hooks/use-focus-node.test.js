@@ -8,8 +8,24 @@ import {
   useSetFocus,
   useFocusStoreDangerously,
 } from '../index';
+import { warning } from '../utils/warning';
 
 describe('useFocusNode', () => {
+  it('warns when there is no FocusRoot', () => {
+    let focusNode;
+    function TestComponent() {
+      focusNode = useFocusNode('A');
+
+      return <div />;
+    }
+
+    render(<TestComponent />);
+
+    expect(focusNode).toEqual(null);
+    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning.mock.calls[0][1]).toEqual('NO_FOCUS_PROVIDER_DETECTED');
+  });
+
   it('returns the expected node', () => {
     let setFocus;
     let focusNode;
