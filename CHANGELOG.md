@@ -1,5 +1,13 @@
 # Changelog
 
+### v0.0.13 (2021/6/17)
+
+**Bug Fixes**
+
+- Numerous pointer-related bugs have been squashed
+- More props passed into FocusNode can be dynamically updated
+- `useSetFocus` no longer works on disabled nodes
+
 ### v0.0.12 (2021/6/15)
 
 **New Features**
