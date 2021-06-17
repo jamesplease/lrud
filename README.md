@@ -35,7 +35,8 @@ This library has the following peer dependencies:
 ## Table of Contents
 
 - [**Guides**](#guides)
-  - [Getting started](#getting-started)
+  - [Basic Setup](#basic-setup)
+  - [Getting Started](#getting-started)
   - [FAQ](#faq)
 - [**API Reference**](#api-reference)
   - [\<FocusRoot/\>](#focusroot-)
@@ -58,7 +59,7 @@ This library has the following peer dependencies:
 
 ## Guides
 
-### Getting Started
+### Basic Setup
 
 Render the `FocusRoot` high up in your application's component tree.
 
@@ -89,6 +90,13 @@ LRUD commands on their keyboard or remote control.
 
 This behavior can be configured through the props of the FocusNode component. To
 learn more about those props, refer to the API documentation below.
+
+### Getting Started
+
+The recommended way to familiarize yourself with this library is to begin by looking at the [examples](#examples). The examples
+do a great job at demonstrating the kinds of interfaces you can create with this library using little code.
+
+Once you've checked out a few examples you should be in a better position to read through these API docs!
 
 ### FAQ
 
@@ -147,7 +155,7 @@ All props are optional. Example usage appears beneath the props table.
 | `disabled`                  | boolean             | `false`          | This node will not receive focus when `true`.                                                                                                                                          |
 | `isGrid`                    | boolean             | `false`          | Pass `true` to make this a grid.                                                                                                                                                       |
 | `isTrap`                    | boolean             | `false`          | Pass `true` to make this a focus trap.                                                                                                                                                 |
-| `restoreTrapFocusHierarchy` | boolean             | `true`           | Pass `false` and, if this node is a trap, it will not restore their previous focus hierarchy when becoming focused again.                                                              |
+| `forgetTrapFocusHierarchy` | boolean             | `false`           | Pass `true` and, if this node is a trap, it will not restore their previous focus hierarchy when becoming focused again.                                                              |
 | `onMountAssignFocusTo`      | string              |                  | A focus ID of a nested child to default focus to when this node mounts.                                                                                                                |
 | `defaultFocusColumn`        | number              | `0`              | The column index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                                                           |
 | `defaultFocusRow`           | number              | `0`              | The row index that should receive focus when focus is assigned to this focus node. Applies to grids only.                                                                              |
@@ -340,7 +348,7 @@ A focus node. Each `<FocusNode/>` React component creates one of these.
 | `wrapGridHorizontal`             | boolean          | `true` when grid columns will wrap.                                                                                               |
 | `isRoot`                      | boolean          | `true` this is the root node.                                                                                                     |
 | `trap`                        | boolean          | `true` when this node is a focus trap.                                                                                            |
-| `restoreTrapFocusHierarchy`   | boolean          | Set to `true` and a focus trap will restore its previous hierarchy upon becoming re-focused.                                      |
+| `forgetTrapFocusHierarchy`   | boolean          | Set to `false` and a focus trap will restore its previous hierarchy upon becoming re-focused.                                      |
 | `parentId`                    | string \| `null` | The focus ID of the parent node. `null` for the root node.                                                                        |
 | `orientation`                 | string           | A string representing the orientation of the node (either `"horizontal"` or `"vertical"`)                                         |
 | `navigationStyle`             | string           | One of `'first-child'` or `'grid'`                                                                                                |

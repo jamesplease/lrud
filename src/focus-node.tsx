@@ -56,7 +56,7 @@ export function FocusNode(
     orientation,
     isGrid = false,
     isTrap = false,
-    restoreTrapFocusHierarchy,
+    forgetTrapFocusHierarchy = false,
 
     defaultFocusColumn,
     defaultFocusRow,
@@ -216,7 +216,7 @@ export function FocusNode(
   onClickRef.current = onClick;
   onMouseOverRef.current = onMouseOver;
 
-  const defaultRestoreFocusTrap = isTrap ? true : undefined;
+  const defaultForgetFocusTrap = isTrap ? false : undefined;
   const defaultOrientation = !isGrid ? undefined : 'horizontal';
 
   const contextValue = useContext(FocusContext.Context);
@@ -248,10 +248,10 @@ export function FocusNode(
       trap: Boolean(isTrap),
       wrapGridHorizontal: wrapGridHorizontalValue,
       wrapGridVertical: wrapGridVerticalValue,
-      restoreTrapFocusHierarchy:
-        restoreTrapFocusHierarchy !== undefined
-          ? restoreTrapFocusHierarchy
-          : defaultRestoreFocusTrap,
+      forgetTrapFocusHierarchy:
+        forgetTrapFocusHierarchy !== undefined
+          ? forgetTrapFocusHierarchy
+          : defaultForgetFocusTrap,
       navigationStyle: isGrid ? 'grid' : 'first-child',
 
       defaultFocusColumn: defaultFocusColumn ?? 0,
@@ -304,9 +304,9 @@ export function FocusNode(
         );
       }
 
-      if (restoreTrapFocusHierarchy && !nodeDefinition.trap) {
+      if (forgetTrapFocusHierarchy && !nodeDefinition.trap) {
         warning(
-          'You passed the restoreTrapFocusHierarchy prop to a focus node that is not a trap. ' +
+          'You passed the forgetTrapFocusHierarchy prop to a focus node that is not a trap. ' +
             'This will have no effect, but it may represent an error in your code. ' +
             `This node has a focus ID of ${focusId}.`,
           'RESTORE_TRAP_FOCUS_WITHOUT_TRAP'
@@ -382,7 +382,7 @@ export function FocusNode(
       defaultFocusRow,
       wrapping,
       trap: isTrap,
-      restoreTrapFocusHierarchy,
+      forgetTrapFocusHierarchy,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -392,7 +392,7 @@ export function FocusNode(
     defaultFocusRow,
     wrapping,
     isTrap,
-    restoreTrapFocusHierarchy,
+    forgetTrapFocusHierarchy,
   ]);
 
   useEffect(() => {

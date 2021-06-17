@@ -35,7 +35,7 @@ const dynamicNodeProps = [
   'defaultFocusRow',
   'wrapping',
   'trap',
-  'restoreTrapFocusHierarchy',
+  'forgetTrapFocusHierarchy',
 ];
 
 export default function createFocusStore({
@@ -76,7 +76,7 @@ export default function createFocusStore({
         wrapping,
         navigationStyle: 'first-child',
         nodeNavigationItem: 'default',
-        restoreTrapFocusHierarchy: true,
+        forgetTrapFocusHierarchy: true,
         children: [],
         focusedChildIndex: null,
         prevFocusedChildIndex: null,
@@ -318,9 +318,9 @@ export default function createFocusStore({
         defaultFocusRow: update.defaultFocusRow ?? currentNode.defaultFocusRow,
         wrapping: update.wrapping ?? currentNode.wrapping,
         trap: update.wrapping ?? currentNode.trap,
-        restoreTrapFocusHierarchy:
-          update.restoreTrapFocusHierarchy ??
-          currentNode.restoreTrapFocusHierarchy,
+        forgetTrapFocusHierarchy:
+          update.forgetTrapFocusHierarchy ??
+          currentNode.forgetTrapFocusHierarchy,
       };
 
       const updatedChildren = recursivelyUpdateChildren(

@@ -70,8 +70,8 @@ export default function nodeFromDefinition({
     defaultFocusColumn: defaultFocusColumnValue,
     defaultFocusRow: defaultFocusRowValue,
 
-    restoreTrapFocusHierarchy: Boolean(
-      nodeDefinition.restoreTrapFocusHierarchy ?? true
+    forgetTrapFocusHierarchy: Boolean(
+      nodeDefinition.forgetTrapFocusHierarchy ?? false
     ),
     children: [],
     focusedChildIndex: null,

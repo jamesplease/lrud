@@ -28,7 +28,7 @@ export default function App() {
       <FocusNode
         focusId="trap"
         className="block-container focus-trap"
-        restoreTrapFocusHierarchy={false}
+        forgetTrapFocusHierarchy
         isTrap
         orientation="vertical">
         <div className="block-header">Focus Trap</div>

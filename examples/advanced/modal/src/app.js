@@ -42,7 +42,7 @@ export default function App() {
         }}
         focusId="trap"
         className="modal-container"
-        restoreTrapFocusHierarchy={false}
+        forgetTrapFocusHierarchy
         isTrap
         orientation="vertical">
         <div className="modal-background"></div>
