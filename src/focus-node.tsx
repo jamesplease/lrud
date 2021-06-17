@@ -177,17 +177,31 @@ export function FocusNode(
   );
 
   const [nodeId] = useState(() => {
-    const isInvalidId = focusId === 'root';
+    const nonStringFocusId = typeof focusId !== 'string';
+    const reservedFocusId = focusId === 'root';
+    const invalidNodeId = nonStringFocusId || reservedFocusId;
 
-    if (isInvalidId) {
-      warning(
-        'A focus node with an invalid focus ID was created: "root". This is a reserved ID, so it has been ' +
-          'ignored. Please choose another ID if you wish to specify an ID.',
-        'ROOT_ID_WAS_PASSED'
-      );
+    if (process.env.NODE_ENV !== 'production') {
+      if (reservedFocusId) {
+        warning(
+          'A focus node with an invalid focus ID was created: "root". This is a reserved ID, so it has been ' +
+            'ignored. Please choose another ID if you wish to specify an ID.',
+          'ROOT_ID_WAS_PASSED'
+        );
+      }
     }
 
-    if (focusId && !isInvalidId) {
+    if (process.env.NODE_ENV !== 'production') {
+      if (nonStringFocusId) {
+        warning(
+          'A focus node with an invalid focus ID was created: "root". This is a reserved ID, so it has been ' +
+            'ignored. Please choose another ID if you wish to specify an ID.',
+          'INVALID_FOCUS_ID_PASSED'
+        );
+      }
+    }
+
+    if (focusId && !invalidNodeId) {
       return focusId;
     } else {
       const id = `node-${uniqueId}`;
