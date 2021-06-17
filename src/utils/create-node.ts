@@ -69,7 +69,7 @@ export default function createNodeDefinitionHierarchy({
           const rowIndex = getIndex(
             gridNode.children.length,
             nodeDefinition.defaultFocusRow ?? 0,
-            gridNode.wrapGridRows
+            gridNode.wrapGridVertical
           );
 
           const newRowNodeId = gridNode.children[rowIndex];
@@ -81,7 +81,7 @@ export default function createNodeDefinitionHierarchy({
           const columnIndex = getIndex(
             rowNodeChildrenLength,
             nodeDefinition.defaultFocusColumn ?? 0,
-            gridNode.wrapGridColumns
+            gridNode.wrapGridHorizontal
           );
 
           const itemIndex = Math.min(

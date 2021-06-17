@@ -345,7 +345,7 @@ describe('Grids', () => {
             focusId="gridRoot"
             data-testid="gridRoot"
             isGrid
-            wrapGridColumns>
+            wrapGridHorizontal>
             <FocusNode focusId="gridRow1" data-testid="gridRow1">
               <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
               <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />
@@ -394,7 +394,7 @@ describe('Grids', () => {
       ]);
       expect(focusState.activeNodeId).toEqual(null);
 
-      // This tests that wrapping doesn't work vertically when only `wrapGridColumns`
+      // This tests that wrapping doesn't work vertically when only `wrapGridHorizontal`
       // is specified
       fireEvent.keyDown(window, {
         code: 'ArrowUp',
@@ -424,7 +424,7 @@ describe('Grids', () => {
             focusId="gridRoot"
             data-testid="gridRoot"
             isGrid
-            wrapGridRows>
+            wrapGridVertical>
             <FocusNode focusId="gridRow1" data-testid="gridRow1">
               <FocusNode focusId="gridItem1-1" data-testid="gridItem1-1" />
               <FocusNode focusId="gridItem1-2" data-testid="gridItem1-2" />

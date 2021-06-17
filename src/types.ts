@@ -119,8 +119,8 @@ export interface RootFocusNode extends BaseNode {
   nodeNavigationItem: NodeNavigationItem;
   _gridColumnIndex: null | number;
   _gridRowIndex: null | number;
-  wrapGridRows: boolean;
-  wrapGridColumns: boolean;
+  wrapGridVertical: boolean;
+  wrapGridHorizontal: boolean;
 
   _focusTrapPreviousHierarchy: NodeHierarchy;
 }
@@ -155,8 +155,8 @@ export interface FocusNode extends BaseNode {
 
   restoreTrapFocusHierarchy: boolean;
 
-  wrapGridRows: boolean;
-  wrapGridColumns: boolean;
+  wrapGridVertical: boolean;
+  wrapGridHorizontal: boolean;
   _gridColumnIndex: null | number;
   _gridRowIndex: null | number;
 
@@ -190,8 +190,8 @@ export interface NodeDefinition extends FocusNodeEvents {
   navigationStyle?: NavigationStyle;
   initiallyDisabled?: boolean;
 
-  wrapGridRows?: boolean;
-  wrapGridColumns?: boolean;
+  wrapGridVertical?: boolean;
+  wrapGridHorizontal?: boolean;
 
   isExiting?: boolean;
 
@@ -241,8 +241,8 @@ export interface FocusNodeProps extends FocusNodeEvents {
   className?: string;
   children?: React.ReactNode;
   wrapping?: boolean;
-  wrapGridRows?: boolean;
-  wrapGridColumns?: boolean;
+  wrapGridVertical?: boolean;
+  wrapGridHorizontal?: boolean;
   orientation?: Orientation;
   isGrid?: boolean;
   isTrap?: boolean;

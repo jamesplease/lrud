@@ -59,10 +59,10 @@ export default function testForGrid({
     !isVertical && isForward && isAtLastColumn;
 
   const wouldHandleVertical =
-    gridNode.wrapGridRows ||
+    gridNode.wrapGridVertical ||
     (!movingBackwardVerticallyOnFirstRow && !movingForwardVerticallyOnLastRow);
   const wouldHandleHorizontal =
-    gridNode.wrapGridColumns ||
+    gridNode.wrapGridHorizontal ||
     (!movingBackwardHorizontallyOnFirstColumn &&
       !movingForwardHorizontallyOnLastColumn);
 
