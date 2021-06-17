@@ -69,65 +69,153 @@ describe('useFocusEvents', () => {
     });
   });
 
-  it('disabled/enabled (enabled by default)', () => {
-    const nodeAOnDisabled = jest.fn();
-    const nodeAOnEnabled = jest.fn();
-    const nodeBOnDisabled = jest.fn();
-    const nodeBOnEnabled = jest.fn();
-    let focusStore;
-    let updateDisableA;
+  describe('disabled/enabled', () => {
+    it('works when enabled on mount', () => {
+      const nodeAOnDisabled = jest.fn();
+      const nodeAOnEnabled = jest.fn();
+      const nodeBOnDisabled = jest.fn();
+      const nodeBOnEnabled = jest.fn();
+      let focusStore;
+      let updateDisableA;
 
-    function TestComponent() {
-      const [disableA, setDisableA] = useState(false);
-      focusStore = useFocusStoreDangerously();
+      function TestComponent() {
+        const [disableA, setDisableA] = useState(false);
+        focusStore = useFocusStoreDangerously();
 
-      updateDisableA = setDisableA;
+        updateDisableA = setDisableA;
 
-      useFocusEvents('nodeA', {
-        disabled: nodeAOnDisabled,
-        enabled: nodeAOnEnabled,
-      });
+        useFocusEvents('nodeA', {
+          disabled: nodeAOnDisabled,
+          enabled: nodeAOnEnabled,
+        });
 
-      useFocusEvents('nodeB', {
-        disabled: nodeBOnDisabled,
-        enabled: nodeBOnEnabled,
-      });
+        useFocusEvents('nodeB', {
+          disabled: nodeBOnDisabled,
+          enabled: nodeBOnEnabled,
+        });
 
-      return (
-        <>
-          <FocusNode focusId="nodeA" data-testid="nodeA" disabled={disableA} />
-          <FocusNode focusId="nodeB" data-testid="nodeB" />
-        </>
+        return (
+          <>
+            <FocusNode
+              focusId="nodeA"
+              data-testid="nodeA"
+              disabled={disableA}
+            />
+            <FocusNode focusId="nodeB" data-testid="nodeB" />
+          </>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
       );
-    }
 
-    render(
-      <FocusRoot>
-        <TestComponent />
-      </FocusRoot>
-    );
+      let focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeA');
+      expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
 
-    let focusState = focusStore.getState();
-    expect(focusState.focusedNodeId).toEqual('nodeA');
-    expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
+      expect(nodeAOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeAOnEnabled.mock.calls.length).toBe(0);
+      expect(nodeBOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeBOnEnabled.mock.calls.length).toBe(0);
 
-    expect(nodeAOnDisabled.mock.calls.length).toBe(0);
-    expect(nodeAOnEnabled.mock.calls.length).toBe(0);
-    expect(nodeBOnDisabled.mock.calls.length).toBe(0);
-    expect(nodeBOnEnabled.mock.calls.length).toBe(0);
+      act(() => updateDisableA(true));
 
-    act(() => updateDisableA(true));
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeB');
+      expect(focusState.focusHierarchy).toEqual(['root', 'nodeB']);
 
-    expect(nodeAOnDisabled.mock.calls.length).toBe(1);
-    expect(nodeAOnEnabled.mock.calls.length).toBe(0);
-    expect(nodeBOnDisabled.mock.calls.length).toBe(0);
-    expect(nodeBOnEnabled.mock.calls.length).toBe(0);
+      expect(nodeAOnDisabled.mock.calls.length).toBe(1);
+      expect(nodeAOnEnabled.mock.calls.length).toBe(0);
+      expect(nodeBOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeBOnEnabled.mock.calls.length).toBe(0);
 
-    act(() => updateDisableA(false));
+      act(() => updateDisableA(false));
 
-    expect(nodeAOnDisabled.mock.calls.length).toBe(1);
-    expect(nodeAOnEnabled.mock.calls.length).toBe(1);
-    expect(nodeBOnDisabled.mock.calls.length).toBe(0);
-    expect(nodeBOnEnabled.mock.calls.length).toBe(0);
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeB');
+      expect(focusState.focusHierarchy).toEqual(['root', 'nodeB']);
+
+      expect(nodeAOnDisabled.mock.calls.length).toBe(1);
+      expect(nodeAOnEnabled.mock.calls.length).toBe(1);
+      expect(nodeBOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeBOnEnabled.mock.calls.length).toBe(0);
+    });
+
+    it('works when disabled on mount', () => {
+      const nodeAOnDisabled = jest.fn();
+      const nodeAOnEnabled = jest.fn();
+      const nodeBOnDisabled = jest.fn();
+      const nodeBOnEnabled = jest.fn();
+      let focusStore;
+      let updateDisableA;
+
+      function TestComponent() {
+        const [disableA, setDisableA] = useState(true);
+        focusStore = useFocusStoreDangerously();
+
+        updateDisableA = setDisableA;
+
+        useFocusEvents('nodeCCC', {
+          disabled: nodeAOnDisabled,
+          enabled: nodeAOnEnabled,
+        });
+
+        useFocusEvents('nodeB', {
+          disabled: nodeBOnDisabled,
+          enabled: nodeBOnEnabled,
+        });
+
+        return (
+          <>
+            <FocusNode
+              focusId="nodeCCC"
+              data-testid="nodeA"
+              disabled={disableA}
+            />
+            <FocusNode focusId="nodeB" data-testid="nodeB" />
+          </>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      let focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeB');
+      expect(focusState.focusHierarchy).toEqual(['root', 'nodeB']);
+
+      expect(nodeAOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeAOnEnabled.mock.calls.length).toBe(0);
+      expect(nodeBOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeBOnEnabled.mock.calls.length).toBe(0);
+
+      act(() => updateDisableA(false));
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeB');
+      expect(focusState.focusHierarchy).toEqual(['root', 'nodeB']);
+
+      expect(nodeAOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeAOnEnabled.mock.calls.length).toBe(1);
+      expect(nodeBOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeBOnEnabled.mock.calls.length).toBe(0);
+
+      act(() => updateDisableA(true));
+
+      focusState = focusStore.getState();
+      expect(focusState.focusedNodeId).toEqual('nodeB');
+      expect(focusState.focusHierarchy).toEqual(['root', 'nodeB']);
+
+      expect(nodeAOnDisabled.mock.calls.length).toBe(1);
+      expect(nodeAOnEnabled.mock.calls.length).toBe(1);
+      expect(nodeBOnDisabled.mock.calls.length).toBe(0);
+      expect(nodeBOnEnabled.mock.calls.length).toBe(0);
+    });
   });
 });
