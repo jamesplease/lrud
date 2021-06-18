@@ -23,7 +23,7 @@ export default function Profiles({ setSelectedProfile }) {
     <FocusNode
       elementType={motion.div}
       orientation="horizontal"
-      className="profiles"
+      className="profiles page"
       initial={{
         scale: 0.8,
         opacity: 0,

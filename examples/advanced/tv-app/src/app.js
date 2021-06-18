@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { FocusNode } from '@please/lrud';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import './app.css';
 import Profiles from './profiles/profiles';
+import Home from './home/home';
+import Nav from './nav/nav';
 
 export default function App() {
   const [selectedProfile, setSelectedProfile] = useState(null);
@@ -16,30 +18,9 @@ export default function App() {
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {hasSelectedProfile && (
-          <FocusNode
-            elementType={motion.div}
-            initial={{
-              scale: 0.8,
-              opacity: 0,
-            }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-            }}
-            exit={{
-              scale: 1.15,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.25,
-              ease: 'easeOut',
-            }}
-            className="home_placeholder">
-            You have chosen {selectedProfile.name}
-          </FocusNode>
-        )}
+        {hasSelectedProfile && <Home profile={selectedProfile} />}
       </AnimatePresence>
+      {selectedProfile && <Nav selectedProfile={selectedProfile} />}
     </FocusNode>
   );
 }

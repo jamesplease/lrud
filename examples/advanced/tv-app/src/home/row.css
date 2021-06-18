@@ -1,0 +1,20 @@
+.row {
+  margin-bottom: 35px;
+  transition: opacity 250ms ease-out;
+}
+
+.row-isBeforeActiveRow {
+  opacity: 0;
+}
+
+.row_header {
+  height: 35px;
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.row_titles {
+  display: flex;
+  gap: 8px;
+}

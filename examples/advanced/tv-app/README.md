@@ -1,6 +1,11 @@
 # TV App (WIP)
 
-This WIP example shows how you can use this library to build a TV app.
+This example shows how you can use this library to build a TV app. Keep in mind
+that there are an infinite number of ways that you can architect any given app.
+I don't think this is the best possible architecture, nor do I think that you
+should necessarily copy it verbatim.
+
+It only exists to serve as a reference of the LRUD library API.
 
 ### Running the Example
 

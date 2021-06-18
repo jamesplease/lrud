@@ -1,9 +1,4 @@
 .profiles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--appWidth);
-  height: var(--appHeight);
   padding-top: 200px;
 }
 

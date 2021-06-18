@@ -1,0 +1,7 @@
+.page {
+  width: var(--appWidth);
+  height: var(--appHeight);
+  position: absolute;
+  top: 0;
+  left: 0;
+}

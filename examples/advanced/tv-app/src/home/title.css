@@ -1,0 +1,37 @@
+.title {
+  position: relative;
+  flex: 0 0 140px;
+  height: 200px;
+  display: grid;
+  place-items: center;
+  background: #222;
+  color: #aaa;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: transform 200ms ease-out;
+}
+
+.title.isFocused {
+  background: #666;
+  transform: scale(1.1);
+  z-index: 2;
+  color: #ccc;
+}
+
+.title:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+
+.title.isFocused:before {
+  opacity: 1;
+}

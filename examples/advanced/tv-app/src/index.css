@@ -1,5 +1,6 @@
 @import './styles/variables.css';
 @import './styles/cursor.css';
+@import './styles/utils.css';
 
 body {
   margin: 0;
