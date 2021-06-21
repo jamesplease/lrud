@@ -63,29 +63,86 @@ export function getChildren({
 
   const nodeRedirectFocusTo = node.redirectFocusTo;
 
+  const shouldLog = nodeId === 'nodeA-A' && nodeRedirectFocusTo;
+
+  if (shouldLog) {
+    // console.log('here we are', nodeRedirectFocusTo);
+  }
+
   if (nodeRedirectFocusTo) {
     const redirectNode = focusState.nodes[nodeRedirectFocusTo];
-
+    if (shouldLog) {
+      // console.log('here we are', redirectNode, focusState.nodes);
+    }
     if (redirectNode) {
-      let parents = getParents({
-        focusState,
-        nodeId: nodeRedirectFocusTo,
-        currentFocusHierarchy: currentFocusHierarchy,
-        stopAt: currentFocusHierarchy.length === 0 ? nodeId : undefined,
-      });
+      if (shouldLog) {
+        // console.log('node', redirectNode);
+      }
+
+      let parents;
+      let modify;
+      if (currentFocusHierarchy.includes(nodeId)) {
+        if (shouldLog) {
+          console.log('in here?', currentFocusHierarchy, nodeId);
+        }
+        parents = currentFocusHierarchy;
+        modify = false;
+      } else {
+        modify = true;
+        parents = getParents({
+          focusState,
+          nodeId: nodeRedirectFocusTo,
+          currentFocusHierarchy: currentFocusHierarchy,
+          stopAt: nodeId,
+          // stopAt: currentFocusHierarchy.length === 0 ? nodeId : undefined,
+        });
+      }
+
+      if (shouldLog) {
+        console.log(
+          'got the parents',
+          currentFocusHierarchy,
+          parents,
+          nodeRedirectFocusTo,
+          nodeId
+        );
+      }
 
       let didMatch = false;
-      if (parents.length && parents[0] === nodeId) {
+
+      if (modify) {
+        if (parents.length && parents[0] === nodeId) {
+          didMatch = true;
+          parents.shift();
+          if (shouldLog) {
+            console.log('post modification', parents);
+          }
+        }
+      } else {
         didMatch = true;
-        parents.shift();
       }
 
       if (!parents.length || didMatch) {
-        const currentHierarchy = [
-          ...currentFocusHierarchy,
-          ...parents,
-          nodeRedirectFocusTo,
-        ];
+        let currentHierarchy;
+        if (currentFocusHierarchy) {
+          currentHierarchy = [
+            ...currentFocusHierarchy,
+            ...parents,
+            nodeRedirectFocusTo,
+          ];
+        } else {
+          currentHierarchy = [
+            ...currentFocusHierarchy,
+            ...parents,
+            nodeRedirectFocusTo,
+          ];
+        }
+
+        if (shouldLog) {
+          console.log('currentFocus', currentFocusHierarchy);
+          console.log('parents', parents);
+          console.log('our node', nodeRedirectFocusTo);
+        }
 
         const children = getChildren({
           focusState,
@@ -94,9 +151,16 @@ export function getChildren({
         });
 
         const result = [...children];
-
+        if (shouldLog) {
+          console.log('children of', nodeRedirectFocusTo);
+          console.log('currentFocusHierarchy', currentHierarchy);
+          console.log('result', result);
+        }
         return result;
       } else {
+        if (shouldLog) {
+          console.log('no', parents, nodeId);
+        }
         // TODO: add warning. This means you redirected to something outside of this subtree!
       }
     }

@@ -63,7 +63,7 @@ export function FocusNode(
 
     disabled,
 
-    onMountAssignFocusTo,
+    // onMountAssignFocusTo,
 
     isExiting = false,
 
@@ -274,7 +274,7 @@ export function FocusNode(
       onGridMove: createCallbackWrapper('onGridMove'),
 
       initiallyDisabled: Boolean(disabled),
-      onMountAssignFocusTo,
+      // onMountAssignFocusTo,
 
       isExiting,
 

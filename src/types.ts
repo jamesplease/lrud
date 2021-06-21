@@ -206,7 +206,7 @@ export interface NodeDefinition extends FocusNodeEvents {
   // This will seek out this node identifier, and set focus to it.
   // IDs are more general, but child indices work, too.
   // Only one thing in the entire tree can have this set at a time.
-  onMountAssignFocusTo?: Id;
+  // onMountAssignFocusTo?: Id;
 
   focusedChildIndex?: null | number;
   prevFocusedChildIndex?: null | number;
@@ -252,7 +252,7 @@ export interface FocusNodeProps extends FocusNodeEvents {
   forgetTrapFocusHierarchy?: boolean;
   propsFromNode?: PropsFromNode;
   isExiting?: boolean;
-  onMountAssignFocusTo?: Id;
+  // onMountAssignFocusTo?: Id;
   disabled?: boolean;
   redirectFocusTo?: Id;
 

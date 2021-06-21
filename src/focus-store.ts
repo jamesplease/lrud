@@ -155,7 +155,7 @@ export default function createFocusStore({
         );
 
         const assigningFocusOnMount = nodeDefinitionHierarchy.findIndex(
-          (v) => v.onMountAssignFocusTo
+          (v) => v.redirectFocusTo
         );
 
         let updatedFocusState = possibleNewState;

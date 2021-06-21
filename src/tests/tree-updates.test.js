@@ -209,7 +209,7 @@ describe('Tree updates', () => {
     expect(Object.values(focusState.nodes)).toHaveLength(4);
   });
 
-  it('respects `onMountAssignFocusTo`', () => {
+  it.only('respects `redirectFocusTo`', () => {
     let focusStore;
     let updateMountState;
 
@@ -221,7 +221,7 @@ describe('Tree updates', () => {
       return (
         <FocusNode focusId="nodeA" data-testid="nodeA">
           {mountChild && (
-            <FocusNode focusId="nodeA-A" onMountAssignFocusTo="nodeA-A-B">
+            <FocusNode focusId="nodeA-A" redirectFocusTo="nodeA-A-B">
               <FocusNode focusId="nodeA-A-A" />
               <FocusNode focusId="nodeA-A-B" />
             </FocusNode>

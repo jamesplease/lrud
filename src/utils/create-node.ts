@@ -33,7 +33,7 @@ export default function createNodeDefinitionHierarchy({
     const currentNode = focusState.nodes[nodeDefinition.focusId];
     const isCreatingNewNode = !currentNode;
 
-    if (nodeDefinition.onMountAssignFocusTo !== undefined) {
+    if (nodeDefinition.redirectFocusTo !== undefined) {
       if (process.env.NODE_ENV !== 'production') {
         if (onMountAssignFocusTo !== null) {
           warning(
@@ -45,13 +45,13 @@ export default function createNodeDefinitionHierarchy({
         }
       }
 
-      onMountAssignFocusTo = nodeDefinition.onMountAssignFocusTo;
+      // onMountAssignFocusTo = nodeDefinition.redirectFocusTo;
 
       // We only actually assign the focus when this thing happens
       if (isLastNode) {
         // We disable the focus lock whenever we "apply" an `onMountAssignFocusTo`
         shouldLockFocus = false;
-        onMountAssignFocusToReturn = nodeDefinition.onMountAssignFocusTo;
+        // onMountAssignFocusToReturn = nodeDefinition.redirectFocusTo;
       } else {
         shouldLockFocus = true;
       }
@@ -106,7 +106,7 @@ export default function createNodeDefinitionHierarchy({
       // NOTE: this check *requires* that this API follow the `useEffect` order of React.
       // The implementation of this feature ties this library very tightly with React.
       const isFinalNode = i === nodeDefinitionHierarchy.length - 1;
-      const setFocusGoal = nodeDefinition.onMountAssignFocusTo;
+      const setFocusGoal = nodeDefinition.redirectFocusTo;
       if (process.env.NODE_ENV !== 'production') {
         if (isFinalNode && setFocusGoal && !focusState.nodes[setFocusGoal]) {
           warning(
