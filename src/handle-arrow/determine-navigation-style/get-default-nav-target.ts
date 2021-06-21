@@ -1,4 +1,4 @@
-import nodeCanBeArrowed from './node-can-be-arrowed';
+import nodeCanReceiveIndirectFocus from '../../utils/node-can-receive-indirect-focus';
 import { FocusState, Node, Orientation, Direction, Id } from '../../types';
 
 export default function getDefaultNavTarget(
@@ -24,7 +24,7 @@ export default function getDefaultNavTarget(
       const parentsChildren = unfilteredChildren.filter((nodeId) => {
         const node = focusState.nodes[nodeId];
 
-        if (!nodeCanBeArrowed(focusState, node)) {
+        if (!nodeCanReceiveIndirectFocus(focusState, node)) {
           return false;
         }
 

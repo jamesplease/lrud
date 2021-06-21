@@ -31,7 +31,7 @@ describe('Focus Traps', () => {
     expect(warning.mock.calls[0][1]).toEqual('RESTORE_TRAP_FOCUS_WITHOUT_TRAP');
   });
 
-  it.skip('does not focus on mount', () => {
+  it('does not focus on mount', () => {
     let focusStore;
 
     function TestComponent() {

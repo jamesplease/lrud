@@ -1,4 +1,5 @@
 import clamp from './clamp';
+import nodeCanReceiveIndirectFocus from './node-can-receive-indirect-focus';
 import { FocusState, Id, NodeHierarchy, Orientation } from '../types';
 
 interface GetParentsOptions {
@@ -54,8 +55,7 @@ export function getChildren({
   const nodeChildren = node.children.filter((childId) => {
     const node = focusState.nodes[childId];
 
-    const isEnabled = node && !node.disabled && !node.isExiting;
-    return isEnabled;
+    return nodeCanReceiveIndirectFocus(focusState, node);
   });
 
   let nextPreferredChildren: NodeHierarchy = [];

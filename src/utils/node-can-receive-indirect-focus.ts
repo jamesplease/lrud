@@ -1,6 +1,16 @@
-import { FocusState, Node } from '../../types';
+import { FocusState, Node } from '../types';
 
-export default function nodeCanBeArrowed(focusState: FocusState, node?: Node) {
+// "Indirect focus" here means:
+// 1. receiving focus when a parent node receives focus, either through LRUD input or through an explicit call
+//    to `setFocus`
+// 2. receiving focus after being mounted
+//
+// This function ensures that things like disabled nodes don't receive focus when LRUD is input or when they mount.
+
+export default function nodeCanReceiveIndirectFocus(
+  focusState: FocusState,
+  node?: Node
+) {
   if (!node) {
     return false;
   }
@@ -21,7 +31,10 @@ export default function nodeCanBeArrowed(focusState: FocusState, node?: Node) {
       const childId = children[i];
       const childNode = focusState.nodes[childId];
 
-      const childCanReceiveFocus = nodeCanBeArrowed(focusState, childNode);
+      const childCanReceiveFocus = nodeCanReceiveIndirectFocus(
+        focusState,
+        childNode
+      );
 
       if (childCanReceiveFocus) {
         someChildIsEnabled = true;
