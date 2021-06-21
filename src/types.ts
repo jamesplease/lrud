@@ -109,6 +109,7 @@ export interface RootFocusNode extends BaseNode {
   wrapping: boolean;
   disabled: boolean;
   trap: boolean;
+  redirectFocusTo?: Id;
 
   defaultFocusColumn: number;
   defaultFocusRow: number;
@@ -149,6 +150,7 @@ export interface FocusNode extends BaseNode {
   disabled: boolean;
   navigationStyle: NavigationStyle;
   nodeNavigationItem: NodeNavigationItem;
+  redirectFocusTo?: Id;
 
   defaultFocusColumn: number;
   defaultFocusRow: number;
@@ -194,6 +196,7 @@ export interface NodeDefinition extends FocusNodeEvents {
   wrapGridHorizontal?: boolean;
 
   isExiting?: boolean;
+  redirectFocusTo?: Id;
 
   defaultFocusColumn?: number;
   defaultFocusRow?: number;
@@ -251,6 +254,7 @@ export interface FocusNodeProps extends FocusNodeEvents {
   isExiting?: boolean;
   onMountAssignFocusTo?: Id;
   disabled?: boolean;
+  redirectFocusTo?: Id;
 
   onClick?: (e: any) => void;
   onMouseOver?: (e: any) => void;

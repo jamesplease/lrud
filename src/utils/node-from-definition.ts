@@ -28,6 +28,8 @@ export default function nodeFromDefinition({
 
     onMove,
     onGridMove,
+
+    redirectFocusTo,
   } = nodeDefinition;
 
   const parentId = parentNode.focusId;
@@ -81,6 +83,8 @@ export default function nodeFromDefinition({
     wrapGridHorizontal: Boolean(nodeDefinition.wrapGridHorizontal),
     wrapGridVertical: Boolean(nodeDefinition.wrapGridVertical),
     _focusTrapPreviousHierarchy: [],
+
+    redirectFocusTo,
 
     onKey,
     onArrow,

@@ -89,6 +89,8 @@ export function FocusNode(
     onFocused,
     onBlurred,
 
+    redirectFocusTo,
+
     onClick,
     onMouseOver,
 
@@ -256,6 +258,8 @@ export function FocusNode(
 
       defaultFocusColumn: defaultFocusColumn ?? 0,
       defaultFocusRow: defaultFocusRow ?? 0,
+
+      redirectFocusTo,
 
       onKey: createCallbackWrapper('onKey'),
       onArrow: createCallbackWrapper('onArrow'),

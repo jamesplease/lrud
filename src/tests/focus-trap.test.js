@@ -431,4 +431,104 @@ describe('Focus Traps', () => {
       'gridItem1-2',
     ]);
   });
+
+  it('works with redirectFocusTo; redirecting to an immediate child with no children', () => {
+    let focusStore;
+    let setFocus;
+
+    function TestComponent() {
+      focusStore = useFocusStoreDangerously();
+      setFocus = useSetFocus();
+
+      return (
+        <FocusNode focusId="testRoot">
+          <FocusNode focusId="nodeA" data-testid="nodeA">
+            <FocusNode focusId="nodeA-A" data-testid="nodeA-A">
+              <FocusNode focusId="nodeA-A-A" data-testid="nodeA-A-A">
+                A
+              </FocusNode>
+            </FocusNode>
+            <FocusNode focusId="nodeA-B" data-testid="nodeA-B" />
+          </FocusNode>
+          <FocusNode
+            focusId="nodeB"
+            data-testid="nodeB"
+            isTrap
+            redirectFocusTo="nodeB-B">
+            <FocusNode focusId="nodeB-A" data-testid="nodeB-A" />
+            <FocusNode focusId="nodeB-B" data-testid="nodeB-B" />
+          </FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeA-A-A');
+    setFocus('nodeB');
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeB-B');
+    expect(focusStore.getState().focusHierarchy).toEqual([
+      'root',
+      'testRoot',
+      'nodeB',
+      'nodeB-B',
+    ]);
+  });
+
+  it('works with redirectFocusTo; redirecting to an immediate child with children', () => {
+    let focusStore;
+    let setFocus;
+
+    function TestComponent() {
+      focusStore = useFocusStoreDangerously();
+      setFocus = useSetFocus();
+
+      return (
+        <FocusNode focusId="testRoot">
+          <FocusNode focusId="nodeA" data-testid="nodeA">
+            <FocusNode focusId="nodeA-A" data-testid="nodeA-A">
+              <FocusNode focusId="nodeA-A-A" data-testid="nodeA-A-A">
+                A
+              </FocusNode>
+            </FocusNode>
+            <FocusNode focusId="nodeA-B" data-testid="nodeA-B" />
+          </FocusNode>
+          <FocusNode
+            focusId="nodeB"
+            data-testid="nodeB"
+            isTrap
+            redirectFocusTo="nodeB-B">
+            <FocusNode focusId="nodeB-A" data-testid="nodeB-A" />
+            <FocusNode focusId="nodeB-B" data-testid="nodeB-B">
+              <FocusNode focusId="nodeB-B-A" data-testid="nodeB-B-A">
+                <FocusNode focusId="nodeB-B-A-A" data-testid="nodeB-B-A-A" />
+              </FocusNode>
+            </FocusNode>
+          </FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeA-A-A');
+    setFocus('nodeB');
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeB-B-A-A');
+    expect(focusStore.getState().focusHierarchy).toEqual([
+      'root',
+      'testRoot',
+      'nodeB',
+      'nodeB-B',
+      'nodeB-B-A',
+      'nodeB-B-A-A',
+    ]);
+  });
 });

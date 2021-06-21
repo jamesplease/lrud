@@ -6,12 +6,14 @@ interface GetParentsOptions {
   focusState: FocusState;
   nodeId: Id;
   currentFocusHierarchy?: NodeHierarchy;
+  stopAt?: Id;
 }
 
 export function getParents({
   focusState,
   nodeId,
   currentFocusHierarchy = [],
+  stopAt,
 }: GetParentsOptions): NodeHierarchy {
   const node = focusState.nodes[nodeId];
 
@@ -21,21 +23,29 @@ export function getParents({
 
   const parentId = node.parentId;
 
-  if (parentId === null) {
+  if (
+    parentId === null ||
+    (typeof stopAt === 'string' && parentId === stopAt)
+  ) {
     return currentFocusHierarchy;
   } else {
     return getParents({
       focusState,
       nodeId: parentId,
       currentFocusHierarchy: [parentId, ...currentFocusHierarchy],
+      stopAt,
     });
   }
 }
 
-interface GetChildrenOptions extends GetParentsOptions {
+interface GetChildrenOptions {
+  focusState: FocusState;
+  nodeId: Id;
+  currentFocusHierarchy?: NodeHierarchy;
   orientation?: Orientation;
   preferEnd?: boolean;
   preferredChildren?: NodeHierarchy;
+  redirectFocusTo?: Id;
 }
 
 export function getChildren({
@@ -50,6 +60,39 @@ export function getChildren({
 
   if (!node) {
     return [];
+  }
+
+  const nodeRedirectFocusTo = node.redirectFocusTo;
+
+  if (nodeRedirectFocusTo) {
+    const redirectNode = focusState.nodes[nodeRedirectFocusTo];
+
+    if (redirectNode) {
+      const parents = getParents({
+        focusState,
+        nodeId: nodeRedirectFocusTo,
+        currentFocusHierarchy: currentFocusHierarchy,
+        stopAt: nodeId,
+      });
+
+      if (!parents.length || parents[0] === nodeId) {
+        const currentHierarchy = [
+          ...currentFocusHierarchy,
+          ...parents,
+          nodeRedirectFocusTo,
+        ];
+
+        const result = [
+          ...parents,
+          ...getChildren({
+            focusState,
+            nodeId: nodeRedirectFocusTo,
+            currentFocusHierarchy: currentHierarchy,
+          }),
+        ];
+        return result;
+      }
+    }
   }
 
   const nodeChildren = node.children.filter((childId) => {
