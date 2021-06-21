@@ -120,13 +120,13 @@ describe('Tree updates', () => {
     act(() => updateMountState(true));
 
     focusState = focusStore.getState();
-    expect(focusState.focusedNodeId).toEqual('nodeA-A');
-    expect(focusState.focusHierarchy).toEqual(['root', 'nodeA', 'nodeA-A']);
+    expect(focusState.focusedNodeId).toEqual('nodeA');
+    expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
     expect(focusState.activeNodeId).toEqual(null);
     expect(Object.values(focusState.nodes)).toHaveLength(4);
   });
 
-  it.skip('focus trap child', () => {
+  it('focus trap child', () => {
     let focusStore;
     let updateMountState;
 
