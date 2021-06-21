@@ -23,10 +23,9 @@ export function getParents({
 
   const parentId = node.parentId;
 
-  if (
-    parentId === null ||
-    (typeof stopAt === 'string' && parentId === stopAt)
-  ) {
+  if (typeof stopAt === 'string' && parentId === stopAt) {
+    return [parentId, ...currentFocusHierarchy];
+  } else if (parentId === null) {
     return currentFocusHierarchy;
   } else {
     return getParents({
@@ -68,29 +67,37 @@ export function getChildren({
     const redirectNode = focusState.nodes[nodeRedirectFocusTo];
 
     if (redirectNode) {
-      const parents = getParents({
+      let parents = getParents({
         focusState,
         nodeId: nodeRedirectFocusTo,
         currentFocusHierarchy: currentFocusHierarchy,
-        stopAt: nodeId,
+        stopAt: currentFocusHierarchy.length === 0 ? nodeId : undefined,
       });
 
-      if (!parents.length || parents[0] === nodeId) {
+      let didMatch = false;
+      if (parents.length && parents[0] === nodeId) {
+        didMatch = true;
+        parents.shift();
+      }
+
+      if (!parents.length || didMatch) {
         const currentHierarchy = [
           ...currentFocusHierarchy,
           ...parents,
           nodeRedirectFocusTo,
         ];
 
-        const result = [
-          ...parents,
-          ...getChildren({
-            focusState,
-            nodeId: nodeRedirectFocusTo,
-            currentFocusHierarchy: currentHierarchy,
-          }),
-        ];
+        const children = getChildren({
+          focusState,
+          nodeId: nodeRedirectFocusTo,
+          currentFocusHierarchy: currentHierarchy,
+        });
+
+        const result = [...children];
+
         return result;
+      } else {
+        // TODO: add warning. This means you redirected to something outside of this subtree!
       }
     }
   }

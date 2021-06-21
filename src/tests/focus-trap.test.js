@@ -531,4 +531,104 @@ describe('Focus Traps', () => {
       'nodeB-B-A-A',
     ]);
   });
+
+  it('works with redirectFocusTo; redirecting to an nested child with no children', () => {
+    let focusStore;
+    let setFocus;
+
+    function TestComponent() {
+      focusStore = useFocusStoreDangerously();
+      setFocus = useSetFocus();
+
+      return (
+        <FocusNode focusId="testRoot">
+          <FocusNode focusId="nodeA">
+            <FocusNode focusId="nodeA-A">
+              <FocusNode focusId="nodeA-A-A">A</FocusNode>
+            </FocusNode>
+            <FocusNode focusId="nodeA-B" />
+          </FocusNode>
+          <FocusNode focusId="nodeB" isTrap redirectFocusTo="nodeB-B-A-A">
+            <FocusNode focusId="nodeB-A" />
+            <FocusNode focusId="nodeB-B">
+              <FocusNode focusId="nodeB-B-A">
+                <FocusNode focusId="nodeB-B-A-A" />
+              </FocusNode>
+            </FocusNode>
+          </FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeA-A-A');
+    setFocus('nodeB');
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeB-B-A-A');
+    expect(focusStore.getState().focusHierarchy).toEqual([
+      'root',
+      'testRoot',
+      'nodeB',
+      'nodeB-B',
+      'nodeB-B-A',
+      'nodeB-B-A-A',
+    ]);
+  });
+
+  it('works with redirectFocusTo; redirecting to an nested child with a children', () => {
+    let focusStore;
+    let setFocus;
+
+    function TestComponent() {
+      focusStore = useFocusStoreDangerously();
+      setFocus = useSetFocus();
+
+      return (
+        <FocusNode focusId="testRoot">
+          <FocusNode focusId="nodeA">
+            <FocusNode focusId="nodeA-A">
+              <FocusNode focusId="nodeA-A-A">A</FocusNode>
+            </FocusNode>
+            <FocusNode focusId="nodeA-B" />
+          </FocusNode>
+          <FocusNode focusId="nodeB" isTrap redirectFocusTo="nodeB-B-A-A">
+            <FocusNode focusId="nodeB-A" />
+            <FocusNode focusId="nodeB-B">
+              <FocusNode focusId="nodeB-B-A">
+                <FocusNode focusId="nodeB-B-A-A">
+                  <FocusNode focusId="nodeB-B-A-A-A">
+                    <FocusNode focusId="nodeB-B-A-A-A-A"></FocusNode>
+                  </FocusNode>
+                </FocusNode>
+              </FocusNode>
+            </FocusNode>
+          </FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeA-A-A');
+    setFocus('nodeB');
+    expect(focusStore.getState().focusedNodeId).toEqual('nodeB-B-A-A-A-A');
+    expect(focusStore.getState().focusHierarchy).toEqual([
+      'root',
+      'testRoot',
+      'nodeB',
+      'nodeB-B',
+      'nodeB-B-A',
+      'nodeB-B-A-A',
+      'nodeB-B-A-A-A',
+      'nodeB-B-A-A-A-A',
+    ]);
+  });
 });
