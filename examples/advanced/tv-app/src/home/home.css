@@ -1,3 +1,5 @@
 .home {
+  /* This places the home screen behind the profile choice screen when it animates in */
+  z-index: 10;
   padding: 50px 0 0 180px;
 }

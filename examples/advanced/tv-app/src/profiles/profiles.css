@@ -1,4 +1,6 @@
 .profiles {
+  /* This places the profile choice screen above the home page */
+  z-index: 20;
   padding-top: 200px;
 }
 
