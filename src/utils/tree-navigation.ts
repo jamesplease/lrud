@@ -107,16 +107,21 @@ export function getChildren({
     }
 
     if (orientation && orientation === node.orientation) {
-      // TODO: leaving this here in the event that I refactor the
-      // preferred column/row implementation above, even though
-      // it is currently redundant.
-      // @ts-ignore
-      const isGridNavigation = node.navigationStyle === 'grid';
-      const useLastNode = !isGridNavigation && preferEnd;
+      let index;
+      if (typeof node.preferredChildIndex === 'function') {
+        index = node.preferredChildIndex();
+      } else {
+        // TODO: leaving this here in the event that I refactor the
+        // preferred column/row implementation above, even though
+        // it is currently redundant.
+        // @ts-ignore
+        const isGridNavigation = node.navigationStyle === 'grid';
+        const useLastNode = !isGridNavigation && preferEnd;
 
-      const lastIndex = Math.max(0, nodeChildren.length - 1);
-      const index = useLastNode ? lastIndex : 0;
-      nextChildId = nodeChildren[index];
+        const lastIndex = Math.max(0, nodeChildren.length - 1);
+        index = useLastNode ? lastIndex : 0;
+        nextChildId = nodeChildren[index];
+      }
     }
 
     return getChildren({

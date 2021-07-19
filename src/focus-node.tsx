@@ -64,6 +64,7 @@ export function FocusNode(
     disabled,
 
     onMountAssignFocusTo,
+    preferredChildIndex,
 
     isExiting = false,
 
@@ -271,6 +272,7 @@ export function FocusNode(
 
       initiallyDisabled: Boolean(disabled),
       onMountAssignFocusTo,
+      preferredChildIndex,
 
       isExiting,
 
