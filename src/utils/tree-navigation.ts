@@ -97,20 +97,33 @@ export function getChildren({
 
     let nextChildId = nodeChildren[0];
 
-    if (preferredChildren && preferredChildren.length) {
-      const possibleId = preferredChildren[0];
-
-      if (focusState.nodes[possibleId]) {
-        nextChildId = possibleId;
-        nextPreferredChildren = preferredChildren.slice(1);
-      }
+    // If the dev explicitly defined an explicit index, then we always use that.
+    if (typeof node.preferredChildIndex === 'function') {
+      const childIndex = clamp(
+        node.preferredChildIndex(),
+        0,
+        node.children.length - 1
+      );
+      nextChildId = nodeChildren[childIndex];
     }
 
-    if (orientation && orientation === node.orientation) {
-      let index;
-      if (typeof node.preferredChildIndex === 'function') {
-        index = node.preferredChildIndex();
-      } else {
+    // Otherwise, there are situations where we choose a child other than the
+    // first.
+    else {
+      // `preferredChildren` exist currently when restoring a focus trap's hierarchy
+      if (preferredChildren && preferredChildren.length) {
+        const possibleId = preferredChildren[0];
+
+        if (focusState.nodes[possibleId]) {
+          nextChildId = possibleId;
+          nextPreferredChildren = preferredChildren.slice(1);
+        }
+      }
+
+      // This allows the focus index to restore to the index in
+      // the "direction" of motion. It's not incredibly common, but not so
+      // rare that it's an edge case.
+      if (orientation && orientation === node.orientation) {
         // TODO: leaving this here in the event that I refactor the
         // preferred column/row implementation above, even though
         // it is currently redundant.
@@ -119,7 +132,7 @@ export function getChildren({
         const useLastNode = !isGridNavigation && preferEnd;
 
         const lastIndex = Math.max(0, nodeChildren.length - 1);
-        index = useLastNode ? lastIndex : 0;
+        const index = useLastNode ? lastIndex : 0;
         nextChildId = nodeChildren[index];
       }
     }
