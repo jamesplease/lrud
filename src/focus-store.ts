@@ -29,6 +29,7 @@ interface CreateFocusStoreOptions {
 // When these props of a node change, then the store
 // will alert subscribers.
 const dynamicNodeProps = [
+  'preferredChildIndex',
   'disabled',
   'isExiting',
   'defaultFocusColumn',
@@ -321,6 +322,8 @@ export default function createFocusStore({
         forgetTrapFocusHierarchy:
           update.forgetTrapFocusHierarchy ??
           currentNode.forgetTrapFocusHierarchy,
+        preferredChildIndex:
+          update.preferredChildIndex ?? currentNode.preferredChildIndex,
       };
 
       const updatedChildren = recursivelyUpdateChildren(

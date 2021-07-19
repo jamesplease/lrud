@@ -385,6 +385,7 @@ export function FocusNode(
       wrapping,
       trap: isTrap,
       forgetTrapFocusHierarchy,
+      preferredChildIndex,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -395,6 +396,7 @@ export function FocusNode(
     wrapping,
     isTrap,
     forgetTrapFocusHierarchy,
+    preferredChildIndex,
   ]);
 
   useEffect(() => {
