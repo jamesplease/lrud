@@ -98,10 +98,7 @@ export function getChildren({
     let nextChildId = nodeChildren[0];
 
     // If the dev explicitly defined an explicit index, then we always use that.
-    if (
-      typeof node.preferredChildIndex !== 'undefined' ||
-      typeof node.preferredChildIndex === 'number'
-    ) {
+    if (typeof node.preferredChildIndex !== 'undefined') {
       let childIndex;
       if (typeof node.preferredChildIndex === 'number') {
         childIndex = 0;
