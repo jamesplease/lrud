@@ -101,7 +101,7 @@ export function getChildren({
     if (typeof node.preferredChildIndex !== 'undefined') {
       let childIndex;
       if (typeof node.preferredChildIndex === 'number') {
-        childIndex = 0;
+        childIndex = node.preferredChildIndex;
       } else if (typeof node.preferredChildIndex === 'function') {
         childIndex = node.preferredChildIndex();
       }
