@@ -285,7 +285,7 @@ export function FocusNode(
         warning(
           'You passed the orientation prop to a grid focus node. ' +
             'This prop has no effect on grid nodes, but it may represent an error in your code. ' +
-            `This node has a focus ID of ${focusId}.`,
+            `This node has a focus ID of ${nodeId}.`,
           'ORIENTATION_ON_GRID'
         );
       }
@@ -294,7 +294,7 @@ export function FocusNode(
         warning(
           'You passed the preferredChildIndex prop to a grid focus node. ' +
             'This prop has no effect on grid nodes, but it may represent an error in your code. ' +
-            `This node has a focus ID of ${focusId}.`,
+            `This node has a focus ID of ${nodeId}.`,
           'PREFERRED_CHILD_INDEX_ON_GRID'
         );
       }
@@ -303,14 +303,14 @@ export function FocusNode(
         warning(
           'You passed the onGridMove prop to a node that is not a grid. ' +
             'This will have no effect, but it may represent an error in your code. ' +
-            `This node has a focus ID of ${focusId}.`,
+            `This node has a focus ID of ${nodeId}.`,
           'GRID_MOVE_NOT_ON_GRID'
         );
       } else if (onMove && isGrid) {
         warning(
           'You passed the onMove prop to a grid Focus Node. ' +
             'onMove does not work on grid nodes. Did you mean to pass onGridMove instead? ' +
-            `This node has a focus ID of ${focusId}.`,
+            `This node has a focus ID of ${nodeId}.`,
           'ON_MOVE_ON_GRID'
         );
       }
@@ -319,7 +319,7 @@ export function FocusNode(
         warning(
           'You passed the forgetTrapFocusHierarchy prop to a focus node that is not a trap. ' +
             'This will have no effect, but it may represent an error in your code. ' +
-            `This node has a focus ID of ${focusId}.`,
+            `This node has a focus ID of ${nodeId}.`,
           'RESTORE_TRAP_FOCUS_WITHOUT_TRAP'
         );
       }
