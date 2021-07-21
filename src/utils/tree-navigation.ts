@@ -105,17 +105,20 @@ export function getChildren({
 
     // If the dev explicitly defined an explicit index, then we always use that.
     if (isValidPreferredChildIndex && node.navigationStyle !== 'grid') {
-      let childIndex;
+      let childIndex = 0;
       if (numericPreferredChildIndex) {
+        // @ts-ignore
         childIndex = node.preferredChildIndex;
       } else {
         // @ts-ignore
         childIndex = node.preferredChildIndex();
       }
 
-      if (typeof childIndex === 'number') {
+      if (typeof childIndex === 'number' && Number.isFinite(childIndex)) {
         childIndex = clamp(childIndex, 0, node.children.length - 1);
         nextChildId = nodeChildren[childIndex];
+      } else {
+        nextChildId = nodeChildren[0];
       }
     }
 
