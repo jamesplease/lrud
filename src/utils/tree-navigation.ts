@@ -96,22 +96,21 @@ export function getChildren({
     }
 
     let nextChildId = nodeChildren[0];
-    const numericPreferredChildIndex =
-      typeof node.preferredChildIndex === 'number' &&
-      Number.isFinite(node.preferredChildIndex);
-    const isValidPreferredChildIndex =
-      numericPreferredChildIndex ||
-      typeof node.preferredChildIndex === 'function';
+    const numericdefaultFocusChild =
+      typeof node.defaultFocusChild === 'number' &&
+      Number.isFinite(node.defaultFocusChild);
+    const isValiddefaultFocusChild =
+      numericdefaultFocusChild || typeof node.defaultFocusChild === 'function';
 
     // If the dev explicitly defined an explicit index, then we always use that.
-    if (isValidPreferredChildIndex && node.navigationStyle !== 'grid') {
+    if (isValiddefaultFocusChild && node.navigationStyle !== 'grid') {
       let childIndex = 0;
-      if (numericPreferredChildIndex) {
+      if (numericdefaultFocusChild) {
         // @ts-ignore
-        childIndex = node.preferredChildIndex;
+        childIndex = node.defaultFocusChild;
       } else {
         // @ts-ignore
-        childIndex = node.preferredChildIndex();
+        childIndex = node.defaultFocusChild();
       }
 
       if (typeof childIndex === 'number' && Number.isFinite(childIndex)) {

@@ -64,7 +64,7 @@ export function FocusNode(
     disabled,
 
     onMountAssignFocusTo,
-    preferredChildIndex,
+    defaultFocusChild,
 
     isExiting = false,
 
@@ -272,7 +272,7 @@ export function FocusNode(
 
       initiallyDisabled: Boolean(disabled),
       onMountAssignFocusTo,
-      preferredChildIndex,
+      defaultFocusChild,
 
       isExiting,
 
@@ -290,9 +290,9 @@ export function FocusNode(
         );
       }
 
-      if (isGrid && preferredChildIndex) {
+      if (isGrid && defaultFocusChild) {
         warning(
-          'You passed the preferredChildIndex prop to a grid focus node. ' +
+          'You passed the defaultFocusChild prop to a grid focus node. ' +
             'This prop has no effect on grid nodes, but it may represent an error in your code. ' +
             `This node has a focus ID of ${nodeId}.`,
           'PREFERRED_CHILD_INDEX_ON_GRID'
@@ -394,7 +394,7 @@ export function FocusNode(
       wrapping,
       trap: isTrap,
       forgetTrapFocusHierarchy,
-      preferredChildIndex,
+      defaultFocusChild,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -405,7 +405,7 @@ export function FocusNode(
     wrapping,
     isTrap,
     forgetTrapFocusHierarchy,
-    preferredChildIndex,
+    defaultFocusChild,
   ]);
 
   useEffect(() => {

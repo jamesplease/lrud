@@ -66,7 +66,7 @@ export default function nodeFromDefinition({
     disabled: Boolean(nodeDefinition.initiallyDisabled),
     navigationStyle,
     nodeNavigationItem,
-    preferredChildIndex: nodeDefinition.preferredChildIndex,
+    defaultFocusChild: nodeDefinition.defaultFocusChild,
 
     defaultFocusColumn: defaultFocusColumnValue,
     defaultFocusRow: defaultFocusRowValue,

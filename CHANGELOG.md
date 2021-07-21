@@ -1,5 +1,17 @@
 # Changelog
 
+### v0.0.15 (2021/6/17)
+
+**New Features**
+
+- A new prop, `defaultFocusChild`, allows you to specify a particular child's index to receive
+  focus. This node is analogous to `defaultFocusColumn` and `defaultFocusRow` for nodes that are
+  not grids.
+
+**Bug Fixes**
+
+- Warnings will now log the associated node's focus ID, even when you do not specify one.
+
 ### v0.0.14 (2021/6/17)
 
 **Bug Fixes**
