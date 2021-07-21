@@ -96,27 +96,59 @@ export function getChildren({
     }
 
     let nextChildId = nodeChildren[0];
+    const numericdefaultFocusChild =
+      typeof node.defaultFocusChild === 'number' &&
+      Number.isFinite(node.defaultFocusChild);
+    const isValiddefaultFocusChild =
+      numericdefaultFocusChild || typeof node.defaultFocusChild === 'function';
 
-    if (preferredChildren && preferredChildren.length) {
-      const possibleId = preferredChildren[0];
+    // If the dev explicitly defined an explicit index, then we always use that.
+    if (isValiddefaultFocusChild && node.navigationStyle !== 'grid') {
+      let childIndex = 0;
+      if (numericdefaultFocusChild) {
+        // @ts-ignore
+        childIndex = node.defaultFocusChild;
+      } else {
+        // @ts-ignore
+        childIndex = node.defaultFocusChild();
+      }
 
-      if (focusState.nodes[possibleId]) {
-        nextChildId = possibleId;
-        nextPreferredChildren = preferredChildren.slice(1);
+      if (typeof childIndex === 'number' && Number.isFinite(childIndex)) {
+        childIndex = clamp(childIndex, 0, node.children.length - 1);
+        nextChildId = nodeChildren[childIndex];
+      } else {
+        nextChildId = nodeChildren[0];
       }
     }
 
-    if (orientation && orientation === node.orientation) {
-      // TODO: leaving this here in the event that I refactor the
-      // preferred column/row implementation above, even though
-      // it is currently redundant.
-      // @ts-ignore
-      const isGridNavigation = node.navigationStyle === 'grid';
-      const useLastNode = !isGridNavigation && preferEnd;
+    // Otherwise, there are situations where we choose a child other than the
+    // first.
+    else {
+      // `preferredChildren` exist currently when restoring a focus trap's hierarchy
+      if (preferredChildren && preferredChildren.length) {
+        const possibleId = preferredChildren[0];
 
-      const lastIndex = Math.max(0, nodeChildren.length - 1);
-      const index = useLastNode ? lastIndex : 0;
-      nextChildId = nodeChildren[index];
+        if (focusState.nodes[possibleId]) {
+          nextChildId = possibleId;
+          nextPreferredChildren = preferredChildren.slice(1);
+        }
+      }
+
+      // This allows the focus index to restore to the index in
+      // the "direction" of motion. It's not incredibly common, but not so
+      // rare that it's an edge case.
+      if (orientation && orientation === node.orientation) {
+        // TODO: leaving this here in the event that I refactor the
+        // preferred column/row implementation above, even though
+        // it is currently redundant.
+        // @ts-ignore
+        const isGridNavigation = node.navigationStyle === 'grid';
+        const useLastNode = !isGridNavigation && preferEnd;
+
+        const lastIndex = Math.max(0, nodeChildren.length - 1);
+        const index = useLastNode ? lastIndex : 0;
+        nextChildId = nodeChildren[index];
+      }
     }
 
     return getChildren({
