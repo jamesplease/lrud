@@ -290,6 +290,15 @@ export function FocusNode(
         );
       }
 
+      if (isGrid && preferredChildIndex) {
+        warning(
+          'You passed the preferredChildIndex prop to a grid focus node. ' +
+            'This prop has no effect on grid nodes, but it may represent an error in your code. ' +
+            `This node has a focus ID of ${focusId}.`,
+          'PREFERRED_CHILD_INDEX_ON_GRID'
+        );
+      }
+
       if (onGridMove && !isGrid) {
         warning(
           'You passed the onGridMove prop to a node that is not a grid. ' +
