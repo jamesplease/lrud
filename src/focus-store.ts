@@ -318,7 +318,7 @@ export default function createFocusStore({
           update.defaultFocusColumn ?? currentNode.defaultFocusColumn,
         defaultFocusRow: update.defaultFocusRow ?? currentNode.defaultFocusRow,
         wrapping: update.wrapping ?? currentNode.wrapping,
-        trap: update.wrapping ?? currentNode.trap,
+        trap: update.trap ?? currentNode.trap,
         forgetTrapFocusHierarchy:
           update.forgetTrapFocusHierarchy ??
           currentNode.forgetTrapFocusHierarchy,
