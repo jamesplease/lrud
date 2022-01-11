@@ -30,7 +30,7 @@ yarn add @please/lrud
 
 This library has the following peer dependencies:
 
-- [`react@^16.8.0`](https://www.npmjs.com/package/react)
+- [`react@^16.8.0 || react@^17.0.0`](https://www.npmjs.com/package/react)
 
 ## Table of Contents
 
