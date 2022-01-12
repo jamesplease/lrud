@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.0.16 (2022/1/12)
+
+**Bug Fixes**
+
+- Fix bug related to updating a FocusNode's `isTrap` prop.
+
 ### v0.0.15 (2021/6/17)
 
 **New Features**
