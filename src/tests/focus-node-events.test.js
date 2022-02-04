@@ -172,6 +172,7 @@ describe('FocusNode Events', () => {
       fireEvent.keyDown(window, {
         code: 'ArrowRight',
         key: 'ArrowRight',
+        targetNode: focusStore.getState().nodes.nodeA,
       });
 
       nodeEl = screen.getByTestId('nodeA');
@@ -279,6 +280,7 @@ describe('FocusNode Events', () => {
           key: 'select',
           isArrow: false,
           node: focusStore.getState().nodes.testRoot,
+          targetNode: preFocusedNodeA,
         })
       );
 
@@ -290,6 +292,7 @@ describe('FocusNode Events', () => {
           // active state. This allows you to, say, prevent default
           // the action.
           node: preFocusedNodeA,
+          targetNode: preFocusedNodeA,
         })
       );
     });
@@ -347,6 +350,7 @@ describe('FocusNode Events', () => {
           key: 'back',
           isArrow: false,
           node: focusStore.getState().nodes.testRoot,
+          targetNode: focusStore.getState().nodes.nodeA,
         })
       );
 
@@ -355,6 +359,7 @@ describe('FocusNode Events', () => {
           key: 'back',
           isArrow: false,
           node: focusStore.getState().nodes.nodeA,
+          targetNode: focusStore.getState().nodes.nodeA,
         })
       );
     });
