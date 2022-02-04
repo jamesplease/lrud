@@ -1,9 +1,15 @@
+import { FocusState } from './../types';
 import { useContext, useState, useEffect, useRef } from 'react';
 import FocusContext from '../focus-context';
 import { warning } from '../utils/warning';
 import { Id, Node } from '../types';
 
-export default function useFocusNode(focusId: Id): Node | null {
+function getCurrentFocusedNodeFromState(fs?: FocusState) {
+  if (!fs) return null;
+  return fs.nodes?.[fs.focusedNodeId];
+}
+
+export default function useFocusNode(focusId?: Id): Node | null {
   const contextValue = useContext(FocusContext.Context);
 
   const [focusNode, setFocusNode] = useState<Node | null>(() => {
@@ -18,7 +24,7 @@ export default function useFocusNode(focusId: Id): Node | null {
       return null;
     } else {
       if (process.env.NODE_ENV !== 'production') {
-        if (typeof focusId !== 'string') {
+        if (typeof focusId != 'undefined' && typeof focusId !== 'string') {
           warning(
             `You passed a non-string focus ID to useFocusNode: ${focusId}. Focus IDs are always strings. ` +
               'This may represent an error in your code.',
@@ -26,9 +32,10 @@ export default function useFocusNode(focusId: Id): Node | null {
           );
         }
       }
-
       const focusState = contextValue.store.getState();
-      const possibleNode = focusState.nodes[focusId];
+      const possibleNode = focusId
+        ? focusState.nodes[focusId]
+        : getCurrentFocusedNodeFromState(focusState);
       return possibleNode ?? null;
     }
   });
@@ -45,9 +52,12 @@ export default function useFocusNode(focusId: Id): Node | null {
     }
 
     if (process.env.NODE_ENV !== 'production') {
-      if (typeof focusIdRef.current !== 'string') {
+      if (
+        typeof focusIdRef.current != 'undefined' &&
+        typeof focusIdRef.current !== 'string'
+      ) {
         warning(
-          `You passed a non-string focus ID to useFocusNode: ${focusId}. Focus IDs are always strings. ` +
+          `You passed a non-string focus ID to useFocusNode: ${focusIdRef.current}. Focus IDs are always strings. ` +
             'This may represent an error in your code.',
           'FOCUS_ID_NOT_STRING'
         );
@@ -55,7 +65,10 @@ export default function useFocusNode(focusId: Id): Node | null {
     }
 
     const currentNode =
-      contextValue.store.getState().nodes[focusIdRef.current] ?? null;
+      (focusIdRef.current
+        ? contextValue.store.getState().nodes[focusIdRef.current]
+        : getCurrentFocusedNodeFromState(contextValue.store.getState())) ??
+      null;
     if (currentNode !== focusNodeRef.current) {
       setFocusNode(currentNode);
     }

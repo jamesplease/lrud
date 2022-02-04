@@ -95,4 +95,51 @@ describe('useFocusNode', () => {
 
     expect(focusNode).toEqual(null);
   });
+
+  it('returns the current focused leaf node', () => {
+    let setFocus;
+    let focusNode;
+    let focusStore;
+
+    function TestComponent() {
+      setFocus = useSetFocus();
+      focusNode = useFocusNode();
+      focusStore = useFocusStoreDangerously();
+
+      return (
+        <>
+          <FocusNode focusId="nodeA" data-testid="nodeA" />
+          <FocusNode focusId="nodeB" data-testid="nodeB" />
+        </>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    expect(focusNode).toEqual(
+      expect.objectContaining({
+        focusId: 'nodeA',
+        isFocused: true,
+        isFocusedLeaf: true,
+      })
+    );
+
+    expect(focusNode).toBe(focusStore.getState().nodes.nodeA);
+
+    act(() => setFocus('nodeB'));
+
+    expect(focusNode).toEqual(
+      expect.objectContaining({
+        focusId: 'nodeB',
+        isFocused: true,
+        isFocusedLeaf: true,
+      })
+    );
+
+    expect(focusNode).toBe(focusStore.getState().nodes.nodeB);
+  });
 });
