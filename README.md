@@ -377,7 +377,8 @@ An object that is passed to you in the LRUD-related callbacks of a [`FocusNode` 
 | ----------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `key`             | string                  | A string representing the key that was pressed. One of `"left"`, `"right"`, `"up"`, `"down"`, `"select"`, or `"back"`. |
 | `isArrow`         | boolean                 | Whether or not this key is an arrow.                                                                                   |
-| `node`            | [FocusNode](#focusnode) | The [`FocusNode`](#focusnode) that received this event.                                                                |
+| `node`            | [FocusNode](#focusnode) | The current [`FocusNode`](#focusnode) that received this event as the event propagates up the focus hierarchy. Analagous to [`event.currentTarget`](https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget) |
+| `targetNode`      | [FocusNode](#focusnode) | The leaf [`FocusNode`](#focusnode) from which this event propagated. Analagous to [`event.target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target) |
 | `preventDefault`  | function                | Call this to stop the default behavior of the event. Commonly used to override the navigation behavior                 |
 | `stopPropagation` | function                | Call this to stop the propagation of the event.                                                                        |
 

@@ -16,7 +16,7 @@ function executeFunction(
   }: {
     isArrow: boolean;
     key: LRUDKey;
-    targetNode?: Node;
+    targetNode: Node;
     preventDefault: PreventDefault;
     stopPropagation: StopPropagation;
   }
@@ -61,7 +61,7 @@ export default function bubbleKey(focusTree: FocusStore, key: LRUDKey) {
     const targetNodeId = reverseFocusHierarchy[0];
 
     // This is the equivalent of event.target within DOM events.
-    const targetNode: Node | undefined = state.nodes?.[targetNodeId];
+    const targetNode: Node = state.nodes[targetNodeId] as Node;
 
     reverseFocusHierarchy.forEach((focusedNodeId) => {
       if (propagationStopped) {
