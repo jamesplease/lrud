@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.0.17 (2022/2/5)
+
+**New Features**
+
+- `targetNode` is now a property of the `LRUDEvents` interface. This is the node that the event stemmed from; it's analagous to
+  [`event.target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target).
+
 ### v0.0.16 (2022/1/12)
 
 **Bug Fixes**

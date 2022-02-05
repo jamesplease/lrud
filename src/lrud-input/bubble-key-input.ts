@@ -16,7 +16,7 @@ function executeFunction(
   }: {
     isArrow: boolean;
     key: LRUDKey;
-    targetNode?: Node;
+    targetNode: Node;
     preventDefault: PreventDefault;
     stopPropagation: StopPropagation;
   }
@@ -48,8 +48,8 @@ export default function bubbleKey(focusTree: FocusStore, key: LRUDKey) {
   let defaultPrevented = false;
   let propagationStopped = false;
 
-  const focusH = [...focusHierarchy].reverse();
-  if (focusH.length) {
+  const reverseFocusHierarchy = focusHierarchy.slice().reverse();
+  if (reverseFocusHierarchy.length) {
     function preventDefault() {
       defaultPrevented = true;
     }
@@ -58,10 +58,12 @@ export default function bubbleKey(focusTree: FocusStore, key: LRUDKey) {
       propagationStopped = true;
     }
 
-    const sourcingLeafId = focusH[0];
-    const targetNode: Node | undefined = state.nodes?.[sourcingLeafId];
+    const targetNodeId = reverseFocusHierarchy[0];
 
-    focusH.forEach((focusedNodeId) => {
+    // This is the equivalent of event.target within DOM events.
+    const targetNode: Node = state.nodes[targetNodeId] as Node;
+
+    reverseFocusHierarchy.forEach((focusedNodeId) => {
       if (propagationStopped) {
         return;
       }

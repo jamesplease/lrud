@@ -21,6 +21,7 @@ export type ReactNodeRef = Ref<HTMLElement>;
 export interface LRUDEvent {
   key: LRUDKey;
   isArrow: boolean;
+  targetNode: Node;
   node: Node;
   preventDefault: () => void;
   stopPropagation: () => void;
