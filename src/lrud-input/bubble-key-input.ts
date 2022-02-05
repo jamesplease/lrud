@@ -10,11 +10,13 @@ function executeFunction(
   {
     isArrow,
     key,
+    targetNode,
     preventDefault,
     stopPropagation,
   }: {
     isArrow: boolean;
     key: LRUDKey;
+    targetNode?: Node;
     preventDefault: PreventDefault;
     stopPropagation: StopPropagation;
   }
@@ -22,7 +24,14 @@ function executeFunction(
   const cb = node[fn];
 
   if (typeof cb === 'function') {
-    const arg = { isArrow, key, node, stopPropagation, preventDefault };
+    const arg = {
+      isArrow,
+      key,
+      node,
+      stopPropagation,
+      preventDefault,
+      targetNode,
+    };
     cb(arg);
   }
 }
@@ -39,99 +48,111 @@ export default function bubbleKey(focusTree: FocusStore, key: LRUDKey) {
   let defaultPrevented = false;
   let propagationStopped = false;
 
-  function preventDefault() {
-    defaultPrevented = true;
-  }
-
-  function stopPropagation() {
-    propagationStopped = true;
-  }
-
-  [...focusHierarchy].reverse().forEach((focusedNodeId) => {
-    if (propagationStopped) {
-      return;
+  const focusH = [...focusHierarchy].reverse();
+  if (focusH.length) {
+    function preventDefault() {
+      defaultPrevented = true;
     }
 
-    const node = state.nodes[focusedNodeId];
-
-    if (!node) {
-      return;
+    function stopPropagation() {
+      propagationStopped = true;
     }
 
-    executeFunction(node, 'onKey', {
-      isArrow,
-      key,
-      preventDefault,
-      stopPropagation,
+    const sourcingLeafId = focusH[0];
+    const targetNode: Node | undefined = state.nodes?.[sourcingLeafId];
+
+    focusH.forEach((focusedNodeId) => {
+      if (propagationStopped) {
+        return;
+      }
+
+      const node = state.nodes[focusedNodeId];
+
+      if (!node) {
+        return;
+      }
+
+      executeFunction(node, 'onKey', {
+        isArrow,
+        key,
+        targetNode,
+        preventDefault,
+        stopPropagation,
+      });
+
+      if (isArrow) {
+        executeFunction(node, 'onArrow', {
+          isArrow,
+          key,
+          targetNode,
+          preventDefault,
+          stopPropagation,
+        });
+      }
+
+      if (key === 'left') {
+        executeFunction(node, 'onLeft', {
+          isArrow,
+          key,
+          targetNode,
+          preventDefault,
+          stopPropagation,
+        });
+      }
+
+      if (key === 'right') {
+        executeFunction(node, 'onRight', {
+          isArrow,
+          key,
+          targetNode,
+          preventDefault,
+          stopPropagation,
+        });
+      }
+
+      if (key === 'up') {
+        executeFunction(node, 'onUp', {
+          isArrow,
+          key,
+          targetNode,
+          preventDefault,
+          stopPropagation,
+        });
+      }
+
+      if (key === 'down') {
+        executeFunction(node, 'onDown', {
+          isArrow,
+          key,
+          targetNode,
+          preventDefault,
+          stopPropagation,
+        });
+      }
+
+      if (isSelect) {
+        executeFunction(node, 'onSelected', {
+          isArrow,
+          key,
+          targetNode,
+          stopPropagation,
+          preventDefault: () => {},
+        });
+      }
+
+      if (isBack) {
+        executeFunction(node, 'onBack', {
+          isArrow,
+          key,
+          targetNode,
+          stopPropagation,
+          preventDefault: () => {},
+        });
+      }
     });
-
-    if (isArrow) {
-      executeFunction(node, 'onArrow', {
-        isArrow,
-        key,
-        preventDefault,
-        stopPropagation,
-      });
-    }
-
-    if (key === 'left') {
-      executeFunction(node, 'onLeft', {
-        isArrow,
-        key,
-        preventDefault,
-        stopPropagation,
-      });
-    }
-
-    if (key === 'right') {
-      executeFunction(node, 'onRight', {
-        isArrow,
-        key,
-        preventDefault,
-        stopPropagation,
-      });
-    }
-
-    if (key === 'up') {
-      executeFunction(node, 'onUp', {
-        isArrow,
-        key,
-        preventDefault,
-        stopPropagation,
-      });
-    }
-
-    if (key === 'down') {
-      executeFunction(node, 'onDown', {
-        isArrow,
-        key,
-        preventDefault,
-        stopPropagation,
-      });
-    }
-
-    if (isSelect) {
-      executeFunction(node, 'onSelected', {
-        isArrow,
-        key,
-        stopPropagation,
-        preventDefault: () => {},
-      });
-    }
-
-    if (isBack) {
-      executeFunction(node, 'onBack', {
-        isArrow,
-        key,
-        stopPropagation,
-        preventDefault: () => {},
-      });
-    }
-  });
+  }
 
   if (isArrow && !defaultPrevented) {
-    // TODO: fix this with a type guard
-    // @ts-ignore
     focusTree.handleArrow(key);
   } else if (isSelect && !defaultPrevented) {
     focusTree.handleSelect();
