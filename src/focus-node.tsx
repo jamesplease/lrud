@@ -505,6 +505,7 @@ export function FocusNode(
           ) {
             nodeRef.current.onSelected({
               node: nodeRef.current,
+              targetNode: nodeRef.current,
               isArrow: false,
               key: 'select',
               preventDefault: () => {},
