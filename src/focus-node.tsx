@@ -181,7 +181,9 @@ export function FocusNode(
     const nonStringFocusId =
       typeof focusId !== 'string' && focusId !== undefined;
     const reservedFocusId = focusId === 'root';
-    const invalidNodeId = nonStringFocusId || reservedFocusId;
+    const emptyStringNode = focusId + '' === '';
+    const invalidNodeId =
+      nonStringFocusId || reservedFocusId || emptyStringNode;
 
     if (process.env.NODE_ENV !== 'production') {
       if (reservedFocusId) {
@@ -192,9 +194,9 @@ export function FocusNode(
         );
       }
 
-      if (nonStringFocusId) {
+      if (nonStringFocusId || emptyStringNode) {
         warning(
-          'A focus node with an invalid focus ID was created: "root". This is a reserved ID, so it has been ' +
+          'A focus node with an invalid (non-string or empty string) focus ID was created. This is a not supported ID type (expected non-empty string), so it has been ' +
             'ignored. Please choose another ID if you wish to specify an ID.',
           'INVALID_FOCUS_ID_PASSED'
         );
