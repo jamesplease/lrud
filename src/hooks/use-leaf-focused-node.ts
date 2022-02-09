@@ -1,56 +1,15 @@
-import { useContext, useState, useEffect, useRef } from 'react';
-import FocusContext from '../focus-context';
-import { warning } from '../utils/warning';
 import { Node } from '../types';
-import { useFocusNode } from '..';
+import { useFocusHierarchy, useFocusNode } from '..';
+import { useMemo } from 'react';
 
-export default function useFocusedNode(): Node | null {
-  const contextValue = useContext(FocusContext.Context);
-  const [focusNodeId, setFocusNodeId] = useState<string>(() => {
-    if (!contextValue) {
-      if (process.env.NODE_ENV !== 'production') {
-        warning(
-          'A FocusProvider was not found in the tree. Did you forget to mount it?',
-          'NO_FOCUS_PROVIDER_DETECTED'
-        );
-      }
+export default function useLeafFocusedNode(): Node | null {
+  const focusHierarchy = useFocusHierarchy();
 
-      return '';
-    }
+  const leafId = useMemo(() => {
+    return focusHierarchy?.[focusHierarchy.length - 1]?.focusId;
+  }, [focusHierarchy]);
 
-    const focusState = contextValue.store.getState();
-    return focusState.focusedNodeId;
-  });
+  const leafFocusedNode = useFocusNode(leafId ?? '');
 
-  const focusNodeIdRef = useRef(focusNodeId);
-  focusNodeIdRef.current = focusNodeId;
-
-  function checkForSync() {
-    if (!contextValue) {
-      return;
-    }
-
-    const currentNodeId = contextValue.store.getState().focusedNodeId;
-    if (currentNodeId !== focusNodeIdRef.current) {
-      setFocusNodeId(currentNodeId);
-    }
-  }
-
-  useEffect(checkForSync, [focusNodeId]);
-
-  useEffect(() => {
-    if (!contextValue) {
-      return;
-    }
-
-    checkForSync();
-    const unsubscribe = contextValue.store.subscribe(checkForSync);
-
-    return () => {
-      unsubscribe();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const focusNode = useFocusNode(focusNodeId);
-  return focusNodeId ? focusNode : null;
+  return leafFocusedNode;
 }
