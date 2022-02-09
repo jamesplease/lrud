@@ -42,6 +42,7 @@ This library has the following peer dependencies:
   - [\<FocusRoot/\>](#focusroot-)
   - [\<FocusNode/\>](#FocusNode-)
   - [useFocusNode()](#usefocusnode-focusid-)
+  - [useLeafFocusedNode()](#useleaffocusednode)
   - [useActiveNode()](#useactivenode)
   - [useSetFocus()](#usesetfocus)
   - [useNodeEvents()](#usenodeevents-focusid-events-)
@@ -205,6 +206,21 @@ export default function MyComponent() {
   const navFocusNode = useFocusNode('nav');
 
   console.log('Is the nav focused?', navFocusNode?.isFocused);
+}
+```
+
+### `useLeafFocusedNode()`
+
+A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the currently in focus leaf node. It reflects the focus state in every moment, therefore if there are no valid focusable nodes,
+then the root node will be returned instead.
+
+```js
+import { useLeafFocusedNode } from '@please/lrud';
+
+export default function MyComponent() {
+  const currentFocusedNode = useLeafFocusedNode();
+
+  console.log('Currently focused node', currentFocusedNode);
 }
 ```
 
