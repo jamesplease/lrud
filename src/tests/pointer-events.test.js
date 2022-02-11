@@ -2,6 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent, createEvent, screen } from '@testing-library/react';
 import { FocusRoot, FocusNode, useFocusStoreDangerously } from '../index';
+import { warning } from '../utils/warning';
 
 describe('Pointer Events', () => {
   it('has them disabled by default', () => {
@@ -34,6 +35,9 @@ describe('Pointer Events', () => {
     focusState = focusStore.getState();
     expect(focusState.focusedNodeId).toEqual('nodeA');
     expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
+
+    expect(warning).toHaveBeenCalledTimes(0);
+    expect(console.error).toHaveBeenCalledTimes(0);
   });
 
   it('can be enabled, and can move focus on mouse move when the interaction mode is pointer', (done) => {
@@ -82,6 +86,9 @@ describe('Pointer Events', () => {
 
       expect(nodeBOnClick.mock.calls.length).toBe(1);
 
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
+
       done();
     });
   });
@@ -129,6 +136,9 @@ describe('Pointer Events', () => {
       fireEvent(nodeB, clickEvent);
 
       expect(nodeBOnClick.mock.calls.length).toBe(0);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
 
       done();
     });
@@ -183,6 +193,9 @@ describe('Pointer Events', () => {
 
       expect(nodeOnSelected.mock.calls.length).toBe(0);
       expect(nodeOnClick.mock.calls.length).toBe(1);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
 
       done();
     });

@@ -2,6 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { FocusRoot, FocusNode, useFocusStoreDangerously } from '../index';
+import { warning } from '../utils/warning';
 
 //
 // These tests verify that the focus tree is accurate during the initial mount.
@@ -38,6 +39,9 @@ describe('Mounting', () => {
       expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(2);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -75,6 +79,9 @@ describe('Mounting', () => {
       expect(focusState.focusHierarchy).toEqual(['root']);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(3);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     it('does not leap over disabled parent nodes', () => {
@@ -116,6 +123,9 @@ describe('Mounting', () => {
       expect(focusState.focusHierarchy).toEqual(['root']);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(4);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     it('automatically assigns focus to the first node', () => {
@@ -155,6 +165,9 @@ describe('Mounting', () => {
       expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(3);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     it('does not move focus when arrows other than right are pressed', () => {
@@ -261,6 +274,9 @@ describe('Mounting', () => {
       });
 
       expect(focusStore.getState().focusedNodeId).toEqual('nodeB');
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -328,6 +344,9 @@ describe('Mounting', () => {
       ]);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(7);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     it('handles `onMountAssignFocusTo`', () => {
@@ -398,6 +417,9 @@ describe('Mounting', () => {
       ]);
       expect(focusState.activeNodeId).toEqual(null);
       expect(Object.values(focusState.nodes)).toHaveLength(9);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 });

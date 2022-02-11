@@ -2,6 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { FocusRoot, FocusNode, useFocusStoreDangerously } from '../index';
+import { warning } from '../utils/warning';
 
 describe('FocusNode Events', () => {
   describe('onMove', () => {
@@ -73,6 +74,9 @@ describe('FocusNode Events', () => {
           nextChildNode: focusStore.getState().nodes.nodeB,
         })
       );
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -133,6 +137,9 @@ describe('FocusNode Events', () => {
       expect(nodeAOnBlurred.mock.calls.length).toBe(1);
       expect(nodeBOnFocused.mock.calls.length).toBe(1);
       expect(nodeBOnBlurred.mock.calls.length).toBe(0);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -182,6 +189,9 @@ describe('FocusNode Events', () => {
       focusState = focusStore.getState();
       expect(focusState.focusedNodeId).toEqual('nodeA');
       expect(focusState.focusHierarchy).toEqual(['root', 'nodeA']);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     it('stopPropagation', () => {
@@ -223,6 +233,9 @@ describe('FocusNode Events', () => {
       focusState = focusStore.getState();
       expect(focusState.focusedNodeId).toEqual('nodeB');
       expect(focusState.focusHierarchy).toEqual(['root', 'nodeB']);
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -295,6 +308,9 @@ describe('FocusNode Events', () => {
           targetNode: preFocusedNodeA,
         })
       );
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 
@@ -362,6 +378,9 @@ describe('FocusNode Events', () => {
           targetNode: focusStore.getState().nodes.nodeA,
         })
       );
+
+      expect(warning).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 });
