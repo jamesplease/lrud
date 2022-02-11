@@ -1,5 +1,16 @@
 # Changelog
 
+### v0.0.18 (2022/2/11)
+
+**New Features**
+
+- New hook: `useLeafFocusedNode`. This returns the current leaf focused node in the hierarchy.
+- Selection events from clicking focus nodes now bubble up the focus hierarchy, just like LRUD events do
+
+**Bug Fixes**
+
+- Fixed an erroneous error that would be logged when mounting a tree with disabled nodes.
+
 ### v0.0.17 (2022/2/5)
 
 **New Features**
