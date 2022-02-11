@@ -11,6 +11,7 @@ import React, {
 import FocusContext from './focus-context';
 import nodeFromDefinition from './utils/node-from-definition';
 import { warning } from './utils/warning';
+import bubbleKey from './lrud-input/bubble-key-input';
 import {
   FocusStore,
   Id,
@@ -505,14 +506,16 @@ export function FocusNode(
             nodeRef.current &&
             typeof nodeRef.current.onSelected === 'function'
           ) {
-            nodeRef.current.onSelected({
-              node: nodeRef.current,
-              targetNode: nodeRef.current,
-              isArrow: false,
-              key: 'select',
-              preventDefault: () => {},
-              stopPropagation: () => {},
-            });
+            // Note: `bubbleKey` fires the events up whatever the current focus hierarchy is, so it might seem
+            // weird that we can just assume that this node is always the leaf node of the current hierarchy.
+            //
+            // It turns out that this works because:
+            //   - when pointer events are enabled we always set focus to leaf nodes in `onMouseOver`
+            //   - this lib is not intended for touchscreen environments, so all click events will be preceded by a hover
+            //   - these pointer events are only handled on leaf nodes
+            //
+            // If any of those conditions ever change then we will need to revisit this, but for now it should be fine.
+            bubbleKey(store, 'select');
           }
 
           staticDefinitions.providerValue.store.handleSelect(nodeId);
