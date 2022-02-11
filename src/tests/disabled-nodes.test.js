@@ -65,4 +65,17 @@ describe('disabled FocusNodes', () => {
 
     expect(warning).toHaveBeenCalledTimes(0);
   });
+
+  it('does not warn when a focus tree mounts with a disabled child (gh-78)', () => {
+    render(
+      <FocusRoot>
+        <FocusNode>
+          <FocusNode focusId="A" disabled />
+          <FocusNode focusId="B" />
+        </FocusNode>
+      </FocusRoot>
+    );
+
+    expect(console.error).toHaveBeenCalledTimes(0);
+  });
 });
