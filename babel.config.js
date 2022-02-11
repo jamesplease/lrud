@@ -7,9 +7,9 @@ const config = {
   build: {
     targets: {
       browsers: [
-        'last 4 chrome version',
-        'last 4 firefox version',
-        'last 2 safari version',
+        'last 8 chrome version',
+        'last 8 firefox version',
+        'last 8 safari version',
       ],
     },
     modules: false,
