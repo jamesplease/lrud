@@ -211,8 +211,7 @@ export default function MyComponent() {
 
 ### `useLeafFocusedNode()`
 
-A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the currently in focus leaf node. It reflects the focus state in every moment, therefore if there are no valid focusable nodes,
-then the root node will be returned instead.
+A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the currently-in-focus leaf node.
 
 ```js
 import { useLeafFocusedNode } from '@please/lrud';
