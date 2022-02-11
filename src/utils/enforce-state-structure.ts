@@ -1,9 +1,10 @@
 import { FocusState, Node, NodeMap, Id } from '../types';
+import nodeCanReceiveIndirectFocus from './node-can-receive-indirect-focus';
 
-function validateNode(node: Node, nodes: NodeMap) {
+function validateNode(node: Node, nodes: NodeMap, focusState: FocusState) {
   const enabledNodeChildren = node.children.filter((childId) => {
     const node = nodes[childId];
-    return node && !node.disabled && !node.isExiting;
+    return nodeCanReceiveIndirectFocus(focusState, node);
   });
 
   if (enabledNodeChildren.length > 0 && node.isFocusedLeaf) {
@@ -74,7 +75,7 @@ export default function enforceStateStructure(focusState: FocusState) {
 
   Object.values(focusState.nodes).forEach((node) => {
     if (node) {
-      validateNode(node, focusState.nodes);
+      validateNode(node, focusState.nodes, focusState);
     }
   });
 }

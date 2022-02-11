@@ -69,7 +69,7 @@ describe('disabled FocusNodes', () => {
   it('does not warn when a focus tree mounts with a disabled child (gh-78)', () => {
     render(
       <FocusRoot>
-        <FocusNode>
+        <FocusNode focusId="parent">
           <FocusNode focusId="A" disabled />
           <FocusNode focusId="B" />
         </FocusNode>
