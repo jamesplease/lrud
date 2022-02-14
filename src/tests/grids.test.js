@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, act, screen } from '@testing-library/react';
 import {
   FocusRoot,
   useSetFocus,
@@ -540,7 +540,7 @@ describe('Grids', () => {
         'defaultFocus',
       ]);
 
-      setFocus('gridRoot');
+      act(() => setFocus('gridRoot'));
       expect(focusStore.getState().focusedNodeId).toEqual('gridItem1-1');
       expect(focusStore.getState().focusHierarchy).toEqual([
         'root',
@@ -551,8 +551,7 @@ describe('Grids', () => {
       ]);
 
       expect(warning).toHaveBeenCalledTimes(0);
-      // TODO: look into this
-      // expect(console.error).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     it('behaves as expected when focusing a grid row', () => {
@@ -593,7 +592,7 @@ describe('Grids', () => {
         'defaultFocus',
       ]);
 
-      setFocus('gridRow2');
+      act(() => setFocus('gridRow2'));
       expect(focusStore.getState().focusedNodeId).toEqual('gridItem2-1');
       expect(focusStore.getState().focusHierarchy).toEqual([
         'root',
@@ -604,8 +603,7 @@ describe('Grids', () => {
       ]);
 
       expect(warning).toHaveBeenCalledTimes(0);
-      // TODO: look into this
-      // expect(console.error).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
 
     it('behaves as expected when focusing a grid item', () => {
@@ -646,7 +644,7 @@ describe('Grids', () => {
         'defaultFocus',
       ]);
 
-      setFocus('gridItem2-2');
+      act(() => setFocus('gridItem2-2'));
       expect(focusStore.getState().focusedNodeId).toEqual('gridItem2-2');
       expect(focusStore.getState().focusHierarchy).toEqual([
         'root',
@@ -657,8 +655,7 @@ describe('Grids', () => {
       ]);
 
       expect(warning).toHaveBeenCalledTimes(0);
-      // TODO: look into this
-      // expect(console.error).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
 
