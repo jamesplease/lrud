@@ -71,6 +71,7 @@ describe('useFocusNode', () => {
     );
 
     expect(focusNode).toBe(focusStore.getState().nodes.nodeA);
+    expect(console.error).toHaveBeenCalledTimes(0);
   });
 
   it('returns null if the node does not exist', () => {
@@ -94,5 +95,6 @@ describe('useFocusNode', () => {
     );
 
     expect(focusNode).toEqual(null);
+    expect(console.error).toHaveBeenCalledTimes(0);
   });
 });

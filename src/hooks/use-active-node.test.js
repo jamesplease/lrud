@@ -93,6 +93,7 @@ describe('useActiveNode', () => {
 
       focusState = focusStore.getState();
       expect(activeNode).toBe(focusState.nodes.nodeA);
+      expect(console.error).toHaveBeenCalledTimes(0);
 
       done();
     });
