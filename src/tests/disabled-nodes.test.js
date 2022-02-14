@@ -64,6 +64,7 @@ describe('disabled FocusNodes', () => {
     ]);
 
     expect(warning).toHaveBeenCalledTimes(0);
+    expect(console.error).toHaveBeenCalledTimes(0);
   });
 
   it('does not warn when a focus tree mounts with a disabled child (gh-78)', () => {
@@ -77,5 +78,6 @@ describe('disabled FocusNodes', () => {
     );
 
     expect(console.error).toHaveBeenCalledTimes(0);
+    expect(warning).toHaveBeenCalledTimes(0);
   });
 });

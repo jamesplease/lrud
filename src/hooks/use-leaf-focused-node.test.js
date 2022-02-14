@@ -87,6 +87,7 @@ describe('useLeafFocusedNode', () => {
         isFocusedLeaf: true,
       })
     );
+    expect(console.error).toHaveBeenCalledTimes(0);
   });
 
   it('returns the root node if there are no focusable nodes (default focus state behavior)', () => {
@@ -114,5 +115,6 @@ describe('useLeafFocusedNode', () => {
     );
 
     expect(focusNode).toEqual(focusRootNode);
+    expect(console.error).toHaveBeenCalledTimes(0);
   });
 });
