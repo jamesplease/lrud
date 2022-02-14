@@ -424,7 +424,7 @@ describe('Mounting', () => {
   });
 
   // TODO: test number and function
-  it('respects `defaultFocusChild` at mount', () => {
+  it.only('respects `defaultFocusChild` at mount (gh-70)', () => {
     let focusStore;
 
     function TestComponent() {
