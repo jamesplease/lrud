@@ -88,7 +88,7 @@ describe('Tree updates', () => {
     expect(Object.values(focusState.nodes)).toHaveLength(3);
 
     expect(warning).toHaveBeenCalledTimes(0);
-    // TODO: look into this
+    // TODO: see gh-92
     // expect(console.error).toHaveBeenCalledTimes(0);
   });
 
@@ -134,7 +134,7 @@ describe('Tree updates', () => {
     expect(Object.values(focusState.nodes)).toHaveLength(4);
 
     expect(warning).toHaveBeenCalledTimes(0);
-    // TODO: look into this
+    // TODO: see gh-92
     // expect(console.error).toHaveBeenCalledTimes(0);
   });
 
@@ -175,7 +175,7 @@ describe('Tree updates', () => {
     expect(Object.values(focusState.nodes)).toHaveLength(3);
 
     expect(warning).toHaveBeenCalledTimes(0);
-    // TODO: look into this
+    // TODO: see gh-92
     // expect(console.error).toHaveBeenCalledTimes(0);
   });
 
