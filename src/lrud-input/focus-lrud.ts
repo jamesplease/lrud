@@ -1,32 +1,31 @@
 import throttle from './throttle';
 import keyToBindingMap from './key-to-binding-map';
 import { FocusStore } from '../types';
-import bubbleKey from './bubble-key-input';
 
 export default function focusLrud(focusStore: FocusStore) {
   const lrudMapping = {
     up() {
-      bubbleKey(focusStore, 'up');
+      focusStore.processKey('up');
     },
 
     down() {
-      bubbleKey(focusStore, 'down');
+      focusStore.processKey('down');
     },
 
     left() {
-      bubbleKey(focusStore, 'left');
+      focusStore.processKey('left');
     },
 
     right() {
-      bubbleKey(focusStore, 'right');
+      focusStore.processKey('right');
     },
 
     select() {
-      bubbleKey(focusStore, 'select');
+      focusStore.processKey('select');
     },
 
     back() {
-      bubbleKey(focusStore, 'back');
+      focusStore.processKey('back');
     },
   };
 

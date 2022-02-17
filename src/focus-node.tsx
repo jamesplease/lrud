@@ -11,7 +11,6 @@ import React, {
 import FocusContext from './focus-context';
 import nodeFromDefinition from './utils/node-from-definition';
 import { warning } from './utils/warning';
-import bubbleKey from './lrud-input/bubble-key-input';
 import {
   FocusStore,
   Id,
@@ -515,7 +514,7 @@ export function FocusNode(
             //   - these pointer events are only handled on leaf nodes
             //
             // If any of those conditions ever change then we will need to revisit this, but for now it should be fine.
-            bubbleKey(store, 'select');
+            staticDefinitions.providerValue.store.processKey('select');
           }
 
           staticDefinitions.providerValue.store.handleSelect(nodeId);

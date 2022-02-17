@@ -4,6 +4,7 @@ import updateFocus from './update-focus/update-focus';
 import handleArrowUtil from './handle-arrow/handle-arrow';
 import enforceStateStructure from './utils/enforce-state-structure';
 import recursivelyUpdateChildren from './utils/recursively-update-node';
+import bubbleKey from './utils/bubble-key-input';
 import { warning } from './utils/warning';
 import {
   FocusState,
@@ -17,6 +18,7 @@ import {
   Listener,
   NodeDefinition,
   InteractionMode,
+  LRUDKey,
 } from './types';
 
 interface CreateFocusStoreOptions {
@@ -487,7 +489,7 @@ export default function createFocusStore({
     addPointerListeners();
   }
 
-  return {
+  const _focusStore: FocusStore = {
     subscribe,
     getState,
     createNodes,
@@ -498,5 +500,14 @@ export default function createFocusStore({
     handleSelect,
     configurePointerEvents,
     destroy,
+    processKey: () => {},
   };
+
+  function processKey(key: LRUDKey) {
+    bubbleKey(_focusStore, key);
+  }
+
+  _focusStore.processKey = processKey;
+
+  return _focusStore;
 }
