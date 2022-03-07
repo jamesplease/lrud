@@ -47,6 +47,7 @@ This library has the following peer dependencies:
   - [useSetFocus()](#usesetfocus)
   - [useNodeEvents()](#usenodeevents-focusid-events-)
   - [useFocusHierarchy()](#usefocushierarchy)
+  - [useProcessKey()](#useprocesskey)
   - [useFocusStoreDangerously()](#usefocusstoredangerously)
 - [**Interfaces**](#interfaces)
   - [FocusNode](#focusnode)
@@ -314,6 +315,42 @@ export default function MyComponent() {
 }
 ```
 
+### `useProcessKey()`
+
+A [Hook](https://reactjs.org/docs/hooks-intro.html) that allows you to imperatively trigger LRUD key presses.
+
+```js
+import { useProcessKey } from '@please/lrud';
+
+function MyComponent() {
+  const processKey = useProcessKey();
+
+  useEffect(() => {
+    // Imperatively trigger a down key press
+    processKey.down();
+
+    // Imperatively trigger a back key press
+    processKey.select();
+
+    // ...same, for the back button.
+    processKey.back();
+  }, []);
+}
+```
+
+The full API is as follows.
+
+```ts
+interface ProcessKey {
+  select: () => void;
+  back: () => void;
+  down: () => void;
+  left: () => void;
+  right: () => void;
+  up: () => void;
+}
+```
+
 ### `useFocusStoreDangerously()`
 
 > ⚠️ Heads up! The FocusStore is an internal API. We strongly discourage you from accessing properties or calling
@@ -451,10 +488,12 @@ for advanced use cases that you may have.
 | `deleteNode`             | function | Deletes a focus node from the tree.                                    |
 | `setFocus`               | function | Imperatively assign focus to a particular focus node.                  |
 | `updateNode`             | function | Update an existing node. Used to, for example, set a node as disabled. |
-| `handleArrow`            | function | Call this to navigate based on an arrow key press.                     |
-| `handleSelect`           | function | Call this to cause the focus tree to respond to a "select" key press.  |
+| `processKey `            | object   | Contains methods to trigger key presses.                               |
+| `handleArrow`            | function | Updates store state after arrow key presses.                           |
+| `handleSelect`           | function | Updates store state after select button presses.                       |
 | `configurePointerEvents` | function | Enable or disable pointer events. Receives one argument, a `boolean`.  | 
 | `destroy`                | function | Call when disposing of the store. Cleans up event listeners.           |
+
 
 ### `FocusState`
 

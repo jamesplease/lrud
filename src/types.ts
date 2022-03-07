@@ -230,6 +230,14 @@ export interface FocusStore {
   handleSelect: (nodeId?: Id) => void;
   configurePointerEvents: (enablePointerEvents: boolean) => void;
   destroy: () => void;
+  processKey: {
+    select: () => void;
+    back: () => void;
+    down: () => void;
+    left: () => void;
+    right: () => void;
+    up: () => void;
+  };
 }
 
 export interface ProviderValue {

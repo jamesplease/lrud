@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.0.19 (2022/3/7)
+
+**New Features**
+
+- New hook: `useProcessKey`. Allows you to imperatively trigger LRUD presses.
+
 ### v0.0.18 (2022/2/11)
 
 **New Features**
