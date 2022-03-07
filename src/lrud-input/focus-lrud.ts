@@ -5,27 +5,27 @@ import { FocusStore } from '../types';
 export default function focusLrud(focusStore: FocusStore) {
   const lrudMapping = {
     up() {
-      focusStore.processKey('up');
+      focusStore.processKey.up();
     },
 
     down() {
-      focusStore.processKey('down');
+      focusStore.processKey.down();
     },
 
     left() {
-      focusStore.processKey('left');
+      focusStore.processKey.left();
     },
 
     right() {
-      focusStore.processKey('right');
+      focusStore.processKey.right();
     },
 
     select() {
-      focusStore.processKey('select');
+      focusStore.processKey.select();
     },
 
     back() {
-      focusStore.processKey('back');
+      focusStore.processKey.back();
     },
   };
 

@@ -489,6 +489,10 @@ export default function createFocusStore({
     addPointerListeners();
   }
 
+  function internalProcessKey(key: LRUDKey) {
+    bubbleKey(_focusStore, key);
+  }
+
   const _focusStore: FocusStore = {
     subscribe,
     getState,
@@ -500,14 +504,15 @@ export default function createFocusStore({
     handleSelect,
     configurePointerEvents,
     destroy,
-    processKey: () => {},
+    processKey: {
+      select: () => internalProcessKey('select'),
+      back: () => internalProcessKey('back'),
+      down: () => internalProcessKey('down'),
+      left: () => internalProcessKey('left'),
+      right: () => internalProcessKey('right'),
+      up: () => internalProcessKey('up'),
+    },
   };
-
-  function processKey(key: LRUDKey) {
-    bubbleKey(_focusStore, key);
-  }
-
-  _focusStore.processKey = processKey;
 
   return _focusStore;
 }

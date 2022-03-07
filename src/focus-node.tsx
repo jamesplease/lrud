@@ -514,7 +514,7 @@ export function FocusNode(
             //   - these pointer events are only handled on leaf nodes
             //
             // If any of those conditions ever change then we will need to revisit this, but for now it should be fine.
-            staticDefinitions.providerValue.store.processKey('select');
+            staticDefinitions.providerValue.store.processKey.select();
           }
 
           staticDefinitions.providerValue.store.handleSelect(nodeId);
