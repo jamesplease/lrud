@@ -375,6 +375,7 @@ export function FocusNode(
     if (typeof propsFromNode === 'function') {
       return propsFromNode(node);
     }
+    return {};
   }, [node, propsFromNode]);
 
   const nodeRef = useRef(node);

@@ -6,28 +6,23 @@
   "module": "es/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "test": "NODE_ENV=test jest",
-    "test:watch": "NODE_ENV=test jest --watchAll",
-    "clean": "rimraf ./dist ./es ./tmp ./lib ./types",
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
     "prepublishOnly": "npm run build",
-    "postpublish": "npm run clean",
-    "prebuild": "npm run clean",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
     "prettier": "prettier --config ./.prettierrc --write **/*.{js,css}",
-    "publish-beta": "npm publish --tag=beta",
-    "build": "npm run build:types && npm run build:es",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --extensions '.ts,.tsx'"
+    "publish-beta": "npm publish --tag=beta"
   },
   "publishConfig": {
     "access": "public"
   },
   "files": [
     "dist",
-    "lib",
-    "es",
-    "*.js",
-    "*.css",
-    "types"
+    "src"
   ],
   "repository": {
     "type": "git",
@@ -74,7 +69,9 @@
     "prettier": "^2.0.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.3.2"
+    "size-limit": "^5.0.1",
+    "typescript": "^4.3.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.0"
   }
 }
