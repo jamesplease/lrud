@@ -162,6 +162,9 @@ export default function createFocusStore({
         );
 
         let updatedFocusState = possibleNewState;
+
+        // TODO: look at this condition. I may need to always update the focus here
+        // now
         if (focusedItemIndex > -1 || assigningFocusOnMount > -1) {
           updatedFocusState = updateFocus({
             focusState: possibleNewState,

@@ -46,15 +46,16 @@ export default function createNodeDefinitionHierarchy({
       }
 
       onMountAssignFocusTo = nodeDefinition.onMountAssignFocusTo;
+    }
 
-      // We only actually assign the focus when this thing happens
-      if (isLastNode) {
-        // We disable the focus lock whenever we "apply" an `onMountAssignFocusTo`
-        shouldLockFocus = false;
+    if (isLastNode) {
+      shouldLockFocus = false;
+
+      if (nodeDefinition.onMountAssignFocusTo !== undefined) {
         onMountAssignFocusToReturn = nodeDefinition.onMountAssignFocusTo;
-      } else {
-        shouldLockFocus = true;
       }
+    } else {
+      shouldLockFocus = false;
     }
 
     if (

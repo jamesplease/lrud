@@ -422,4 +422,35 @@ describe('Mounting', () => {
       expect(console.error).toHaveBeenCalledTimes(0);
     });
   });
+
+  // TODO: test number and function
+  it.only('respects `defaultFocusChild` at mount (gh-70)', () => {
+    let focusStore;
+
+    function TestComponent() {
+      focusStore = useFocusStoreDangerously();
+
+      return (
+        <FocusNode focusId="nodeRoot" defaultFocusChild={1}>
+          <FocusNode focusId="nodeA" data-testid="nodeA"></FocusNode>
+          <FocusNode focusId="nodeB" data-testid="nodeB"></FocusNode>
+        </FocusNode>
+      );
+    }
+
+    render(
+      <FocusRoot>
+        <TestComponent />
+      </FocusRoot>
+    );
+
+    const focusState = focusStore.getState();
+    expect(focusState.focusedNodeId).toEqual('nodeB');
+    expect(focusState.focusHierarchy).toEqual(['root', 'nodeRoot', 'nodeB']);
+    expect(focusState.activeNodeId).toEqual(null);
+    expect(Object.values(focusState.nodes)).toHaveLength(7);
+
+    expect(warning).toHaveBeenCalledTimes(0);
+    expect(console.error).toHaveBeenCalledTimes(0);
+  });
 });
