@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.0.20 (2022/3/8)
+
+- ESM, CJS, and transpiled builds are now distributed in the npm package.
+
 ### v0.0.19 (2022/3/7)
 
 **New Features**

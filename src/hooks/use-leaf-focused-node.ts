@@ -1,6 +1,7 @@
-import { Node } from '../types';
-import { useFocusHierarchy, useFocusNode } from '..';
 import { useMemo } from 'react';
+import { Node } from '../types';
+import useFocusHierarchy from './use-focus-hierarchy';
+import useFocusNode from './use-focus-node';
 
 export default function useLeafFocusedNode(): Node | null {
   const focusHierarchy = useFocusHierarchy();

@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom';
-import * as warning from './src/utils/warning';
+require('@testing-library/jest-dom');
+const warning = require('./src/utils/warning');
 
 beforeEach(() => {
   if (console.error.mockRestore) {

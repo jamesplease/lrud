@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { warning } from './warning';
 
 describe('warning', () => {

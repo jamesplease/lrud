@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import '@testing-library/jest-dom';
 import { render, act, screen } from '@testing-library/react';

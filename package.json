@@ -1,33 +1,28 @@
 {
   "name": "@please/lrud",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "A React library for managing focus in TV apps.",
-  "main": "es/index.js",
-  "module": "es/index.js",
-  "types": "types/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/lrud.esm.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "NODE_ENV=test jest",
-    "test:watch": "NODE_ENV=test jest --watchAll",
-    "clean": "rimraf ./dist ./es ./tmp ./lib ./types",
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
     "prepublishOnly": "npm run build",
-    "postpublish": "npm run clean",
-    "prebuild": "npm run clean",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
     "prettier": "prettier --config ./.prettierrc --write **/*.{js,css}",
-    "publish-beta": "npm publish --tag=beta",
-    "build": "npm run build:types && npm run build:es",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --extensions '.ts,.tsx'"
+    "publish-beta": "npm publish --tag=beta"
   },
   "publishConfig": {
     "access": "public"
   },
   "files": [
     "dist",
-    "lib",
-    "es",
-    "*.js",
-    "*.css",
-    "types"
+    "src"
   ],
   "repository": {
     "type": "git",
@@ -52,29 +47,16 @@
     "react": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.14.6",
-    "@babel/plugin-external-helpers": "^7.10.4",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
-    "@babel/preset-env": "^7.11.0",
-    "@babel/preset-react": "^7.10.4",
-    "@babel/preset-typescript": "^7.10.4",
-    "@testing-library/react": "11.2.7",
     "@testing-library/jest-dom": "5.14.1",
-    "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.2",
+    "@testing-library/react": "11.2.7",
     "@types/react": "^17.0.11",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "27.0.2",
-    "babel-loader": "^8.0.6",
-    "coveralls": "3.1.0",
-    "cross-env": "^7.0.2",
-    "eslint": "^7.6.0",
-    "jest": "27.0.4",
+    "@types/react-dom": "^17.0.8",
     "prettier": "^2.0.5",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.3.2"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "size-limit": "^5.0.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.4"
   }
 }

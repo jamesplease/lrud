@@ -1,4 +1,4 @@
-import { FocusStore, Node, LRUDKey, LRUDFocusEvents } from '../types';
+import { FocusStore, Node, Arrow, LRUDKey, LRUDFocusEvents } from '../types';
 
 type FocusCallbackNames = keyof LRUDFocusEvents;
 type PreventDefault = () => void;
@@ -50,10 +50,12 @@ export default function bubbleKey(focusTree: FocusStore, key: LRUDKey) {
 
   const reverseFocusHierarchy = focusHierarchy.slice().reverse();
   if (reverseFocusHierarchy.length) {
+    // @ts-ignore
     function preventDefault() {
       defaultPrevented = true;
     }
 
+    // @ts-ignore
     function stopPropagation() {
       propagationStopped = true;
     }
@@ -155,7 +157,8 @@ export default function bubbleKey(focusTree: FocusStore, key: LRUDKey) {
   }
 
   if (isArrow && !defaultPrevented) {
-    focusTree.handleArrow(key);
+    /* This cast is, for some reason, required for TSDX */
+    focusTree.handleArrow(key as Arrow);
   } else if (isSelect && !defaultPrevented) {
     focusTree.handleSelect();
   }
