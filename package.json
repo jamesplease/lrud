@@ -1,9 +1,9 @@
 {
   "name": "@please/lrud",
-  "version": "0.0.20-beta.0",
+  "version": "0.0.20-beta.1",
   "description": "A React library for managing focus in TV apps.",
   "main": "dist/index.js",
-  "module": "dist/xd-settings.esm.js",
+  "module": "dist/lrud.esm.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "start": "tsdx watch",
