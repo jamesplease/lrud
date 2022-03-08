@@ -31,6 +31,10 @@ It is a simple code change to enable pointer events, but in general pointer even
 does not come for free. For example, apps with scrolling areas requires custom logic to support pointer events in
 addition to LRUD inputs, and that logic can at times be complex.
 
+Another area where you need to be mindful when using pointer-events are elements like focus traps. You may need to
+set `pointer-events: none` on these elements when they aren't visible or active to ensure they don't accidentally capture
+the pointer events from the nodes that the user is currently interacting with.
+
 So, in general, enabling pointer events should be considered an advanced feature that can increase the scope of your
 project.
 
