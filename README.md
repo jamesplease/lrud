@@ -117,10 +117,11 @@ Serves as the root node of a new focus hierarchy. There should only ever be one 
 
 All props are optional.
 
-| Prop          | Type    | Default value  | Description                                                                                             |
-| ------------- | ------- | -------------- | ------------------------------------------------------------------------------------------------------- |
-| `orientation` | string  | `'horizontal'` | Whether the children of the root node are arranged horizontally or vertically.                          |
-| `wrapping`    | boolean | `false`        | Set to `true` for the navigation to wrap when the user reaches the start or end of the root's children. |
+| Prop            | Type    | Default value  | Description                                                                                             |
+| --------------- | ------- | -------------- | ------------------------------------------------------------------------------------------------------- |
+| `orientation`   | string  | `'horizontal'` | Whether the children of the root node are arranged horizontally or vertically.                          |
+| `wrapping`      | boolean | `false`        | Set to `true` for the navigation to wrap when the user reaches the start or end of the root's children. |
+| `pointerEvents` | boolean | `false`        | Set to `true` to enable pointer events. [Read the guide.](./guides/pointer-events.md) |
 
 ```jsx
 import { FocusRoot } from '@please/lrud';
