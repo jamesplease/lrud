@@ -226,7 +226,9 @@ export default function MyComponent() {
 
 ### `useActiveNode()`
 
-A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the active focus node, or `null` if no node is active.
+A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the [active focus node](./guides/active.md), or `null` if
+no node is active. As a reminder, the active node is whatever node was selected last (similar to how interactive elements
+in the DOM become active after being clicked).
 
 ```js
 import { useActiveNode } from '@please/lrud';
