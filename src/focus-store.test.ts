@@ -1,3 +1,4 @@
+// @ts-nocheck
 import createFocusStore from './focus-store';
 
 describe('createFocusStore', () => {

@@ -1,20 +1,21 @@
+// @ts-nocheck
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, act } from '@testing-library/react';
 import {
   FocusRoot,
   FocusNode,
-  useFocusNode,
+  useLeafFocusedNode,
   useSetFocus,
   useFocusStoreDangerously,
 } from '../index';
 import { warning } from '../utils/warning';
 
-describe('useFocusNode', () => {
+describe('useLeafFocusedNode', () => {
   it('warns when there is no FocusRoot', () => {
     let focusNode;
     function TestComponent() {
-      focusNode = useFocusNode('A');
+      focusNode = useLeafFocusedNode();
 
       return <div />;
     }
@@ -22,7 +23,7 @@ describe('useFocusNode', () => {
     render(<TestComponent />);
 
     expect(focusNode).toEqual(null);
-    expect(warning).toHaveBeenCalledTimes(1);
+    expect(warning).toHaveBeenCalledTimes(2);
     expect(warning.mock.calls[0][1]).toEqual('NO_FOCUS_PROVIDER_DETECTED');
   });
 
@@ -33,7 +34,7 @@ describe('useFocusNode', () => {
 
     function TestComponent() {
       setFocus = useSetFocus();
-      focusNode = useFocusNode('nodeA');
+      focusNode = useLeafFocusedNode();
       focusStore = useFocusStoreDangerously();
 
       return (
@@ -50,6 +51,8 @@ describe('useFocusNode', () => {
       </FocusRoot>
     );
 
+    expect(focusNode).toBe(focusStore.getState().nodes.nodeA);
+
     expect(focusNode).toEqual(
       expect.objectContaining({
         focusId: 'nodeA',
@@ -58,11 +61,19 @@ describe('useFocusNode', () => {
       })
     );
 
-    expect(focusNode).toBe(focusStore.getState().nodes.nodeA);
+    expect(focusStore.getState().nodes.nodeB).toEqual(
+      expect.objectContaining({
+        focusId: 'nodeB',
+        isFocused: false,
+        isFocusedLeaf: false,
+      })
+    );
 
     act(() => setFocus('nodeB'));
 
-    expect(focusNode).toEqual(
+    expect(focusNode).toBe(focusStore.getState().nodes.nodeB);
+
+    expect(focusStore.getState().nodes.nodeA).toEqual(
       expect.objectContaining({
         focusId: 'nodeA',
         isFocused: false,
@@ -70,20 +81,27 @@ describe('useFocusNode', () => {
       })
     );
 
-    expect(focusNode).toBe(focusStore.getState().nodes.nodeA);
+    expect(focusNode).toEqual(
+      expect.objectContaining({
+        focusId: 'nodeB',
+        isFocused: true,
+        isFocusedLeaf: true,
+      })
+    );
     expect(console.error).toHaveBeenCalledTimes(0);
   });
 
-  it('returns null if the node does not exist', () => {
+  it('returns the root node if there are no focusable nodes (default focus state behavior)', () => {
     let focusNode;
+    let focusStore;
 
     function TestComponent() {
-      focusNode = useFocusNode('nodeABC');
+      focusNode = useLeafFocusedNode();
+      focusStore = useFocusStoreDangerously();
 
       return (
         <>
-          <FocusNode focusId="nodeA" data-testid="nodeA" />
-          <FocusNode focusId="nodeB" data-testid="nodeB" />
+          <div>No Focusable</div>
         </>
       );
     }
@@ -93,8 +111,11 @@ describe('useFocusNode', () => {
         <TestComponent />
       </FocusRoot>
     );
+    const focusRootNode = Object.values(focusStore.getState().nodes).find(
+      (n) => n.isRoot
+    );
 
-    expect(focusNode).toEqual(null);
+    expect(focusNode).toEqual(focusRootNode);
     expect(console.error).toHaveBeenCalledTimes(0);
   });
 });

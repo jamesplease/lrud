@@ -50,10 +50,12 @@ export default function bubbleKey(focusTree: FocusStore, key: LRUDKey) {
 
   const reverseFocusHierarchy = focusHierarchy.slice().reverse();
   if (reverseFocusHierarchy.length) {
+    // @ts-ignore
     function preventDefault() {
       defaultPrevented = true;
     }
 
+    // @ts-ignore
     function stopPropagation() {
       propagationStopped = true;
     }
