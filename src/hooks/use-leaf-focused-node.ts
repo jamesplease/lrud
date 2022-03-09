@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Node } from '../types';
 import useFocusHierarchy from './use-focus-hierarchy';
-import useFocusNode from './use-focus-node';
+import useFocusNodeById from './use-focus-node-by-id';
 
 export default function useLeafFocusedNode(): Node | null {
   const focusHierarchy = useFocusHierarchy();
@@ -10,7 +10,7 @@ export default function useLeafFocusedNode(): Node | null {
     return focusHierarchy?.[focusHierarchy.length - 1]?.focusId;
   }, [focusHierarchy]);
 
-  const leafFocusedNode = useFocusNode(leafId ?? '');
+  const leafFocusedNode = useFocusNodeById(leafId ?? '');
 
   return leafFocusedNode;
 }

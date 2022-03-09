@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import useOnChange from './internal/use-on-change';
-import useFocusNode from './use-focus-node';
+import useFocusNodeById from './use-focus-node-by-id';
 import { warning } from '../utils/warning';
 import { Id, Node } from '../types';
 
@@ -20,7 +20,7 @@ interface Events {
 export default function useFocusEvents(nodeId: Id, events: Events = {}): void {
   const [constantNodeId] = useState(nodeId);
 
-  const node = useFocusNode(constantNodeId);
+  const node = useFocusNodeById(constantNodeId);
   const nodeRef = useRef(node);
   nodeRef.current = node;
 

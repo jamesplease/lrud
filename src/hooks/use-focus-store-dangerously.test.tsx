@@ -5,7 +5,6 @@ import { render, act } from '@testing-library/react';
 import {
   FocusRoot,
   FocusNode,
-  useFocusNode,
   useSetFocus,
   useFocusStoreDangerously,
 } from '../index';

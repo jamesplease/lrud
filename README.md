@@ -41,7 +41,7 @@ This library has the following peer dependencies:
 - [**API Reference**](#api-reference)
   - [\<FocusRoot/\>](#focusroot-)
   - [\<FocusNode/\>](#FocusNode-)
-  - [useFocusNode()](#usefocusnode-focusid-)
+  - [useFocusNodeById()](#usefocusnodebyid-focusid-)
   - [useLeafFocusedNode()](#useleaffocusednode)
   - [useActiveNode()](#useactivenode)
   - [useSetFocus()](#usesetfocus)
@@ -196,16 +196,16 @@ export default function Profile() {
 }
 ```
 
-### `useFocusNode( focusId )`
+### `useFocusNodeById( focusId )`
 
 A [Hook](https://reactjs.org/docs/hooks-intro.html) that returns the focus node with ID `focusId`. If the node does not exist,
 then `null` will be returned instead.
 
 ```js
-import { useFocusNode } from '@please/lrud';
+import { useFocusNodeById } from '@please/lrud';
 
 export default function MyComponent() {
-  const navFocusNode = useFocusNode('nav');
+  const navFocusNode = useFocusNodeById('nav');
 
   console.log('Is the nav focused?', navFocusNode?.isFocused);
 }

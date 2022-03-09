@@ -5,17 +5,17 @@ import { render, act } from '@testing-library/react';
 import {
   FocusRoot,
   FocusNode,
-  useFocusNode,
+  useFocusNodeById,
   useSetFocus,
   useFocusStoreDangerously,
 } from '../index';
 import { warning } from '../utils/warning';
 
-describe('useFocusNode', () => {
+describe('useFocusNodeById', () => {
   it('warns when there is no FocusRoot', () => {
     let focusNode;
     function TestComponent() {
-      focusNode = useFocusNode('A');
+      focusNode = useFocusNodeById('A');
 
       return <div />;
     }
@@ -34,7 +34,7 @@ describe('useFocusNode', () => {
 
     function TestComponent() {
       setFocus = useSetFocus();
-      focusNode = useFocusNode('nodeA');
+      focusNode = useFocusNodeById('nodeA');
       focusStore = useFocusStoreDangerously();
 
       return (
@@ -79,7 +79,7 @@ describe('useFocusNode', () => {
     let focusNode;
 
     function TestComponent() {
-      focusNode = useFocusNode('nodeABC');
+      focusNode = useFocusNodeById('nodeABC');
 
       return (
         <>
