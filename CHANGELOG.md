@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.0.22 (2022/3/9)
+
+**Bug Fixes**
+
+- Resolved an issue where numeric `defaultFocusChild` used with disabled child nodes could lead to invalid
+  tree states.
+
 ### v0.0.21 (2022/3/9)
 
 **New Features**
