@@ -103,7 +103,7 @@ describe('disabled FocusNodes', () => {
             }}>
             <FocusNode focusId="nodeA-A" data-testid="nodeA-B" disabled />
             <FocusNode focusId="nodeA-B" data-testid="nodeA-B" />
-            <FocusNode focusId="nodeA-B" data-testid="nodeA-C" />
+            <FocusNode focusId="nodeA-C" data-testid="nodeA-C" />
           </FocusNode>
         </FocusNode>
       );
