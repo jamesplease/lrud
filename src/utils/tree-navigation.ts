@@ -114,7 +114,8 @@ export function getChildren({
       }
 
       if (typeof childIndex === 'number' && Number.isFinite(childIndex)) {
-        childIndex = clamp(childIndex, 0, node.children.length - 1);
+        const maxChildIndex = Math.max(0, nodeChildren.length - 1);
+        childIndex = clamp(childIndex, 0, maxChildIndex);
         nextChildId = nodeChildren[childIndex];
       } else {
         nextChildId = nodeChildren[0];

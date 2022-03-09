@@ -5,6 +5,8 @@ const tests = [
   // [valueToClamp, lowerBound, upperBound, expectedResult]
 
   // These test values within and on the boundaries
+  [0, 0, 0, 0],
+
   [0, 0, 10, 0],
   [10, 0, 10, 10],
   [5, 0, 10, 5],
