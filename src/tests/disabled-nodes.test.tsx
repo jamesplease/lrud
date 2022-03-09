@@ -7,6 +7,7 @@ import {
   FocusNode,
   useSetFocus,
   useFocusStoreDangerously,
+  useProcessKey,
 } from '../index';
 import { warning } from '../utils/warning';
 
@@ -84,15 +85,10 @@ describe('disabled FocusNodes', () => {
 
   it('disabled nodes work nicely with numeric defaultFocusChild (gh-104)', () => {
     let focusStore;
-    let rerender;
     let processKey;
 
     function TestComponent() {
       focusStore = useFocusStoreDangerously();
-      // Only used to rerender the component. When the bug is present, this will propagate parent state down to the child,
-      // overriding the child's disabled state.
-      const [forceRerender, setForceRerender] = useState(false);
-      rerender = () => setForceRerender(true);
       processKey = useProcessKey();
 
       return (
@@ -103,11 +99,11 @@ describe('disabled FocusNodes', () => {
             focusId="nodeA"
             data-testid="nodeA"
             defaultFocusChild={() => {
-              return 0;
+              return 2;
             }}>
             <FocusNode focusId="nodeA-A" data-testid="nodeA-B" disabled />
             <FocusNode focusId="nodeA-B" data-testid="nodeA-B" />
-            <FocusNode focusId="nodeA-C" data-testid="nodeA-C" />
+            <FocusNode focusId="nodeA-B" data-testid="nodeA-C" />
           </FocusNode>
         </FocusNode>
       );
@@ -126,12 +122,12 @@ describe('disabled FocusNodes', () => {
     act(() => processKey.right());
 
     focusState = focusStore.getState();
-    expect(focusState.focusedNodeId).toEqual('nodeA-B');
+    expect(focusState.focusedNodeId).toEqual('nodeA-C');
     expect(focusState.focusHierarchy).toEqual([
       'root',
       'testRoot',
       'nodeA',
-      'nodeA-B',
+      'nodeA-C',
     ]);
   });
 });
