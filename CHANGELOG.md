@@ -1,5 +1,13 @@
 # Changelog
 
+### v0.0.21 (2022/3/9)
+
+**New Features**
+
+- `useFocusNode` has been renamed to `useFocusNodeById` for clarity, and to distinguish it from `useLeafFocusedNode`. The
+  old hook will continue to work, but using it will log a warning to the console when you are not running your app in
+  production.
+
 ### v0.0.20 (2022/3/8)
 
 - ESM, CJS, and transpiled builds are now distributed in the npm package.
