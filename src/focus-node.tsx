@@ -11,6 +11,7 @@ import React, {
 import FocusContext from './focus-context';
 import nodeFromDefinition from './utils/node-from-definition';
 import { warning } from './utils/warning';
+import usePrevious from './hooks/internal/use-previous';
 import {
   FocusStore,
   Id,
@@ -383,13 +384,8 @@ export function FocusNode(
 
   let nodeExistsInTree = useRef(false);
 
-  useEffect(() => {
-    // This ensures that we don't check for updates on the first render.
-    if (!nodeExistsInTree.current) {
-      return;
-    }
-
-    store.updateNode(nodeId, {
+  const dynamicProps = useMemo(() => {
+    return {
       disabled: Boolean(disabled),
       isExiting: Boolean(isExiting),
       defaultFocusColumn,
@@ -398,8 +394,7 @@ export function FocusNode(
       trap: isTrap,
       forgetTrapFocusHierarchy,
       defaultFocusChild,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
   }, [
     disabled,
     isExiting,
@@ -410,6 +405,36 @@ export function FocusNode(
     forgetTrapFocusHierarchy,
     defaultFocusChild,
   ]);
+
+  const prevDynamicProps = usePrevious(dynamicProps);
+
+  useEffect(() => {
+    // This ensures that we don't check for updates on the first render.
+    if (!nodeExistsInTree.current) {
+      return;
+    }
+
+    const actualUpdate = {};
+    let hasUpdate = false;
+
+    for (let x in dynamicProps) {
+      // @ts-ignore
+      const currentProp = dynamicProps[x];
+      // @ts-ignore
+      const prevProp = prevDynamicProps[x];
+
+      if (currentProp !== prevProp) {
+        hasUpdate = true;
+        // @ts-ignore
+        actualUpdate[x] = currentProp;
+      }
+    }
+
+    if (hasUpdate) {
+      store.updateNode(nodeId, actualUpdate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dynamicProps, prevDynamicProps]);
 
   useEffect(() => {
     store.createNodes(
