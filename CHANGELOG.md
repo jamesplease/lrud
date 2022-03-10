@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.0.23 (2022/3/10)
+
+**Bug Fixes**
+
+- Resolved an issue where a parent node's `disabled` or `isExiting` state would override a child's prop.
+
 ### v0.0.22 (2022/3/9)
 
 **Bug Fixes**
