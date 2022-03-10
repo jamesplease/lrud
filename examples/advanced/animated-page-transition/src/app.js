@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import classnames from 'classnames';
 import { useMountTransition } from 'core-hooks';
 import { FocusNode } from '@please/lrud';

@@ -9,7 +9,7 @@ export default function App() {
   const [lastGridPosition, setLastGridPosition] = useState({
     rowIndex: 0,
     columnIndex: 0,
-  })
+  });
 
   return (
     <FocusNode className="app">
@@ -27,11 +27,11 @@ export default function App() {
         defaultFocusColumn={lastGridPosition.columnIndex}
         defaultFocusRow={lastGridPosition.rowIndex}
         // Every time the user moves in the grid, we update the position
-        onGridMove={e => {
+        onGridMove={(e) => {
           setLastGridPosition({
             rowIndex: e.nextRowIndex,
-            columnIndex: e.nextColumnIndex
-          })
+            columnIndex: e.nextColumnIndex,
+          });
         }}>
         <FocusNode className="grid-row">
           <FocusNode className="block">1</FocusNode>
@@ -73,8 +73,6 @@ export default function App() {
           <FocusNode className="block">25</FocusNode>
         </FocusNode>
       </FocusNode>
-
-
     </FocusNode>
   );
 }
