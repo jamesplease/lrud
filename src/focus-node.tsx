@@ -97,7 +97,7 @@ export function FocusNode(
 
     ...otherProps
   }: FocusNodeProps,
-  ref: ReactNodeRef,
+  ref: ReactNodeRef
 ) {
   const elRef = useRef(null);
 
