@@ -22,6 +22,7 @@ import {
   ProviderValue,
   ReactNodeRef,
 } from './types';
+import { MotionProps } from 'framer-motion';
 
 let uniqueId = 0;
 
@@ -96,7 +97,7 @@ export function FocusNode(
 
     ...otherProps
   }: FocusNodeProps,
-  ref: ReactNodeRef
+  ref: ReactNodeRef,
 ) {
   const elRef = useRef(null);
 
@@ -550,5 +551,5 @@ export function FocusNode(
   );
 }
 
-const ForwardedFocusNode = forwardRef(FocusNode);
+const ForwardedFocusNode = forwardRef<FocusNodeProps & HTMLElement &  MotionProps>(FocusNode);
 export default ForwardedFocusNode;
