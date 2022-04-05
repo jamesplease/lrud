@@ -551,5 +551,5 @@ export function FocusNode(
   );
 }
 
-const ForwardedFocusNode = forwardRef<FocusNodeProps & HTMLElement &  MotionProps>(FocusNode);
+const ForwardedFocusNode = forwardRef<HTMLElement, FocusNodeProps & MotionProps>(FocusNode);
 export default ForwardedFocusNode;
