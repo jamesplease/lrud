@@ -1,5 +1,5 @@
 import throttle from './throttle';
-import keyToBindingMap from './key-to-binding-map';
+import {keyToBindingMap, keyCodeToBindingMap} from './key-to-binding-map';
 import { FocusStore } from '../types';
 
 export default function focusLrud(focusStore: FocusStore) {
@@ -32,7 +32,7 @@ export default function focusLrud(focusStore: FocusStore) {
   const keydownHandler = throttle(
     function (e: KeyboardEvent) {
       // @ts-ignore
-      const bindingName = keyToBindingMap[e.key];
+      const bindingName = keyToBindingMap[e.key] || keyCodeToBindingMap[e.keyCode];
       // @ts-ignore
       const binding = lrudMapping[bindingName];
 
