@@ -2,6 +2,7 @@ import defaultNavigation from './default-navigation/default-navigation';
 import gridNavigation from './grid-navigation/grid-navigation';
 import determineNavigationStyle from './determine-navigation-style/determine-navigation-style';
 import { FocusState, Arrow, Orientation, Direction } from '../types';
+import { defaultNoNavigation } from './default-no-navigation/default-no-navigation';
 
 interface HandleArrowOptions {
   focusState: FocusState;
@@ -32,7 +33,12 @@ export default function handleArrow({
   });
 
   if (!navigationStyle) {
-    return null;
+    return defaultNoNavigation({
+      arrow,
+      focusedNode,
+      direction,
+      orientation,
+    });
   } else if (navigationStyle.style === 'default') {
     return defaultNavigation({
       arrow,

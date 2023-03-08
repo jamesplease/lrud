@@ -38,6 +38,13 @@ export interface MoveEvent {
   nextChildNode: Node;
 }
 
+export interface NoMoveEvent {
+  orientation: Orientation;
+  direction: Direction;
+  arrow: Arrow;
+  node: Node;
+}
+
 export interface GridMoveEvent {
   orientation: Orientation;
   direction: Direction;
@@ -81,6 +88,7 @@ export interface LRUDFocusEvents {
 }
 
 export interface FocusNodeEvents extends LRUDFocusEvents {
+  onNoNavigation?: (e: NoMoveEvent) => void;
   onMove?: (e: MoveEvent) => void;
   onGridMove?: (e: GridMoveEvent) => void;
 

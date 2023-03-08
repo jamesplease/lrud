@@ -28,6 +28,7 @@ export default function nodeFromDefinition({
 
     onMove,
     onGridMove,
+    onNoNavigation,
   } = nodeDefinition;
 
   const parentId = parentNode.focusId;
@@ -96,6 +97,7 @@ export default function nodeFromDefinition({
     onBlurred,
 
     onMove,
+    onNoNavigation,
     onGridMove,
   };
 

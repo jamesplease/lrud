@@ -86,6 +86,7 @@ export function FocusNode(
     onBack,
 
     onMove,
+    onNoNavigation,
     onGridMove,
 
     onFocused,
@@ -118,6 +119,7 @@ export function FocusNode(
     onBack,
 
     onMove,
+    onNoNavigation,
     onGridMove,
 
     onFocused,
@@ -139,6 +141,7 @@ export function FocusNode(
       onBack,
 
       onMove,
+      onNoNavigation,
       onGridMove,
 
       onFocused,
@@ -158,6 +161,7 @@ export function FocusNode(
     onBack,
 
     onMove,
+    onNoNavigation,
     onGridMove,
 
     onFocused,
@@ -271,6 +275,7 @@ export function FocusNode(
       onBack: createCallbackWrapper('onBack'),
 
       onMove: createCallbackWrapper('onMove'),
+      onNoNavigation: createCallbackWrapper('onNoNavigation'),
       onGridMove: createCallbackWrapper('onGridMove'),
 
       initiallyDisabled: Boolean(disabled),

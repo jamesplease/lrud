@@ -175,6 +175,7 @@ All props are optional. Example usage appears beneath the props table.
 | `onSelected`                | function            |                  | A function that is called when the user pressed the select button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                    |
 | `onBack`                    | function            |                  | A function that is called when the user presses the back button. Passed one argument, an [LRUDEvent](#lrudevent).                                                                      |
 | `onMove`                    | function            |                  | A function that is called when the focused child index of this node changes. Only called for nodes with children that are _not_ grids. Passed one argument, a [MoveEvent](#moveevent). |
+| `onNoNavigation`            | function            |                  | A function that is called when the an arrow was pressed but nothing changed. Passed one argument, a [NoMoveEvent](#nomoveevent). |
 | `onGridMove`                | function            |                  | A function that is called when the focused child index of this node changes. Only called for grids. Passed one argument, a [GridMoveEvent](#gridmoveevent).                            |
 | `children`                  | React Node(s)       |                  | Children of the Focus Node.                                                                                                                                                            |
 | `...rest`                   | any                 |                  | All other props are applied to the underlying DOM node.                                                                                                                                |
@@ -450,6 +451,18 @@ An object that is passed to you in the `onMove` callback of a [`FocusNode` compo
 | `nextChildIndex` | number                            | The index of the child [`FocusNode`](#focusnode) that is now focused.        |
 | `prevChildNode`  | [FocusNode](#focusnode) \| `null` | The previously-focused [`FocusNode`](#focusnode).                            |
 | `nextChildNode`  | [FocusNode](#focusnode)           | The child [`FocusNode`](#focusnode) that is now focused.                     |
+
+### `NoMoveEvent`
+
+An object that is passed to you in the `onNoNavigation` callback of a [`FocusNode` component](#FocusNode-).
+
+| Property         | Type                              | Description                                                                  |
+| ---------------- | --------------------------------- | ---------------------------------------------------------------------------- |
+| `orientation`    | string                            | The orientation of the move. Either `"horizontal"` or `"vertical"`.          |
+| `direction`      | string                            | The direction of the move. Either `"forward"` or `"back"`.                   |
+| `arrow`          | string                            | The arrow that was pressed. One of `"up"`, `"down"`, `"left"`, or `"right"`. |
+| `node`           | [FocusNode](#focusnode) \| `null` | The [`FocusNode`](#focusnode) that received a key press, but no movement happened |
+
 
 ### `GridMoveEvent`
 

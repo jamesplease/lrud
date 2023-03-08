@@ -6,6 +6,72 @@ import { FocusRoot, FocusNode, useFocusStoreDangerously } from '../index';
 import { warning } from '../utils/warning';
 
 describe('FocusNode Events', () => {
+  describe('onNoNavigation', () => {
+    it('calls it when no movement occurs', () => {
+      const rootOnNoNavigation = jest.fn();
+      const nodeANoNavigation = jest.fn();
+      const nodeBNoNavigation = jest.fn();
+      let focusStore;
+
+      function TestComponent() {
+        focusStore = useFocusStoreDangerously();
+
+        return (
+          <FocusNode onNoNavigation={rootOnNoNavigation}>
+            <FocusNode
+              focusId="nodeA"
+              onNoNavigation={nodeANoNavigation}
+              data-testid="nodeA"
+            />
+            <FocusNode
+              focusId="nodeB"
+              data-testid="nodeB"
+              onNoNavigation={nodeBNoNavigation}
+            />
+          </FocusNode>
+        );
+      }
+
+      render(
+        <FocusRoot>
+          <TestComponent />
+        </FocusRoot>
+      );
+
+      expect(focusStore.getState().focusedNodeId).toEqual('nodeA');
+
+      // No movement, so onNoNavigation fires
+      fireEvent.keyDown(window, {
+        code: 'ArrowLeft',
+        key: 'ArrowLeft',
+      });
+      expect(rootOnNoNavigation.mock.calls.length).toBe(0);
+      expect(nodeANoNavigation.mock.calls.length).toBe(1);
+      expect(nodeBNoNavigation.mock.calls.length).toBe(0);
+
+      // move to the right, there is movement
+      fireEvent.keyDown(window, {
+        code: 'ArrowRight',
+        key: 'ArrowRight',
+      });
+
+      expect(focusStore.getState().focusedNodeId).toEqual('nodeB');
+
+      expect(rootOnNoNavigation.mock.calls.length).toBe(0);
+      expect(nodeANoNavigation.mock.calls.length).toBe(1);
+      expect(nodeBNoNavigation.mock.calls.length).toBe(0);
+
+      fireEvent.keyDown(window, {
+        code: 'ArrowRight',
+        key: 'ArrowRight',
+      });
+
+      expect(rootOnNoNavigation.mock.calls.length).toBe(0);
+      expect(nodeANoNavigation.mock.calls.length).toBe(1);
+      expect(nodeBNoNavigation.mock.calls.length).toBe(1);
+    });
+  });
+
   describe('onMove', () => {
     it('calls it when movement occurs', () => {
       const rootOnMove = jest.fn();
