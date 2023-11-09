@@ -389,12 +389,17 @@ export default function createFocusStore({
   }
 
   function handleArrow(arrow: Arrow) {
-    const newState = handleArrowUtil({
+    const { newState, prevState } = handleArrowUtil({
       focusState: currentState,
       arrow,
-    });
+    }) || {};
 
     if (!newState) {
+      return;
+    }
+
+    if (prevState !== currentState) {
+      handleArrow(arrow);
       return;
     }
 
