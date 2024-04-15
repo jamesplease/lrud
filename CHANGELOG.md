@@ -1,5 +1,9 @@
 # Changelog
 
+### v0.0.24 (2024/4/15)
+
+- React 18 is now accepted as a peer dependency
+
 ### v0.0.23 (2022/3/10)
 
 **Bug Fixes**
