@@ -12,3 +12,11 @@ export { default as useProcessKey } from './hooks/use-process-key';
 
 const FocusRoot = FocusContext.FocusRoot;
 export { FocusRoot };
+
+export type {
+  LRUDEvent,
+  FocusEvent,
+  MoveEvent,
+  GridMoveEvent,
+  FocusNodeProps,
+} from './types';
