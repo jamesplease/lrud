@@ -8,10 +8,15 @@ interface HandleArrowOptions {
   arrow: Arrow;
 }
 
+type HandleArrowResult = {
+  prevState: FocusState;
+  newState: FocusState | null;
+} | null;
+
 export default function handleArrow({
   focusState,
   arrow,
-}: HandleArrowOptions): FocusState | null {
+}: HandleArrowOptions): HandleArrowResult {
   const orientation: Orientation =
     arrow === 'right' || arrow === 'left' ? 'horizontal' : 'vertical';
   const direction: Direction =
@@ -34,15 +39,17 @@ export default function handleArrow({
   if (!navigationStyle) {
     return null;
   } else if (navigationStyle.style === 'default') {
-    return defaultNavigation({
+    const newState = defaultNavigation({
       arrow,
       focusState,
       targetNode: navigationStyle.targetNode,
       direction,
       orientation,
     });
+
+    return { prevState: focusState, newState };
   } else if (navigationStyle.style === 'grid') {
-    return gridNavigation({
+    const newState = gridNavigation({
       arrow,
       focusState,
       focusedNode,
@@ -51,6 +58,8 @@ export default function handleArrow({
       direction,
       orientation,
     });
+
+    return { prevState: focusState, newState };
   }
 
   return null;
